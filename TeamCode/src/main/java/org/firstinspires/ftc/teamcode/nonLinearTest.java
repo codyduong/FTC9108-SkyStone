@@ -1,13 +1,9 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.GyroSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
-import com.qualcomm.robotcore.util.Range;
-
 
 /*
 Okay so I have no idea if we're using mecanum drive, but I made this just for some practice,
@@ -15,20 +11,16 @@ and is not tested yet, so is probably broken. Also not finished, just some refer
 -Cody D.
  */
 @TeleOp(name="test", group="test") //fix this
-public class nonLinearTest extends OpMode {
+public class nonLinearTest extends teamMethods {
     private ElapsedTime runtime = new ElapsedTime();
 
-    private DcMotor leftDriveFront = null;
-    private DcMotor leftDriveBack = null;
-    private DcMotor rightDriveFront = null;
-    private DcMotor rightDriveBack = null;
-
     //these values should be determined based off hardware being used
+    /*
     private static final double ticksPerRev = 1;
     private static final double gearRatio = 1;
     private static final double wheelDiameter = 1;
     private static final double ticksPerInch = (ticksPerRev * gearRatio) / (wheelDiameter * 3.1415); //the math changes on mecanum. fix and find formula.
-
+    */
 
     //Initialized by: Initialization Button (i think)
     public void init() {
@@ -41,6 +33,7 @@ public class nonLinearTest extends OpMode {
         leftDriveBack = hardwareMap.get(DcMotor.class, "left_drive_back");
         rightDriveFront = hardwareMap.get(DcMotor.class, "right_drive_front");
         rightDriveBack = hardwareMap.get(DcMotor.class, "right_drive_back");
+        robotGyro = hardwareMap.get(GyroSensor.class,"gyrosensor");
 
         // Most robots need the motor on one side to be reversed to drive forward
         // Reverse the motor that runs backwards when connected directly to the battery
@@ -49,11 +42,12 @@ public class nonLinearTest extends OpMode {
         rightDriveFront.setDirection(DcMotor.Direction.REVERSE);
         rightDriveBack.setDirection(DcMotor.Direction.REVERSE);
 
-        telemetry.addData("Encoders","Resetting");
+        telemetry.addData("Encoders and GyroSensor","Resetting");
         leftDriveFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         leftDriveBack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rightDriveFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rightDriveBack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robotGyro.calibrate();
 
         leftDriveFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         leftDriveBack.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -74,10 +68,11 @@ public class nonLinearTest extends OpMode {
     //Initialized by: After Start, Before Stop / loops
     @Override
     public void loop() {
-        double leftPower;
-        double rightPower;
-
-        //while
+        double drivex = -gamepad1.left_stick_y;
+        double drivey = gamepad1.left_stick_x;
+        double turn  =  gamepad1.right_stick_x;
+        driveToPosition(drivex,drivey,0);
+        telemetry.addData("Status", "Run Time: " + runtime.toString());
     }
 
     //Initialized by: Stop / runs once

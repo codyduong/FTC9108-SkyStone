@@ -1,57 +1,76 @@
 package org.firstinspires.ftc.teamcode;
 
-
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.GyroSensor;
+
+import java.util.concurrent.TimeUnit;
 
 public abstract class teamMethods extends OpMode {
-    public void driveToPosition(double inputPosX,double inputPosY) {
-        //The Xdistance and Ydistance is marked on the above image
-        final double Xdistance = 1;
-        final double Ydistance = 1;
-        double XYcombinedD = Xdistance + Ydistance;
-        double gyroRobot = obtainGyroInput;
 
-        double V1 = inputPosY - inputPosX + gyroRobot*(XYcombinedD);
-        double V2 = inputPosY + inputPosX - gyroRobot*(XYcombinedD);
-        double V3 = inputPosY - inputPosX - gyroRobot*(XYcombinedD);
-        double V4 = inputPosY + inputPosX + gyroRobot*(XYcombinedD);
+    public DcMotor leftDriveFront = null;
+    public DcMotor leftDriveBack = null;
+    public DcMotor rightDriveFront = null;
+    public DcMotor rightDriveBack = null;
+    public GyroSensor robotGyro = null;
 
-        double compareSet1;
-        double compareSet2;
-        double compareSet1s;
-        double compareSet2s;
-        double largest;
-        double smallest;
-        if (V1 >= V2) {
-            compareSet1 = V1;
-            compareSet1s = V2;
-        } else {
-            compareSet1 = V2;
-            compareSet1s = V1;
-        }
-        if (V3 >= V4) {
-            compareSet2 = V3;
-            compareSet2s = V4;
-        } else {
-            compareSet2 = V4;
-            compareSet2s = V3;
-        }
-        if (compareSet1>=compareSet2) {
-            largest = compareSet1;
-        } else {
-            largest = compareSet2;
-        }
-        if (compareSet1s<=compareSet2s) {
-            smallest = compareSet1s;
-        } else {
-            smallest = compareSet2s;
-        }
+    //X = a, Y = b
+    private final double Xdistance = 8;
+    private final double Ydistance = 8;
+    private double XYcombinedD = Xdistance + Ydistance;
 
-        double difference = largest-smallest
-        double V1F =
-        double V2F =
-        double V3F =
-        double V4F =
+    private static final double     COUNTS_PER_MOTOR_REV    = 1440 ;    // eg: TETRIX Motor Encoder
+    private static final double     DRIVE_GEAR_REDUCTION    = 2.0 ;     // This is < 1.0 if geared UP
+    private static final double     WHEEL_DIAMETER_INCHES   = 4.0 ;     // For figuring circumference
+    private static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) / (WHEEL_DIAMETER_INCHES * 3.1415);
+    private static final double     DRIVE_SPEED             = 0.6;
+    private static final double     TURN_SPEED              = 0.5;
 
+    public void driveToPosition(double inputPosX, double inputPosY, double inputAngle) {
+
+        //NOTE: This uses displacement instead of velocity, since in practice the ratio of velocity_X to velocity_Y, will be equal to ratio of displacement_X to displacement_Y.
+        double V1 = inputPosY - inputPosX + inputAngle*(XYcombinedD);
+        double V2 = inputPosY + inputPosX - inputAngle*(XYcombinedD);
+        double V3 = inputPosY - inputPosX - inputAngle*(XYcombinedD);
+        double V4 = inputPosY + inputPosX + inputAngle*(XYcombinedD);
+
+        double largest = Math.max(Math.max(V1,V2),Math.max(V3,V4));
+        double smallest = Math.min(Math.min(V1,V2),Math.min(V3,V4));
+        double dividend = Math.max(-largest, smallest);
+
+        //WARNING: need to resolve SCALING issues with any other inputAngle != 0, if inputAngle == 0, won't work.
+        V1 = 100*(dividend/V1);
+        V2 = 100*(dividend/V2);
+        V3 = 100*(dividend/V3);
+        V4 = 100*(dividend/V4);
+        //
+
+        while (rightDriveFront.getCurrentPosition() < V1 || leftDriveFront.getCurrentPosition() < V2 || leftDriveBack.getCurrentPosition() < V3 || rightDriveBack.getCurrentPosition() < V4)
+        rightDriveFront.setPower(V1);
+        leftDriveFront.setPower(V2);
+        leftDriveBack.setPower(V3);
+        rightDriveBack.setPower(V4);
+        telemetry.addData("Motors", "V1 (%.2f), V2 (%.2f), V3 (%.2f), V4 (%.2f)", V1, V2, V3, V4);
+        try {
+            TimeUnit.MILLISECONDS.sleep(100);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+        rightDriveFront.setPower(0);
+        leftDriveFront.setPower(0);
+        leftDriveBack.setPower(0);
+        rightDriveBack.setPower(0);
     }
+
+    public void strafeToPositionFromAngle(double angle, double distance) {
+        double xpos = distance * Math.cos(angle);
+        double ypos = distance * Math.sin(angle);
+        double inputAngle = 0;
+        driveToPosition(xpos,ypos,inputAngle);
+    }
+
+    public void turnToAngle(double angle) {
+        driveToPosition(0,0,angle);
+    }
+
 }
