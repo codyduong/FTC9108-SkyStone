@@ -15,8 +15,9 @@ public abstract class teamMethods extends OpMode {
     public GyroSensor robotGyro = null;
 
     //X = a, Y = b
-    private final double Xdistance = 8;
-    private final double Ydistance = 8;
+    //The distances are in inches
+    private final double Xdistance = 9.27;
+    private final double Ydistance = 10.02;
     private double XYcombinedD = Xdistance + Ydistance;
 
     private static final double     COUNTS_PER_MOTOR_REV    = 1440 ;    // eg: TETRIX Motor Encoder
