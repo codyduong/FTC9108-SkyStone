@@ -36,26 +36,21 @@ public abstract class teamMethods extends OpMode {
 
         double largest = Math.max(Math.max(V1,V2),Math.max(V3,V4));
         double smallest = Math.min(Math.min(V1,V2),Math.min(V3,V4));
-        double dividend = Math.max(-largest, smallest);
+        double divisor = Math.max(Math.abs(largest), Math.abs(smallest));
 
-        //WARNING: need to resolve SCALING issues with any other inputAngle != 0, if inputAngle == 0, won't work.
-        V1 = 100*(dividend/V1);
-        V2 = 100*(dividend/V2);
-        V3 = 100*(dividend/V3);
-        V4 = 100*(dividend/V4);
-        //
+        V1 = 100*(V1/divisor);
+        V2 = 100*(V1/divisor);
+        V3 = 100*(V1/divisor);
+        V4 = 100*(V1/divisor);
 
-        while (rightDriveFront.getCurrentPosition() < V1 || leftDriveFront.getCurrentPosition() < V2 || leftDriveBack.getCurrentPosition() < V3 || rightDriveBack.getCurrentPosition() < V4)
-        rightDriveFront.setPower(V1);
-        leftDriveFront.setPower(V2);
-        leftDriveBack.setPower(V3);
-        rightDriveBack.setPower(V4);
-        telemetry.addData("Motors", "V1 (%.2f), V2 (%.2f), V3 (%.2f), V4 (%.2f)", V1, V2, V3, V4);
-        try {
-            TimeUnit.MILLISECONDS.sleep(100);
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
+        while (rightDriveFront.getCurrentPosition() < V1 || leftDriveFront.getCurrentPosition() < V2 || leftDriveBack.getCurrentPosition() < V3 || rightDriveBack.getCurrentPosition() < V4) {
+            rightDriveFront.setPower(V1);
+            leftDriveFront.setPower(V2);
+            leftDriveBack.setPower(V3);
+            rightDriveBack.setPower(V4);
+
         }
+        telemetry.addData("Motors", "V1 (%.2f), V2 (%.2f), V3 (%.2f), V4 (%.2f)", V1, V2, V3, V4);
         rightDriveFront.setPower(0);
         leftDriveFront.setPower(0);
         leftDriveBack.setPower(0);
@@ -72,5 +67,4 @@ public abstract class teamMethods extends OpMode {
     public void turnToAngle(double angle) {
         driveToPosition(0,0,angle);
     }
-
 }
