@@ -57,7 +57,7 @@ public abstract class teamMethods extends OpMode {
         rightDriveBack.setPower(0);
     }
 
-    public void strafeToPositionFromAngle(double angle, double distance) {
+    public void strafeToAngle(double angle, double distance) {
         double xpos = distance * Math.cos(angle);
         double ypos = distance * Math.sin(angle);
         double inputAngle = 0;
@@ -67,4 +67,6 @@ public abstract class teamMethods extends OpMode {
     public void turnToAngle(double angle) {
         driveToPosition(0,0,angle);
     }
+
+    
 }
