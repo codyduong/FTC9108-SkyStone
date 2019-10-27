@@ -27,6 +27,7 @@ public abstract class teamMethods extends OpMode {
     //private static final double     DRIVE_SPEED             = 0.6;
     //private static final double     TURN_SPEED              = 0.5;
 
+    //METHOD 1: self-explanatory
     public void driveToPosition(double inputPosX, double inputPosY, double inputAngle) {
         double refAngle = robotGyro.getHeading();
         double newInputAngle = refAngle + inputAngle;
@@ -61,18 +62,17 @@ public abstract class teamMethods extends OpMode {
         motor3.setPower(0);
         motor4.setPower(0);
     }
-
+    //METHOD 1.1: basically different input of method driveToPosition, named differently for distinguishing.
     public void strafeToAngle(double angle, double distance) {
         double xpos = distance * Math.cos(angle);
         double ypos = distance * Math.sin(angle);
         double inputAngle = 0;
         driveToPosition(xpos,ypos,inputAngle);
     }
+    //METHOD 1.2: ditto
+    public void turnToAngle(double angle) { driveToPosition(0,0,angle); }
 
-    public void turnToAngle(double angle) {
-        driveToPosition(0,0,angle);
-    }
-
+    //FUNCTION 1: handles power scaling as robot approaches near target
     public double funcEncoderPercentagePower(double currentPosition, double encoderFinal) {
         int power = (int)(-100*(currentPosition/encoderFinal)+100);
         if (currentPosition>=encoderFinal){ power=0; }
@@ -80,10 +80,11 @@ public abstract class teamMethods extends OpMode {
         return power;
     }
 
+    //FUNCTION 2: lots of trig going on, so have fun trying to figure it out
     public double[] relativeValues(double inputX, double inputY, double inputGyro) {
-        double angleDifference = robotGyro.getHeading() - inputGyro;
-        double angleTriangle = Math.atan(inputY/inputX);
-        double hypotnuse = Math.sqrt(Math.pow(inputX,2)+Math.pow(inputY,2));
+        double angleDifference = robotGyro.getHeading() - inputGyro; //self explanatory
+        double angleTriangle = Math.atan(inputY/inputX); //angle of side closest to robot, is added to to get hypotnuse point
+        double hypotnuse = Math.sqrt(Math.pow(inputX,2)+Math.pow(inputY,2)); //multiplier to scale cos and sin, keeps values right
         double Xfinal = hypotnuse*Math.cos(angleDifference+angleTriangle);
         double Yfinal = hypotnuse*Math.sin(angleDifference+angleTriangle);
         double returnValues[] = new double[]{Xfinal,Yfinal,angleDifference};

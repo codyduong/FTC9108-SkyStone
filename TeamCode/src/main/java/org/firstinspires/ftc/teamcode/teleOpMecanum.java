@@ -5,11 +5,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.GyroSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-/*
-Will probably refactor the name of this class eventually...
- */
 @TeleOp(name="test", group="test") //fix this
-public class nonLinearTest extends teamMethods {
+public class teleOpMecanum extends teamMethods {
     private ElapsedTime runtime = new ElapsedTime();
 
     //these values should be determined based off hardware being used
