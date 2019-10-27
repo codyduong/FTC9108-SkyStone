@@ -6,9 +6,7 @@ import com.qualcomm.robotcore.hardware.GyroSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 /*
-Okay so I have no idea if we're using mecanum drive, but I made this just for some practice,
-and is not tested yet, so is probably broken. Also not finished, just some reference stuff for non-linear.
--Cody D.
+Will probably refactor the name of this class eventually...
  */
 @TeleOp(name="test", group="test") //fix this
 public class nonLinearTest extends teamMethods {
@@ -71,7 +69,11 @@ public class nonLinearTest extends teamMethods {
         double drivex = -gamepad1.left_stick_y;
         double drivey = gamepad1.left_stick_x;
         double turn  =  gamepad1.right_stick_x;
-        driveToPosition(drivex,drivey,0);
+        double relativeValues[] = relativeValues(drivex,drivey,turn);
+        double xNew = relativeValues[1];
+        double yNew = relativeValues[2];
+        double angleNew = relativeValues[3];
+        driveToPosition(xNew,yNew,angleNew);
         telemetry.addData("Status", "Run Time: " + runtime.toString());
     }
 

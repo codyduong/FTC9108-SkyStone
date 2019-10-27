@@ -80,4 +80,14 @@ public abstract class teamMethods extends OpMode {
         return power;
     }
 
+    public double[] relativeValues(double inputX, double inputY, double inputGyro) {
+        double angleDifference = robotGyro.getHeading() - inputGyro;
+        double angleTriangle = Math.atan(inputY/inputX);
+        double hypotnuse = Math.sqrt(Math.pow(inputX,2)+Math.pow(inputY,2));
+        double Xfinal = hypotnuse*Math.cos(angleDifference+angleTriangle);
+        double Yfinal = hypotnuse*Math.sin(angleDifference+angleTriangle);
+        double returnValues[] = new double[]{Xfinal,Yfinal,angleDifference};
+        return returnValues;
+    }
+
 }
