@@ -9,7 +9,7 @@ import org.firstinspires.ftc.teamcode;
 import org.firstinspires.ftc.teamcode.teamMethods;
 
 @TeleOp(name="test2", group="test") //fix this
-public class meh extends teamMethods {
+public class auto1 extends teamMethods {
     private ElapsedTime runtime = new ElapsedTime();
 
     //these values should be determined based off hardware being used
