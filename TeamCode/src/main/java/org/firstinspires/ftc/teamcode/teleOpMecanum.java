@@ -70,12 +70,16 @@ public class teleOpMecanum extends teamMethods {
         double xNew = relativeValues[1];
         double yNew = relativeValues[2];
         double angleNew = relativeValues[3];
-        driveToPosition(xNew,yNew,angleNew);
+        driveToPosition(xNew,yNew,angleNew, true);
         telemetry.addData("Status", "Run Time: " + runtime.toString());
     }
 
     //Initialized by: Stop / runs once
     @Override
-    public void stop() {}
-
+    public void stop() {
+        motor1.setPower(0);
+        motor2.setPower(0);
+        motor3.setPower(0);
+        motor4.setPower(0);
+    }
 }

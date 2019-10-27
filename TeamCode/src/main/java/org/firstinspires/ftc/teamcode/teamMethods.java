@@ -28,7 +28,7 @@ public abstract class teamMethods extends OpMode {
     //private static final double     TURN_SPEED              = 0.5;
 
     //METHOD 1: self-explanatory
-    public void driveToPosition(double inputPosX, double inputPosY, double inputAngle) {
+    public void driveToPosition(double inputPosX, double inputPosY, double inputAngle, boolean teleOp) {
         double refAngle = robotGyro.getHeading();
         double newInputAngle = refAngle + inputAngle;
         //NOTE: This uses displacement instead of velocity, since in practice the ratio of velocity_X to velocity_Y, will be equal to ratio of displacement_X to displacement_Y.
@@ -46,15 +46,22 @@ public abstract class teamMethods extends OpMode {
         V3 = 100*(V1/divisor);
         V4 = 100*(V1/divisor);
 
-        while ( motor1.getCurrentPosition() < V1 ||
-                motor2.getCurrentPosition() < V2 ||
-                motor3.getCurrentPosition() < V3 ||
-                motor4.getCurrentPosition() < V4 ||
-                robotGyro.getHeading() < newInputAngle) {
-            motor1.setPower(funcEncoderPercentagePower(motor1.getCurrentPosition(),V1));
-            motor2.setPower(funcEncoderPercentagePower(motor2.getCurrentPosition(),V2));
-            motor3.setPower(funcEncoderPercentagePower(motor3.getCurrentPosition(),V3));
-            motor4.setPower(funcEncoderPercentagePower(motor4.getCurrentPosition(),V4));
+        if (teleOp == false) {
+            while ( motor1.getCurrentPosition() < V1 ||
+                    motor2.getCurrentPosition() < V2 ||
+                    motor3.getCurrentPosition() < V3 ||
+                    motor4.getCurrentPosition() < V4 ||
+                    robotGyro.getHeading() < newInputAngle) {
+                motor1.setPower(funcEncoderPercentagePower(motor1.getCurrentPosition(), V1));
+                motor2.setPower(funcEncoderPercentagePower(motor2.getCurrentPosition(), V2));
+                motor3.setPower(funcEncoderPercentagePower(motor3.getCurrentPosition(), V3));
+                motor4.setPower(funcEncoderPercentagePower(motor4.getCurrentPosition(), V4));
+            }
+        } else if (teleOp == true) {
+            motor1.setPower(funcEncoderPercentagePower(motor1.getCurrentPosition(), V1));
+            motor2.setPower(funcEncoderPercentagePower(motor2.getCurrentPosition(), V2));
+            motor3.setPower(funcEncoderPercentagePower(motor3.getCurrentPosition(), V3));
+            motor4.setPower(funcEncoderPercentagePower(motor4.getCurrentPosition(), V4));
         }
         telemetry.addData("Motors", "V1 (%.2f), V2 (%.2f), V3 (%.2f), V4 (%.2f)", V1, V2, V3, V4);
         motor1.setPower(0);
@@ -63,14 +70,14 @@ public abstract class teamMethods extends OpMode {
         motor4.setPower(0);
     }
     //METHOD 1.1: basically different input of method driveToPosition, named differently for distinguishing.
-    public void strafeToAngle(double angle, double distance) {
+    public void strafeToAngle(double angle, double distance, boolean teleOp) {
         double xpos = distance * Math.cos(angle);
         double ypos = distance * Math.sin(angle);
         double inputAngle = 0;
-        driveToPosition(xpos,ypos,inputAngle);
+        driveToPosition(xpos,ypos,inputAngle, teleOp);
     }
     //METHOD 1.2: ditto
-    public void turnToAngle(double angle) { driveToPosition(0,0,angle); }
+    public void turnToAngle(double angle, boolean teleOp) { driveToPosition(0,0,angle,teleOp); }
 
     //FUNCTION 1: handles power scaling as robot approaches near target
     public double funcEncoderPercentagePower(double currentPosition, double encoderFinal) {
