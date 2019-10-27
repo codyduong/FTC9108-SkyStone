@@ -8,10 +8,10 @@ import java.util.concurrent.TimeUnit;
 
 public abstract class teamMethods extends OpMode {
 
-    public DcMotor leftDriveFront = null;
-    public DcMotor leftDriveBack = null;
-    public DcMotor rightDriveFront = null;
-    public DcMotor rightDriveBack = null;
+    public DcMotor motor1 = null;   //RDRIVEFRONT
+    public DcMotor motor2 = null;   //LDRIVEFRONT
+    public DcMotor motor3 = null;   //LDRIVEBACK
+    public DcMotor motor4 = null;   //RDRIVEBACK
     public GyroSensor robotGyro = null;
 
     //X = a, Y = b
@@ -24,11 +24,13 @@ public abstract class teamMethods extends OpMode {
     private static final double     DRIVE_GEAR_REDUCTION    = 2.0 ;     // This is < 1.0 if geared UP
     private static final double     WHEEL_DIAMETER_INCHES   = 4.0 ;     // For figuring circumference
     private static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) / (WHEEL_DIAMETER_INCHES * 3.1415);
-    private static final double     DRIVE_SPEED             = 0.6;
-    private static final double     TURN_SPEED              = 0.5;
+    //private static final double     DRIVE_SPEED             = 0.6;
+    //private static final double     TURN_SPEED              = 0.5;
 
+    //METHOD 1: self-explanatory
     public void driveToPosition(double inputPosX, double inputPosY, double inputAngle) {
-
+        double refAngle = robotGyro.getHeading();
+        double newInputAngle = refAngle + inputAngle;
         //NOTE: This uses displacement instead of velocity, since in practice the ratio of velocity_X to velocity_Y, will be equal to ratio of displacement_X to displacement_Y.
         double V1 = inputPosY - inputPosX + inputAngle*(XYcombinedD);
         double V2 = inputPosY + inputPosX - inputAngle*(XYcombinedD);
@@ -44,30 +46,49 @@ public abstract class teamMethods extends OpMode {
         V3 = 100*(V1/divisor);
         V4 = 100*(V1/divisor);
 
-        while (rightDriveFront.getCurrentPosition() < V1 || leftDriveFront.getCurrentPosition() < V2 || leftDriveBack.getCurrentPosition() < V3 || rightDriveBack.getCurrentPosition() < V4) {
-            rightDriveFront.setPower(V1);
-            leftDriveFront.setPower(V2);
-            leftDriveBack.setPower(V3);
-            rightDriveBack.setPower(V4);
-
+        while ( motor1.getCurrentPosition() < V1 ||
+                motor2.getCurrentPosition() < V2 ||
+                motor3.getCurrentPosition() < V3 ||
+                motor4.getCurrentPosition() < V4 ||
+                robotGyro.getHeading() < newInputAngle) {
+            motor1.setPower(funcEncoderPercentagePower(motor1.getCurrentPosition(),V1));
+            motor2.setPower(funcEncoderPercentagePower(motor2.getCurrentPosition(),V2));
+            motor3.setPower(funcEncoderPercentagePower(motor3.getCurrentPosition(),V3));
+            motor4.setPower(funcEncoderPercentagePower(motor4.getCurrentPosition(),V4));
         }
         telemetry.addData("Motors", "V1 (%.2f), V2 (%.2f), V3 (%.2f), V4 (%.2f)", V1, V2, V3, V4);
-        rightDriveFront.setPower(0);
-        leftDriveFront.setPower(0);
-        leftDriveBack.setPower(0);
-        rightDriveBack.setPower(0);
+        motor1.setPower(0);
+        motor2.setPower(0);
+        motor3.setPower(0);
+        motor4.setPower(0);
     }
-
+    //METHOD 1.1: basically different input of method driveToPosition, named differently for distinguishing.
     public void strafeToAngle(double angle, double distance) {
         double xpos = distance * Math.cos(angle);
         double ypos = distance * Math.sin(angle);
         double inputAngle = 0;
         driveToPosition(xpos,ypos,inputAngle);
     }
+    //METHOD 1.2: ditto
+    public void turnToAngle(double angle) { driveToPosition(0,0,angle); }
 
-    public void turnToAngle(double angle) {
-        driveToPosition(0,0,angle);
+    //FUNCTION 1: handles power scaling as robot approaches near target
+    public double funcEncoderPercentagePower(double currentPosition, double encoderFinal) {
+        int power = (int)(-100*(currentPosition/encoderFinal)+100);
+        if (currentPosition>=encoderFinal){ power=0; }
+        if (encoderFinal==0) { power = 0; }
+        return power;
     }
 
-    
+    //FUNCTION 2: lots of trig going on, so have fun trying to figure it out
+    public double[] relativeValues(double inputX, double inputY, double inputGyro) {
+        double angleDifference = robotGyro.getHeading() - inputGyro; //self explanatory
+        double angleTriangle = Math.atan(inputY/inputX); //angle of side closest to robot, is added to to get hypotnuse point
+        double hypotnuse = Math.sqrt(Math.pow(inputX,2)+Math.pow(inputY,2)); //multiplier to scale cos and sin, keeps values right
+        double Xfinal = hypotnuse*Math.cos(angleDifference+angleTriangle);
+        double Yfinal = hypotnuse*Math.sin(angleDifference+angleTriangle);
+        double returnValues[] = new double[]{Xfinal,Yfinal,angleDifference};
+        return returnValues;
+    }
+
 }
