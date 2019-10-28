@@ -17,7 +17,7 @@ public abstract class teamMethods extends OpMode {
     //X = a, Y = b
     //The distances are in inches
     private final double Xdistance = 9.27;
-    private final double Ydistance = 10.02;
+    private final double Ydistance = 9.27;
     private double XYcombinedD = Xdistance + Ydistance;
 
     private static final double     COUNTS_PER_MOTOR_REV    = 1440 ;    // eg: TETRIX Motor Encoder
