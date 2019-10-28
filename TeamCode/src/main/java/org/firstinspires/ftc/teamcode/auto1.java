@@ -5,7 +5,6 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.GyroSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.teamcode;
 import org.firstinspires.ftc.teamcode.teamMethods;
 
 @TeleOp(name="test2", group="test") //fix this
