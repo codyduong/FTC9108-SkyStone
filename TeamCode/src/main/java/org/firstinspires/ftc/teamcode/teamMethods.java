@@ -97,11 +97,5 @@ public abstract class teamMethods extends OpMode {
         double returnValues[] = new double[]{Xfinal,Yfinal,angleDifference};
         return returnValues;
     }
-
-    public void pathfinding(double[] inputPathways) {
-        for (int i=0; i<inputPathways.length;i=i+3) {
-            driveToPosition(inputPathways[i],inputPathways[i+1],inputPathways[i+1], false);
-        }
-    }
-
+    
 }
