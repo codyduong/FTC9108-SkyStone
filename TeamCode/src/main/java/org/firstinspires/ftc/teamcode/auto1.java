@@ -56,10 +56,36 @@ public class auto1 extends teamMethods {
         telemetry.addData("Status", "Initialized");
     }
 
+    int position;
+
     //Initialized by: Start / runs once
     @Override
     public void start() {
+        position = 1;
+        //Position 1 is building zone, and position 2 is loading zone.
         runtime.reset();
+
+        if (position = 1) {
+            //starting facing wall, and 42.25'' away from the other wall
+            driveToPosition(0, -65.75, 0);
+            driveToPosition(20, 0, 0);
+            driveToPosition(0, 47.5, 0);
+            driveToPosition(0, -47.5, 0);
+            driveToPosition(-46.75, 0, 0);
+            driveToPosition(0, -25, 0);
+            while (frontOds < averageColor) ;
+            {
+                driveToPosition(-1, 0, 0);
+            }
+            // at this point, the robot will pick up the skystone
+
+            position = 3;
+        }
+        if (position = 2) {
+
+            position = 3;
+        }
+
     }
 
 
