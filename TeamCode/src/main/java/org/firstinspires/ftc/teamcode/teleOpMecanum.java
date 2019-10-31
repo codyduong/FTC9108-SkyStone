@@ -82,6 +82,4 @@ public class teleOpMecanum extends teamMethods {
         motor3.setPower(0);
         motor4.setPower(0);
     }
-        driveToPosition(0,0,0);
-    }
 }
