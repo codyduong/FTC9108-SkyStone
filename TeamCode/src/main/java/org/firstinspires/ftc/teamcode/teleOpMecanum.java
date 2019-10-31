@@ -77,16 +77,9 @@ public class teleOpMecanum extends teamMethods {
     //Initialized by: Stop / runs once
     @Override
     public void stop() {
-<<<<<<< Updated upstream:TeamCode/src/main/java/org/firstinspires/ftc/teamcode/teleOpMecanum.java
         motor1.setPower(0);
         motor2.setPower(0);
         motor3.setPower(0);
         motor4.setPower(0);
     }
-=======
-        driveToPosition(0,0,0);
-    }
-
-
->>>>>>> Stashed changes:TeamCode/src/main/java/org/firstinspires/ftc/teamcode/nonLinearTest.java
 }
