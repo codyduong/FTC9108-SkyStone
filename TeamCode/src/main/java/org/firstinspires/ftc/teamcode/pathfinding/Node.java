@@ -1,21 +1,28 @@
 package org.firstinspires.ftc.teamcode.pathfinding;
 
+/*PUBLIC NODE
+An class and object which is in essence a position marker.
+ */
 public class Node {
-    String type = "";
     double xpos;
     double ypos;
-    double xsize;
-    double ysize;
 
-    Node(String typeI, double xposI, double yposI, double xsizeI, double ysizeI) {
+    //object
+    Node(double xposI, double yposI) {
         xpos = xposI;
         ypos = yposI;
-        xsize = xsizeI;
-        ysize = ysizeI;
     }
 
+    //returns X and Y pos
     public double[] GetPos() {
         double returnV[] = new double[]{xpos,ypos};
         return returnV;
     }
+
+    //instantiates several default nodes
+    public static void instantiateDefaultField() {
+
+    }
+
+
 }

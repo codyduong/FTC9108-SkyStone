@@ -1,14 +1,15 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.auto_classes;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.GyroSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.teamcode.teamMethods;
+import org.firstinspires.ftc.teamcode.team_methods.TeamMethods
+import org.firstinspires.ftc.teamcode.team_methods.Drive;
 
-@TeleOp(name="test2", group="test") //fix this
-public class auto1 extends teamMethods {
+@TeleOp(name="test", group="test") //fix this
+public class teleOpMecanum extends OpMode {
     private ElapsedTime runtime = new ElapsedTime();
 
     //these values should be determined based off hardware being used
@@ -65,10 +66,23 @@ public class auto1 extends teamMethods {
     //Initialized by: After Start, Before Stop / loops
     @Override
     public void loop() {
+        double drivex = -gamepad1.left_stick_y;
+        double drivey = gamepad1.left_stick_x;
+        double turn  =  gamepad1.right_stick_x;
+        double relativeValues[] = relativeValues(drivex,drivey,turn);
+        double xNew = relativeValues[1];
+        double yNew = relativeValues[2];
+        double angleNew = relativeValues[3];
+        Drive.driveToPosition(xNew,yNew,angleNew, true);
+        telemetry.addData("Status", "Run Time: " + runtime.toString());
     }
 
     //Initialized by: Stop / runs once
     @Override
-    public void stop() {}
-
+    public void stop() {
+        motor1.setPower(0);
+        motor2.setPower(0);
+        motor3.setPower(0);
+        motor4.setPower(0);
+    }
 }
