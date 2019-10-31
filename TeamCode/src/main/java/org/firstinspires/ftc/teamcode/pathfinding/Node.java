@@ -13,4 +13,9 @@ public class Node {
         xsize = xsizeI;
         ysize = ysizeI;
     }
+
+    public double[] GetPos() {
+        double returnV[] = new double[]{xpos,ypos};
+        return returnV;
+    }
 }
