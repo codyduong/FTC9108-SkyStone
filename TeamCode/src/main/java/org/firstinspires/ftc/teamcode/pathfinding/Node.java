@@ -1,21 +1,25 @@
 package org.firstinspires.ftc.teamcode.pathfinding;
+import org.firstinspires.ftc.teamcode.general_classes.Pos2D;
 
 /*PUBLIC NODE
 An class and object which is in essence a position marker.
  */
 public class Node {
+    public Pos2D Pos2D;
     double X_POS;
     double Y_POS;
 
     //object
-    Node(double X_POS_I, double Y_POS_I) {
-        X_POS = X_POS_I;
-        Y_POS = Y_POS_I;
+    Node(Pos2D Pos2DInput) {
+        X_POS = Pos2DInput.X_POS;
+        Y_POS = Pos2DInput.Y_POS;
     }
 
     //returns X and Y pos
     public double[] GetPos() {
+        /*
         double returnV[] = new double[]{X_POS,Y_POS};
         return returnV;
+         */
     }
 }
