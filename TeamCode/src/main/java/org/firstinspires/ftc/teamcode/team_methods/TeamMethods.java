@@ -40,9 +40,11 @@ public abstract class TeamMethods extends OpMode {
         double divisor = Math.max(Math.abs(largest), Math.abs(smallest));
 
         V1 = 100*(V1/divisor);
-        V2 = 100*(V1/divisor);
-        V3 = 100*(V1/divisor);
-        V4 = 100*(V1/divisor);
+        V2 = 100*(V2/divisor);
+        V3 = 100*(V3/divisor);
+        V4 = 100*(V4/divisor);
+
+        double EncoderMax1 = inchToEncoder(0);
 
         if (teleOp == false) {
             while ( motor1.getCurrentPosition() < V1 ||
@@ -50,16 +52,16 @@ public abstract class TeamMethods extends OpMode {
                     motor3.getCurrentPosition() < V3 ||
                     motor4.getCurrentPosition() < V4 ||
                     robotGyro.getHeading() < newInputAngle) {
-                motor1.setPower(funcEncoderPercentagePower(motor1.getCurrentPosition(), V1));
-                motor2.setPower(funcEncoderPercentagePower(motor2.getCurrentPosition(), V2));
-                motor3.setPower(funcEncoderPercentagePower(motor3.getCurrentPosition(), V3));
-                motor4.setPower(funcEncoderPercentagePower(motor4.getCurrentPosition(), V4));
+                motor1.setPower(funcEncoderPercentagePower(motor1.getCurrentPosition(),0, V1));
+                motor2.setPower(funcEncoderPercentagePower(motor2.getCurrentPosition(),0, V2));
+                motor3.setPower(funcEncoderPercentagePower(motor3.getCurrentPosition(),0, V3));
+                motor4.setPower(funcEncoderPercentagePower(motor4.getCurrentPosition(),0, V4));
             }
         } else if (teleOp == true) {
-            motor1.setPower(funcEncoderPercentagePower(motor1.getCurrentPosition(), V1));
-            motor2.setPower(funcEncoderPercentagePower(motor2.getCurrentPosition(), V2));
-            motor3.setPower(funcEncoderPercentagePower(motor3.getCurrentPosition(), V3));
-            motor4.setPower(funcEncoderPercentagePower(motor4.getCurrentPosition(), V4));
+            motor1.setPower(V1);
+            motor2.setPower(V2);
+            motor3.setPower(V3);
+            motor4.setPower(V4);
         }
         telemetry.addData("Motors", "V1 (%.2f), V2 (%.2f), V3 (%.2f), V4 (%.2f)", V1, V2, V3, V4);
         motor1.setPower(0);
@@ -67,6 +69,11 @@ public abstract class TeamMethods extends OpMode {
         motor3.setPower(0);
         motor4.setPower(0);
     }
+    //IF undeclared teleop, assumes auto drive method
+    public void driveToPosition(double inputPosX, double inputPosY, double inputAngle) {
+        driveToPosition(inputPosX,inputPosY,inputAngle,false);
+    }
+
     //METHOD 1.1: basically different input of method driveToPosition, named differently for distinguishing.
     public void strafeToAngle(double angle, double distance, boolean teleOp) {
         double xpos = distance * Math.cos(angle);
@@ -78,7 +85,7 @@ public abstract class TeamMethods extends OpMode {
     public void turnToAngle(double angle, boolean teleOp) { driveToPosition(0,0,angle,teleOp); }
 
     //FUNCTION 1: handles power scaling as robot approaches near target
-    public double funcEncoderPercentagePower(double currentPosition, double encoderFinal) {
+    public double funcEncoderPercentagePower(double currentPosition, double encoderFinal, double maxPower) {
         int power = (int)(-100*(currentPosition/encoderFinal)+100);
         if (currentPosition>=encoderFinal){ power=0; }
         if (encoderFinal==0) { power = 0; }
@@ -94,6 +101,11 @@ public abstract class TeamMethods extends OpMode {
         double Yfinal = hypotnuse*Math.sin(angleDifference+angleTriangle);
         double returnValues[] = new double[]{Xfinal,Yfinal,angleDifference};
         return returnValues;
+    }
+
+    //FUNCTION 3:
+    public double inchToEncoder(double inchInput){
+        return 0;
     }
     
 }

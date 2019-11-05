@@ -1,10 +1,11 @@
 package org.firstinspires.ftc.teamcode.general_classes;
 
 public class Size2D {
-    Double X_POS;
-    Double Y_POS;
+    public double X_SIZE;
+    public double Y_SIZE;
+
     Size2D(double X,double Y){
-        X_POS = X;
-        Y_POS = Y;
+        X_SIZE = X;
+        Y_SIZE = Y;
     }
 }
