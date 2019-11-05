@@ -13,13 +13,11 @@ public class Node {
     Node(Pos2D Pos2DInput) {
         X_POS = Pos2DInput.X_POS;
         Y_POS = Pos2DInput.Y_POS;
+        Pos2D = Pos2DInput;
     }
 
     //returns X and Y pos
-    public double[] GetPos() {
-        /*
-        double returnV[] = new double[]{X_POS,Y_POS};
-        return returnV;
-         */
+    public Pos2D getPos2D() {
+        return Pos2D;
     }
 }

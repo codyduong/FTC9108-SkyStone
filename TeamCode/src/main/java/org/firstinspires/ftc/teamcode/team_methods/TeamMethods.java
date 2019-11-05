@@ -18,12 +18,11 @@ public abstract class TeamMethods extends OpMode {
     private final double Ydistance = 10.02;
     public double XYcombinedD = Xdistance + Ydistance;
 
-    private static final double     COUNTS_PER_MOTOR_REV    = 1440 ;    // eg: TETRIX Motor Encoder
-    private static final double     DRIVE_GEAR_REDUCTION    = 2.0 ;     // This is < 1.0 if geared UP
-    private static final double     WHEEL_DIAMETER_INCHES   = 4.0 ;     // For figuring circumference
+    private static final double     COUNTS_PER_MOTOR_REV    = 0 ;   // 5202 Series Yellow Jacket Planetary Gear Motor
+    private static final double     DRIVE_GEAR_REDUCTION    = 1.0 ;     // This is < 1.0 if geared UP
+    private static final double     WHEEL_DIAMETER_MM       = 100;      // goBilda metric wheels :v
+    private static final double     WHEEL_DIAMETER_INCHES   = WHEEL_DIAMETER_MM/25.4;
     private static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) / (WHEEL_DIAMETER_INCHES * 3.1415);
-    //private static final double     DRIVE_SPEED             = 0.6;
-    //private static final double     TURN_SPEED              = 0.5;
 
     //METHOD 1: self-explanatory
     public void driveToPosition(double inputPosX, double inputPosY, double inputAngle, boolean teleOp) {
@@ -104,7 +103,11 @@ public abstract class TeamMethods extends OpMode {
     }
 
     //FUNCTION 3:
-    public double inchToEncoder(double inchInput){
+    public double inchToEncoder(double inches){
+        return 0;
+    }
+
+    public double EncoderRatioAngle(double encoder, double Angle){
         return 0;
     }
     

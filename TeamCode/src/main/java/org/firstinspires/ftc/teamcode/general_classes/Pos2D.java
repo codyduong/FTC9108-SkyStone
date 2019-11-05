@@ -4,7 +4,7 @@ public class Pos2D {
     public double X_POS;
     public double Y_POS;
 
-    Pos2D(double X,double Y){
+    public Pos2D(double X,double Y){
         X_POS = X;
         Y_POS = Y;
     }
