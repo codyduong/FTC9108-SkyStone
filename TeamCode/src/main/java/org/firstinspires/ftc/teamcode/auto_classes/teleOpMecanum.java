@@ -1,12 +1,13 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.auto_classes;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.GyroSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
+import org.firstinspires.ftc.teamcode.team_methods.TeamMethods;
 
 @TeleOp(name="test", group="test") //fix this
-public class teleOpMecanum extends teamMethods {
+public class teleOpMecanum extends TeamMethods {
     private ElapsedTime runtime = new ElapsedTime();
 
     //these values should be determined based off hardware being used
