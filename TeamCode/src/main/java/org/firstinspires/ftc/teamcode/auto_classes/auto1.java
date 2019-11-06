@@ -55,32 +55,84 @@ public class auto1 extends TeamMethods {
     }
 
     int position;
+    int offset;
+    int averageColorFront;
+    int avarageColorBottom;
 
     //Initialized by: Start / runs once
     @Override
     public void start() {
+        offset = 0;
         position = 1;
+        avarageColorBottom = 0;
+        averageColorFront = 0;
         //Position 1 is building zone, and position 2 is loading zone.
         runtime.reset();
 
         if (position == 1) {
             //starting facing wall, and 42.25'' away from the other wall
+
             driveToPosition(0, -65.75, 0);
             driveToPosition(20, 0, 0);
             driveToPosition(0, 47.5, 0);
             driveToPosition(0, -47.5, 0);
             driveToPosition(-46.75, 0, 0);
             driveToPosition(0, -25, 0);
-            while (frontOds < averageColor) ;
+            while (frontOds < averageColorFront)
             {
                 driveToPosition(-1, 0, 0);
+                offset++;
             }
+
             // at this point, the robot will pick up the skystone
+
+            driveToPosition(offset,0,0);
+            driveToPosition(0,-43,0);
+            driveToPosition(26.75,0,0);
+            driveToPosition(0,68,0);
+            driveToPosition(20,0,0);
+            driveToPosition(0,0,180);
+
+            //At this point, the robot will place the stone in the foundation.
+
+            driveToPosition(0,0,180);
+            driveToPosition(-20,0,0);
+            driveToPosition(0,-68,0);
+            while(bottomOds < avarageColorBottom)
+            {
+                driveToPosition(-1,0,0);
+            }
 
             position = 3;
         }
         if (position == 2) {
+            //Starting at wall, facing away, and 50" away from other wall.
+            driveToPosition(0,29,0);
+            while (frontOds < averageColorFront)
+            {
+                driveToPosition(-1, 0, 0);
+                offset++;
+            }
 
+            //At this point, the robot will pick up the skystone.
+
+            driveToPosition(offset,0,0);
+            driveToPosition(0,-43,0);
+            driveToPosition(26.75,0,0);
+            driveToPosition(0,68,0);
+            driveToPosition(20,0,0);
+            driveToPosition(0,0,180);
+
+            //At this point, the robot will place the stone in the foundation.
+
+            driveToPosition(0,0,180);
+            driveToPosition(-20,0,0);
+            driveToPosition(0,-68,0);
+            while(bottomOds < avarageColorBottom)
+            {
+                driveToPosition(-1,0,0);
+            }
+            
             position = 3;
         }
 
