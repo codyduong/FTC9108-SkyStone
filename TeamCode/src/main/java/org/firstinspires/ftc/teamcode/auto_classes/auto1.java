@@ -4,8 +4,6 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.GyroSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
-
-import org.firstinspires.ftc.teamcode;
 import org.firstinspires.ftc.teamcode.team_methods.TeamMethods;
 
 @TeleOp(name="test2", group="test") //fix this
@@ -65,7 +63,7 @@ public class auto1 extends TeamMethods {
         //Position 1 is building zone, and position 2 is loading zone.
         runtime.reset();
 
-        if (position = 1) {
+        if (position == 1) {
             //starting facing wall, and 42.25'' away from the other wall
             driveToPosition(0, -65.75, 0);
             driveToPosition(20, 0, 0);
@@ -81,7 +79,7 @@ public class auto1 extends TeamMethods {
 
             position = 3;
         }
-        if (position = 2) {
+        if (position == 2) {
 
             position = 3;
         }
