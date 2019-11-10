@@ -4,7 +4,7 @@ public class Size2D {
     public double X_SIZE;
     public double Y_SIZE;
 
-    Size2D(double X,double Y){
+    public Size2D(double X,double Y){
         X_SIZE = X;
         Y_SIZE = Y;
     }
