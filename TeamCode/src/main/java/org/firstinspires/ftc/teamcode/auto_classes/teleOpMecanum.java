@@ -1,23 +1,26 @@
 package org.firstinspires.ftc.teamcode.auto_classes;
 
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.GyroSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.teamcode.team_methods.TeamMethods;
+import org.firstinspires.ftc.teamcode.general_classes.Position2DAngle;
+import org.firstinspires.ftc.teamcode.team_methods.DcMotorGroup;
 
 @TeleOp(name="test", group="test") //fix this
-public class teleOpMecanum extends TeamMethods {
-    private ElapsedTime runtime = new ElapsedTime();
+public class teleOpMecanum extends OpMode {
 
-    //these values should be determined based off hardware being used
-    /*
-    private static final double ticksPerRev = 1;
-    private static final double gearRatio = 1;
-    private static final double wheelDiameter = 1;
-    private static final double ticksPerInch = (ticksPerRev * gearRatio) / (wheelDiameter * 3.1415); //the math changes on mecanum. fix and find formula.
-    */
+    private DcMotor motor1;          //RDRIVEFRONT
+    private DcMotor motor2;          //LDRIVEFRONT
+    private DcMotor motor3;          //LDRIVEBACK
+    private DcMotor motor4;          //RDRIVEBACK
+    private DcMotor[] DcMotorArray = new DcMotor[]{motor1,motor2,motor3,motor4};
+    private DcMotorGroup MotorGroup = new DcMotorGroup(DcMotorArray);
+    private GyroSensor robotGyro;
+
+    private ElapsedTime runtime = new ElapsedTime();
 
     //Initialized by: Initialization Button (i think)
     public void init() {
@@ -68,20 +71,17 @@ public class teleOpMecanum extends TeamMethods {
         double drivex = -gamepad1.left_stick_y;
         double drivey = gamepad1.left_stick_x;
         double turn  =  gamepad1.right_stick_x;
-        double relativeValues[] = relativeValues(drivex,drivey,turn);
+        double relativeValues[] = MotorGroup.relativeValues(new Position2DAngle(drivex,drivey,turn), robotGyro);
         double xNew = relativeValues[1];
         double yNew = relativeValues[2];
         double angleNew = relativeValues[3];
-        driveToPosition(xNew,yNew,angleNew, true);
+        MotorGroup.driveToPositionAngle(new Position2DAngle(xNew,yNew,angleNew), true);
         telemetry.addData("Status", "Run Time: " + runtime.toString());
     }
 
     //Initialized by: Stop / runs once
     @Override
     public void stop() {
-        motor1.setPower(0);
-        motor2.setPower(0);
-        motor3.setPower(0);
-        motor4.setPower(0);
+        MotorGroup.setPower(new double[]{0,0,0,0});
     }
 }
