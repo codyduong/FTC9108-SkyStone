@@ -17,5 +17,5 @@ jobs:
       with:
         java-version: 1.8
     - name: Build with Gradle
-      run: ./chmod +x gradlew build
+      run: ./git update-index --chmod=+x gradlew ./git add . ./git commit -m "Changing permission of gradlew" ./git push
 
