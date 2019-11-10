@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.GyroSensor;
 
 import org.firstinspires.ftc.robotcore.external.navigation.Position;
+import org.firstinspires.ftc.teamcode.general_classes.Position2D;
 import org.firstinspires.ftc.teamcode.general_classes.Position2DAngle;
 
 public class DcMotorGroup {
@@ -76,8 +77,8 @@ public class DcMotorGroup {
 
     //METHOD 1.1: basically different input of method driveToPosition, named differently for distinguishing.
     public void strafeToAngle(Position2D Position, boolean teleOp) {
-        double xlength = Position.X;
-        double ylength = Position.Y;
+        double xlength = Position.X_POS;
+        double ylength = Position.Y_POS;
         driveToPositionAngle(new Position2DAngle(xlength,ylength,0), teleOp);
     }
     //METHOD 1.2: ditto
