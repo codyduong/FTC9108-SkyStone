@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.teamcode.pathfinding;
 
-import org.firstinspires.ftc.teamcode.general_classes.Pos2D;
+import org.firstinspires.ftc.teamcode.general_classes.Position2D;
 import org.firstinspires.ftc.teamcode.general_classes.Size2D;
 
 /* Obstacle
@@ -9,7 +9,7 @@ will "close" any nodes that its intersecting with.
  */
 public class Obstacle extends Node {
 
-    public Pos2D Pos2D;
+    public Position2D Pos2D;
     public double X_POS;
     public double Y_POS;
     public Size2D Size2D;
@@ -26,7 +26,7 @@ public class Obstacle extends Node {
         X_SIZE = Size2D.Y_SIZE;
     }
 
-    public Obstacle(Pos2D Pos2D_I, Size2D Size2D_I, double Rotation_I, boolean STATICITY_I) {
+    public Obstacle(Position2D Pos2D_I, Size2D Size2D_I, double Rotation_I, boolean STATICITY_I) {
         super(Pos2D_I);
         Pos2D = Pos2D_I;
         X_POS = Pos2D.X_POS;
