@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.team_methods;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.GyroSensor;
 
@@ -11,6 +12,8 @@ public abstract class TeamMethods extends OpMode {
     public DcMotor motor3 = null;   //LDRIVEBACK
     public DcMotor motor4 = null;   //RDRIVEBACK
     public GyroSensor robotGyro = null;
+    public ColorSensor bottomODS = null;
+    public ColorSensor frontODS = null;
 
     //X = a, Y = b
     //The distances are in inches

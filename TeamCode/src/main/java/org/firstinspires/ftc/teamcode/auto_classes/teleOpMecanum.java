@@ -11,7 +11,7 @@ import org.firstinspires.ftc.teamcode.team_methods.TeamMethods;
 @TeleOp(name="test", group="test") //fix this
 public class teleOpMecanum extends TeamMethods {
     private ElapsedTime runtime = new ElapsedTime();
-
+    ColorSensor color_sensor;
     //these values should be determined based off hardware being used
     /*
     private static final double ticksPerRev = 1;
@@ -32,6 +32,8 @@ public class teleOpMecanum extends TeamMethods {
         motor3 = hardwareMap.get(DcMotor.class, "right_drive_front");
         motor4 = hardwareMap.get(DcMotor.class, "right_drive_back");
         robotGyro = hardwareMap.get(GyroSensor.class,"gyrosensor");
+        frontODS = hardwareMap.colorSensor.get("color");
+        bottomODS = hardwareMap.colorSensor.get("color");
 
         // Most robots need the motor on one side to be reversed to drive forward
         // Reverse the motor that runs backwards when connected directly to the battery
@@ -75,6 +77,11 @@ public class teleOpMecanum extends TeamMethods {
         double angleNew = relativeValues[3];
         driveToPosition(xNew,yNew,angleNew, true);
         telemetry.addData("Status", "Run Time: " + runtime.toString());
+        color_sensor.red();
+        color_sensor.green();
+        color_sensor.blue();
+        color_sensor.alpha();
+        color_sensor.argb();
     }
 
     //Initialized by: Stop / runs once

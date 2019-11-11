@@ -10,7 +10,7 @@ import org.firstinspires.ftc.teamcode.team_methods.TeamMethods;
 @TeleOp(name="test2", group="test") //fix this
 public class auto1 extends TeamMethods {
     private ElapsedTime runtime = new ElapsedTime();
-
+    ColorSensor color_sensor;
     //these values should be determined based off hardware being used
     /*
     private static final double ticksPerRev = 1;
@@ -31,6 +31,8 @@ public class auto1 extends TeamMethods {
         motor3 = hardwareMap.get(DcMotor.class, "right_drive_front");
         motor4 = hardwareMap.get(DcMotor.class, "right_drive_back");
         robotGyro = hardwareMap.get(GyroSensor.class,"gyrosensor");
+        frontODS = hardwareMap.colorSensor.get("color");
+        bottomODS = hardwareMap.colorSensor.get("color");
 
         // Most robots need the motor on one side to be reversed to drive forward
         // Reverse the motor that runs backwards when connected directly to the battery
@@ -68,8 +70,6 @@ public class auto1 extends TeamMethods {
         offset = 0;
         avarageColorBottom = 0;
         averageColorFront = 0;
-        ColorSensor bottomOds = new ColorSensor();
-        ColorSensor frontOds = new ColorSensor();
         runtime.reset();
 
         if (position == 1) {
@@ -81,7 +81,7 @@ public class auto1 extends TeamMethods {
             driveToPosition(0, -47.5, 0);
             driveToPosition(-46.75, 0, 0);
             driveToPosition(0, -25, 0);
-            while (frontOds.argb() < averageColorFront)
+            while (frontODS.argb() < averageColorFront)
             {
                 driveToPosition(-1, 0, 0);
                 offset++;
@@ -101,7 +101,7 @@ public class auto1 extends TeamMethods {
             driveToPosition(0,0,180);
             driveToPosition(-20,0,0);
             driveToPosition(0,-68,0);
-            while(bottomOds.argb() < avarageColorBottom)
+            while(bottomODS.argb() < avarageColorBottom)
             {
                 driveToPosition(-1,0,0);
             }
@@ -111,7 +111,7 @@ public class auto1 extends TeamMethods {
         if (position == 2) {
             //Starting at wall, facing away, and 50" away from other wall.
             driveToPosition(0,29,0);
-            while (frontOds.argb() < averageColorFront)
+            while (frontODS.argb() < averageColorFront)
             {
                 driveToPosition(-1, 0, 0);
                 offset++;
@@ -131,7 +131,7 @@ public class auto1 extends TeamMethods {
             driveToPosition(0,0,180);
             driveToPosition(-20,0,0);
             driveToPosition(0,-68,0);
-            while(bottomOds.argb() < avarageColorBottom)
+            while(bottomODS.argb() < avarageColorBottom)
             {
                 driveToPosition(-1,0,0);
             }
