@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.auto_classes;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.GyroSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -54,19 +55,21 @@ public class auto1 extends TeamMethods {
         telemetry.addData("Status", "Initialized");
     }
 
-    int position;
+    int position = 1;
+    //Position 1 is building zone, and position 2 is loading zone.
     int offset;
     int averageColorFront;
     int avarageColorBottom;
+
 
     //Initialized by: Start / runs once
     @Override
     public void start() {
         offset = 0;
-        position = 1;
         avarageColorBottom = 0;
         averageColorFront = 0;
-        //Position 1 is building zone, and position 2 is loading zone.
+        ColorSensor bottomOds = new ColorSensor();
+        ColorSensor frontOds = new ColorSensor();
         runtime.reset();
 
         if (position == 1) {
@@ -78,7 +81,7 @@ public class auto1 extends TeamMethods {
             driveToPosition(0, -47.5, 0);
             driveToPosition(-46.75, 0, 0);
             driveToPosition(0, -25, 0);
-            while (frontOds < averageColorFront)
+            while (frontOds.argb() < averageColorFront)
             {
                 driveToPosition(-1, 0, 0);
                 offset++;
@@ -98,7 +101,7 @@ public class auto1 extends TeamMethods {
             driveToPosition(0,0,180);
             driveToPosition(-20,0,0);
             driveToPosition(0,-68,0);
-            while(bottomOds < avarageColorBottom)
+            while(bottomOds.argb() < avarageColorBottom)
             {
                 driveToPosition(-1,0,0);
             }
@@ -108,7 +111,7 @@ public class auto1 extends TeamMethods {
         if (position == 2) {
             //Starting at wall, facing away, and 50" away from other wall.
             driveToPosition(0,29,0);
-            while (frontOds < averageColorFront)
+            while (frontOds.argb() < averageColorFront)
             {
                 driveToPosition(-1, 0, 0);
                 offset++;
@@ -128,7 +131,7 @@ public class auto1 extends TeamMethods {
             driveToPosition(0,0,180);
             driveToPosition(-20,0,0);
             driveToPosition(0,-68,0);
-            while(bottomOds < avarageColorBottom)
+            while(bottomOds.argb() < avarageColorBottom)
             {
                 driveToPosition(-1,0,0);
             }
