@@ -99,14 +99,13 @@ public class DcMotorGroup {
     }
 
     //FUNCTION 2: lots of trig going on, so have fun trying to figure it out
-    public double[] relativeValues(Position2DAngle PosAngle, GyroSensor robotGyro) {
-        double angleDifference = robotGyro.getHeading() - PosAngle.ANGLE; //self explanatory
-        double angleTriangle = Math.atan(PosAngle.Y/PosAngle.X); //angle of side closest to robot, is added to to get hypotnuse point
-        double hypotnuse = Math.sqrt(Math.pow(PosAngle.X,2)+Math.pow(PosAngle.Y,2)); //multiplier to scale cos and sin, keeps values right
-        double Xfinal = hypotnuse*Math.cos(angleDifference+angleTriangle);
-        double Yfinal = hypotnuse*Math.sin(angleDifference+angleTriangle);
-        double returnValues[] = new double[]{Xfinal,Yfinal,angleDifference};
-        return returnValues;
+    public Position2DAngle relativeValues(Position2DAngle PosAngle, GyroSensor robotGyro) {
+        double THETA_triangle = Math.atan(PosAngle.Y/PosAngle.X);
+        double THETA_relative = (-robotGyro.getHeading()) + THETA_triangle + PosAngle.ANGLE;
+        double L_hypotnuse = PosAngle.getMagnitude();
+        double X_New = L_hypotnuse * Math.cos(THETA_relative);
+        double Y_New = L_hypotnuse * Math.sin(THETA_relative);
+        return new Position2DAngle(X_New,Y_New,THETA_relative);
     }
 
     //FUNCTION 3:
