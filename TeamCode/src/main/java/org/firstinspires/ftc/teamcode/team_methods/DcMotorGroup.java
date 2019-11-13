@@ -93,6 +93,7 @@ public class DcMotorGroup {
         }
 
     }
+
     //IF undeclared teleop, assumes auto drive method
     public void driveToPositionAngle(Position2DAngle PositionAngle) {
         driveToPositionAngle(PositionAngle,false);
@@ -104,6 +105,7 @@ public class DcMotorGroup {
         double ylength = Position.Y_POS;
         driveToPositionAngle(new Position2DAngle(xlength,ylength,0), teleOp);
     }
+
     //METHOD 1.2: ditto
     public void turnToAngle(double angle, boolean teleOp) {
         driveToPositionAngle(new Position2DAngle(0,0,angle), teleOp);
@@ -113,6 +115,7 @@ public class DcMotorGroup {
     public void driveToPosition(double X, double Y, double Angle) {
         driveToPositionAngle(new Position2DAngle(X,Y,Angle),false);
     }
+
     //FUNCTION 1: handles power scaling as robot approaches near target
     public double funcEncoderPercentagePower(double currentPosition, double encoderFinal, double maxPower) {
         int power = (int)(-100*(currentPosition/encoderFinal)+100);
@@ -123,7 +126,18 @@ public class DcMotorGroup {
 
     //FUNCTION 2: lots of trig going on, so have fun trying to figure it out
     public Position2DAngle relativeValues(Position2DAngle PosAngle, GyroSensor robotGyro) {
-        double THETA_triangle = Math.atan(PosAngle.Y/PosAngle.X);
+        double THETA_triangle;
+        if (PosAngle.X==0) {
+            /* The inclusion of 0 as part of the relative operator was deemed unnecessary
+             Since the final calculation would suss that out*/
+            if (PosAngle.Y > 1) {
+                THETA_triangle = 90;
+            } else {
+                THETA_triangle = -90;
+            }
+        } else {
+            THETA_triangle = Math.atan(PosAngle.Y/PosAngle.X);
+        }
         double THETA_relative = (-robotGyro.getHeading()) + THETA_triangle + PosAngle.ANGLE;
         double L_hypotnuse = PosAngle.getMagnitude();
         double X_New = L_hypotnuse * Math.cos(THETA_relative);
@@ -140,4 +154,5 @@ public class DcMotorGroup {
     public double EncoderRatioAngle(double encoder, double Angle){
         return 0;
     }
+
 }
