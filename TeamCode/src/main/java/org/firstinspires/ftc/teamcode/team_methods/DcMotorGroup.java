@@ -2,8 +2,9 @@ package org.firstinspires.ftc.teamcode.team_methods;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.GyroSensor;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 
-import org.firstinspires.ftc.robotcore.external.navigation.Position;
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.general_classes.Position2D;
 import org.firstinspires.ftc.teamcode.general_classes.Position2DAngle;
 
@@ -34,6 +35,28 @@ public class DcMotorGroup {
     }
 
     //METHOD 1: self-explanatory
+    public void initialization(HardwareMap Hmap, Telemetry Tm) {
+        this.DcMotors[0] = Hmap.get(DcMotor.class, "left_drive_front");
+        this.DcMotors[1] = Hmap.get(DcMotor.class, "left_drive_back");
+        this.DcMotors[2] = Hmap.get(DcMotor.class, "right_drive_front");
+        this.DcMotors[3] = Hmap.get(DcMotor.class, "right_drive_back");
+        this.DcMotors[0].setDirection(DcMotor.Direction.FORWARD);
+        this.DcMotors[1].setDirection(DcMotor.Direction.FORWARD);
+        this.DcMotors[2].setDirection(DcMotor.Direction.REVERSE);
+        this.DcMotors[3].setDirection(DcMotor.Direction.REVERSE);
+        Tm.addData("Encoders","Resetting");
+        this.DcMotors[0].setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        this.DcMotors[1].setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        this.DcMotors[2].setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        this.DcMotors[3].setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        this.DcMotors[0].setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        this.DcMotors[1].setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        this.DcMotors[2].setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        this.DcMotors[3].setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        Tm.addData("DcMotorGroup Initialization","Complete");
+        Tm.update();
+    }
+
     public void driveToPositionAngle(Position2DAngle PositionAngle, boolean teleOp) {
 
         //X = a, Y = b
