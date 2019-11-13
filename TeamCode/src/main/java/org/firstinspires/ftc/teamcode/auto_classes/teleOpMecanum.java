@@ -12,10 +12,6 @@ import org.firstinspires.ftc.teamcode.team_methods.DcMotorGroup;
 @TeleOp(name="test", group="test") //fix this
 public class teleOpMecanum extends OpMode {
 
-    private DcMotor motor1;          //RDRIVEFRONT
-    private DcMotor motor2;          //LDRIVEFRONT
-    private DcMotor motor3;          //LDRIVEBACK
-    private DcMotor motor4;          //RDRIVEBACK
     private DcMotorGroup MotorGroup;
     private GyroSensor robotGyro;
 
