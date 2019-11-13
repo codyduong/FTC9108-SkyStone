@@ -20,6 +20,7 @@ public class teleOpMecanum extends OpMode {
     //Initialized by: Initialization Button (i think)
     public void init() {
         telemetry.addData("Status", "Initializing");
+
         MotorGroup.initialization(hardwareMap,telemetry);
         robotGyro = hardwareMap.get(GyroSensor.class,"gyrosensor");
         robotGyro.calibrate();
@@ -40,11 +41,8 @@ public class teleOpMecanum extends OpMode {
         double drivex = -gamepad1.left_stick_y;
         double drivey = gamepad1.left_stick_x;
         double turn  =  gamepad1.right_stick_x;
-        double relativeValues[] = MotorGroup.relativeValues(new Position2DAngle(drivex,drivey,turn), robotGyro);
-        double xNew = relativeValues[1];
-        double yNew = relativeValues[2];
-        double angleNew = relativeValues[3];
-        MotorGroup.driveToPositionAngle(new Position2DAngle(xNew,yNew,angleNew), true);
+        Position2DAngle relativeValues = MotorGroup.relativeValues(new Position2DAngle(drivex,drivey,turn), robotGyro);
+        MotorGroup.driveToPositionAngle(relativeValues, true);
         telemetry.addData("Status", "Run Time: " + runtime.toString());
     }
 
