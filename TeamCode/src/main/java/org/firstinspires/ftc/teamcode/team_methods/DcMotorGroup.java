@@ -36,9 +36,9 @@ public class DcMotorGroup {
 
     //METHOD 1: self-explanatory
     public void initialization(HardwareMap Hmap, Telemetry Tm) {
-        this.DcMotors[0] = Hmap.get(DcMotor.class, "left_drive_front");
-        this.DcMotors[1] = Hmap.get(DcMotor.class, "left_drive_back");
-        this.DcMotors[2] = Hmap.get(DcMotor.class, "right_drive_front");
+        this.DcMotors[0] = Hmap.get(DcMotor.class, "right_drive_front");
+        this.DcMotors[1] = Hmap.get(DcMotor.class, "left_drive_front");
+        this.DcMotors[2] = Hmap.get(DcMotor.class, "left_drive_back");
         this.DcMotors[3] = Hmap.get(DcMotor.class, "right_drive_back");
         this.DcMotors[0].setDirection(DcMotor.Direction.FORWARD);
         this.DcMotors[1].setDirection(DcMotor.Direction.FORWARD);
