@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.auto_classes;
 
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -8,7 +9,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.team_methods.TeamMethods;
 
-@TeleOp(name="test", group="test") //fix this
+@Autonomous(name="MecanumMethods-Auto", group="test") //fix this
 public class teleOpMecanum extends TeamMethods {
     private ElapsedTime runtime = new ElapsedTime();
     ColorSensor color_sensor;
