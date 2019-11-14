@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.team_methods.TeamMethods;
 
-@Autonomous(name="MecanumMethods-Auto", group="test") //fix this
+@TeleOp(name="MecanumDrive", group="test") //fix this
 public class teleOpMecanum extends TeamMethods {
     private ElapsedTime runtime = new ElapsedTime();
     ColorSensor color_sensor;
@@ -78,11 +78,6 @@ public class teleOpMecanum extends TeamMethods {
         double angleNew = relativeValues[3];
         driveToPosition(xNew,yNew,angleNew, true);
         telemetry.addData("Status", "Run Time: " + runtime.toString());
-        color_sensor.red();
-        color_sensor.green();
-        color_sensor.blue();
-        color_sensor.alpha();
-        color_sensor.argb();
     }
 
     //Initialized by: Stop / runs once
