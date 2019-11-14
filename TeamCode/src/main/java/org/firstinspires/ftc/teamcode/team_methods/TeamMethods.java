@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.team_methods;
 
+import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -14,6 +15,7 @@ public abstract class TeamMethods extends OpMode {
     public GyroSensor robotGyro = null;
     public ColorSensor bottomODS = null;
     public ColorSensor frontODS = null;
+    public BNO055IMU imu =null;
 
     //X = a, Y = b
     //The distances are in inches

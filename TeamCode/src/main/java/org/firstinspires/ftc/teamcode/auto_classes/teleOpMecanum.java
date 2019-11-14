@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.auto_classes;
 
+import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.ColorSensor;
@@ -32,7 +33,12 @@ public class teleOpMecanum extends TeamMethods {
         motor2 = hardwareMap.get(DcMotor.class, "left_drive_back");
         motor3 = hardwareMap.get(DcMotor.class, "right_drive_front");
         motor4 = hardwareMap.get(DcMotor.class, "right_drive_back");
-        robotGyro = hardwareMap.get(GyroSensor.class,"gyrosensor");
+        BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
+
+        parameters.mode = BNO055IMU.SensorMode.IMU;
+        parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
+        parameters.accelUnit = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
+        parameters.loggingEnabled = false;
         frontODS = hardwareMap.colorSensor.get("color");
         bottomODS = hardwareMap.colorSensor.get("color");
 
