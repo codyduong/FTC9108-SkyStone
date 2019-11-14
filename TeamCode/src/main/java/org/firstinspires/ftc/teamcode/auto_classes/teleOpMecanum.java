@@ -33,14 +33,10 @@ public class teleOpMecanum extends TeamMethods {
         motor2 = hardwareMap.get(DcMotor.class, "left_drive_back");
         motor3 = hardwareMap.get(DcMotor.class, "right_drive_front");
         motor4 = hardwareMap.get(DcMotor.class, "right_drive_back");
-        BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
-
-        parameters.mode = BNO055IMU.SensorMode.IMU;
-        parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
-        parameters.accelUnit = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
-        parameters.loggingEnabled = false;
+        robotGyro = hardwareMap.get(GyroSensor.class,"gyrosensor");
         frontODS = hardwareMap.colorSensor.get("color");
         bottomODS = hardwareMap.colorSensor.get("color");
+        imu = hardwareMap.get(BNO055IMU.class, "imu");
 
         // Most robots need the motor on one side to be reversed to drive forward
         // Reverse the motor that runs backwards when connected directly to the battery

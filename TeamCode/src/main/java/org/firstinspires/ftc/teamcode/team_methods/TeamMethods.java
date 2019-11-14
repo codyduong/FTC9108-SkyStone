@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.GyroSensor;
 
+
 public abstract class TeamMethods extends OpMode {
 
     public DcMotor motor1 = null;   //RDRIVEFRONT
@@ -15,7 +16,14 @@ public abstract class TeamMethods extends OpMode {
     public GyroSensor robotGyro = null;
     public ColorSensor bottomODS = null;
     public ColorSensor frontODS = null;
-    public BNO055IMU imu =null;
+    public BNO055IMU imu = null;
+
+    BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
+
+    parameters.mode = BNO055IMU.SensorMode.IMU;
+    parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
+    parameters.accelUnit = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
+    parameters.loggingEnabled = false;
 
     //X = a, Y = b
     //The distances are in inches
