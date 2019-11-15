@@ -2,8 +2,9 @@ package org.firstinspires.ftc.teamcode.team_methods;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.GyroSensor;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 
-import org.firstinspires.ftc.robotcore.external.navigation.Position;
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.general_classes.Position2D;
 import org.firstinspires.ftc.teamcode.general_classes.Position2DAngle;
 
@@ -21,7 +22,7 @@ public class DcMotorGroup {
     private static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) / (WHEEL_DIAMETER_INCHES * 3.1415);
 
     //Constructor
-    DcMotorGroup(DcMotor[] DcMotorArray) {
+    public DcMotorGroup(DcMotor[] DcMotorArray) {
         DcMotors = DcMotorArray;
         DcMotorCount = DcMotorArray.length;
     }
@@ -34,6 +35,28 @@ public class DcMotorGroup {
     }
 
     //METHOD 1: self-explanatory
+    public void initialization(HardwareMap Hmap, Telemetry Tm) {
+        this.DcMotors[0] = Hmap.get(DcMotor.class, "right_drive_front");
+        this.DcMotors[1] = Hmap.get(DcMotor.class, "left_drive_front");
+        this.DcMotors[2] = Hmap.get(DcMotor.class, "left_drive_back");
+        this.DcMotors[3] = Hmap.get(DcMotor.class, "right_drive_back");
+        this.DcMotors[0].setDirection(DcMotor.Direction.FORWARD);
+        this.DcMotors[1].setDirection(DcMotor.Direction.FORWARD);
+        this.DcMotors[2].setDirection(DcMotor.Direction.REVERSE);
+        this.DcMotors[3].setDirection(DcMotor.Direction.REVERSE);
+        Tm.addData("Encoders","Resetting");
+        this.DcMotors[0].setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        this.DcMotors[1].setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        this.DcMotors[2].setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        this.DcMotors[3].setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        this.DcMotors[0].setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        this.DcMotors[1].setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        this.DcMotors[2].setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        this.DcMotors[3].setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        Tm.addData("DcMotorGroup Initialization","Complete");
+        Tm.update();
+    }
+
     public void driveToPositionAngle(Position2DAngle PositionAngle, boolean teleOp) {
 
         //X = a, Y = b
@@ -70,6 +93,7 @@ public class DcMotorGroup {
         }
 
     }
+
     //IF undeclared teleop, assumes auto drive method
     public void driveToPositionAngle(Position2DAngle PositionAngle) {
         driveToPositionAngle(PositionAngle,false);
@@ -81,6 +105,7 @@ public class DcMotorGroup {
         double ylength = Position.Y_POS;
         driveToPositionAngle(new Position2DAngle(xlength,ylength,0), teleOp);
     }
+
     //METHOD 1.2: ditto
     public void turnToAngle(double angle, boolean teleOp) {
         driveToPositionAngle(new Position2DAngle(0,0,angle), teleOp);
@@ -90,6 +115,7 @@ public class DcMotorGroup {
     public void driveToPosition(double X, double Y, double Angle) {
         driveToPositionAngle(new Position2DAngle(X,Y,Angle),false);
     }
+
     //FUNCTION 1: handles power scaling as robot approaches near target
     public double funcEncoderPercentagePower(double currentPosition, double encoderFinal, double maxPower) {
         int power = (int)(-100*(currentPosition/encoderFinal)+100);
@@ -99,14 +125,24 @@ public class DcMotorGroup {
     }
 
     //FUNCTION 2: lots of trig going on, so have fun trying to figure it out
-    public double[] relativeValues(Position2DAngle PosAngle, GyroSensor robotGyro) {
-        double angleDifference = robotGyro.getHeading() - PosAngle.ANGLE; //self explanatory
-        double angleTriangle = Math.atan(PosAngle.Y/PosAngle.X); //angle of side closest to robot, is added to to get hypotnuse point
-        double hypotnuse = Math.sqrt(Math.pow(PosAngle.X,2)+Math.pow(PosAngle.Y,2)); //multiplier to scale cos and sin, keeps values right
-        double Xfinal = hypotnuse*Math.cos(angleDifference+angleTriangle);
-        double Yfinal = hypotnuse*Math.sin(angleDifference+angleTriangle);
-        double returnValues[] = new double[]{Xfinal,Yfinal,angleDifference};
-        return returnValues;
+    public Position2DAngle relativeValues(Position2DAngle PosAngle, GyroSensor robotGyro) {
+        double THETA_triangle;
+        if (PosAngle.X==0) {
+            /* The inclusion of 0 as part of the relative operator was deemed unnecessary
+             Since the final calculation would suss that out*/
+            if (PosAngle.Y > 1) {
+                THETA_triangle = 90;
+            } else {
+                THETA_triangle = -90;
+            }
+        } else {
+            THETA_triangle = Math.atan(PosAngle.Y/PosAngle.X);
+        }
+        double THETA_relative = (-robotGyro.getHeading()) + THETA_triangle + PosAngle.ANGLE;
+        double L_hypotnuse = PosAngle.getMagnitude();
+        double X_New = L_hypotnuse * Math.cos(THETA_relative);
+        double Y_New = L_hypotnuse * Math.sin(THETA_relative);
+        return new Position2DAngle(X_New,Y_New,THETA_relative);
     }
 
     //FUNCTION 3:
@@ -118,4 +154,5 @@ public class DcMotorGroup {
     public double EncoderRatioAngle(double encoder, double Angle){
         return 0;
     }
+
 }
