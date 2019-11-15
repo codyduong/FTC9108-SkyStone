@@ -1,9 +1,7 @@
-9108-VX.X (D November 20XX)
+9108-VX.X (X November 20XX)
 
 Changes
-
 -
 
 Fixed Issues:
-
 -
