@@ -10,7 +10,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.team_methods.TeamMethods;
 
-@TeleOp(name="MecanumDrive", group="test") //fix this
+@TeleOp(name="MecanumDrive2", group="test") //fix this
 public class teleOpMecanum extends TeamMethods {
     private ElapsedTime runtime = new ElapsedTime();
     ColorSensor color_sensor;
@@ -33,9 +33,8 @@ public class teleOpMecanum extends TeamMethods {
         motor2 = hardwareMap.get(DcMotor.class, "left_drive_back");
         motor3 = hardwareMap.get(DcMotor.class, "right_drive_front");
         motor4 = hardwareMap.get(DcMotor.class, "right_drive_back");
-        robotGyro = hardwareMap.get(GyroSensor.class,"gyrosensor");
-        frontODS = hardwareMap.colorSensor.get("color");
-        bottomODS = hardwareMap.colorSensor.get("color");
+        frontODS = hardwareMap.colorSensor.get("front_color");
+        bottomODS = hardwareMap.colorSensor.get("bottom_color");
         imu = hardwareMap.get(BNO055IMU.class, "imu");
 
         // Most robots need the motor on one side to be reversed to drive forward
@@ -50,7 +49,7 @@ public class teleOpMecanum extends TeamMethods {
         motor2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         motor3.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         motor4.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        robotGyro.calibrate();
+
 
         motor1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         motor2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
