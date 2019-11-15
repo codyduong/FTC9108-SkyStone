@@ -1,16 +1,19 @@
 package org.firstinspires.ftc.teamcode.auto_classes;
 
+import com.qualcomm.hardware.bosch.BNO055IMU;
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.GyroSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.team_methods.TeamMethods;
 
-@TeleOp(name="test", group="test") //fix this
+@TeleOp(name="MecanumDrive", group="test") //fix this
 public class teleOpMecanum extends TeamMethods {
     private ElapsedTime runtime = new ElapsedTime();
-
+    ColorSensor color_sensor;
     //these values should be determined based off hardware being used
     /*
     private static final double ticksPerRev = 1;
@@ -31,6 +34,9 @@ public class teleOpMecanum extends TeamMethods {
         motor3 = hardwareMap.get(DcMotor.class, "right_drive_front");
         motor4 = hardwareMap.get(DcMotor.class, "right_drive_back");
         robotGyro = hardwareMap.get(GyroSensor.class,"gyrosensor");
+        frontODS = hardwareMap.colorSensor.get("color");
+        bottomODS = hardwareMap.colorSensor.get("color");
+        imu = hardwareMap.get(BNO055IMU.class, "imu");
 
         // Most robots need the motor on one side to be reversed to drive forward
         // Reverse the motor that runs backwards when connected directly to the battery
