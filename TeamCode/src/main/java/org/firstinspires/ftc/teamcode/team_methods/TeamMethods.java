@@ -156,5 +156,4 @@ public abstract class TeamMethods extends OpMode {
     public double EncoderRatioAngle(double encoder, double Angle){
         return 0;
     }
-
 }
