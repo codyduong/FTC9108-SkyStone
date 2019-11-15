@@ -10,7 +10,7 @@ public class Node {
     public double X_POS;
     public double Y_POS;
 
-    Node(Position2D Pos2D_I) {
+    public Node(Position2D Pos2D_I) {
         Pos2D = Pos2D_I;
         X_POS = Pos2D.X_POS;
         Y_POS = Pos2D.Y_POS;
