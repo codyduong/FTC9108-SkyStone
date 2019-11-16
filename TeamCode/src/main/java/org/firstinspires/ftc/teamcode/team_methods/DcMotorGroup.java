@@ -1,10 +1,12 @@
 package org.firstinspires.ftc.teamcode.team_methods;
 
+import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.GyroSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.robotcore.external.navigation.Position;
 import org.firstinspires.ftc.teamcode.general_classes.Position2D;
 import org.firstinspires.ftc.teamcode.general_classes.Position2DAngle;
 
@@ -35,7 +37,7 @@ public class DcMotorGroup {
     }
 
     //METHOD 1: self-explanatory
-    public void initialization(HardwareMap Hmap, Telemetry Tm) {
+    public void initialize(HardwareMap Hmap, Telemetry Tm) {
         this.DcMotors[0] = Hmap.get(DcMotor.class, "right_drive_front");
         this.DcMotors[1] = Hmap.get(DcMotor.class, "left_drive_front");
         this.DcMotors[2] = Hmap.get(DcMotor.class, "left_drive_back");
@@ -125,7 +127,7 @@ public class DcMotorGroup {
     }
 
     //FUNCTION 2: lots of trig going on, so have fun trying to figure it out
-    public Position2DAngle relativeValues(Position2DAngle PosAngle, GyroSensor robotGyro) {
+    public Position2DAngle relativeValues(Position2DAngle PosAngle, BNOIMU IMU) {
         double THETA_triangle;
         if (PosAngle.X==0) {
             /* The inclusion of 0 as part of the relative operator was deemed unnecessary
@@ -138,7 +140,7 @@ public class DcMotorGroup {
         } else {
             THETA_triangle = Math.atan(PosAngle.Y/PosAngle.X);
         }
-        double THETA_relative = (-robotGyro.getHeading()) + THETA_triangle + PosAngle.ANGLE;
+        double THETA_relative = (-IMU.getAngle()) + THETA_triangle + PosAngle.ANGLE;
         double L_hypotnuse = PosAngle.getMagnitude();
         double X_New = L_hypotnuse * Math.cos(THETA_relative);
         double Y_New = L_hypotnuse * Math.sin(THETA_relative);
