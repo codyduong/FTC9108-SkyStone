@@ -2,13 +2,15 @@ package org.firstinspires.ftc.teamcode.auto_classes;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.GyroSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.teamcode.team_methods.TeamMethods;
+import org.firstinspires.ftc.teamcode.general_classes.Position2DAngle;
+import org.firstinspires.ftc.teamcode.team_methods.DcMotorGroup;
 
 @TeleOp(name="MecanumDrive2", group="test") //fix this
 public class teleOpMecanum extends TeamMethods {
@@ -21,6 +23,14 @@ public class teleOpMecanum extends TeamMethods {
     private static final double wheelDiameter = 1;
     private static final double ticksPerInch = (ticksPerRev * gearRatio) / (wheelDiameter * 3.1415); //the math changes on mecanum. fix and find formula.
     */
+
+@TeleOp(name="test", group="test") //fix this
+public class teleOpMecanum extends OpMode {
+
+    private DcMotorGroup MotorGroup;
+    private GyroSensor robotGyro;
+
+    private ElapsedTime runtime = new ElapsedTime();
 
     //Initialized by: Initialization Button (i think)
     public void init() {
@@ -51,12 +61,11 @@ public class teleOpMecanum extends TeamMethods {
         motor4.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
 
-        motor1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        motor2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        motor3.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        motor4.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        MotorGroup.initialization(hardwareMap,telemetry);
+        robotGyro = hardwareMap.get(GyroSensor.class,"gyrosensor");
+        robotGyro.calibrate();
 
-        // Tell the driver that initialization is complete.
+
         telemetry.addData("Status", "Initialized");
     }
 
@@ -73,20 +82,14 @@ public class teleOpMecanum extends TeamMethods {
         double drivex = -gamepad1.left_stick_y;
         double drivey = gamepad1.left_stick_x;
         double turn  =  gamepad1.right_stick_x;
-        double relativeValues[] = relativeValues(drivex,drivey,turn);
-        double xNew = relativeValues[1];
-        double yNew = relativeValues[2];
-        double angleNew = relativeValues[3];
-        driveToPosition(xNew,yNew,angleNew, true);
+        Position2DAngle relativeValues = MotorGroup.relativeValues(new Position2DAngle(drivex,drivey,turn), robotGyro);
+        MotorGroup.driveToPositionAngle(relativeValues, true);
         telemetry.addData("Status", "Run Time: " + runtime.toString());
     }
 
     //Initialized by: Stop / runs once
     @Override
     public void stop() {
-        motor1.setPower(0);
-        motor2.setPower(0);
-        motor3.setPower(0);
-        motor4.setPower(0);
+        MotorGroup.setPower(new double[]{0,0,0,0});
     }
 }

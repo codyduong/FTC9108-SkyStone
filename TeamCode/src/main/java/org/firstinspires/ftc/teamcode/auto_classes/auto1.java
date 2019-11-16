@@ -2,15 +2,18 @@ package org.firstinspires.ftc.teamcode.auto_classes;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.GyroSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
-import org.firstinspires.ftc.teamcode.team_methods.TeamMethods;
+
+import org.firstinspires.ftc.teamcode.team_methods.DcMotorGroup;
+
 
 @Autonomous(name="Auto2", group="test") //fix this
-public class auto1 extends TeamMethods {
+public class auto1 extends OpMode {
     private ElapsedTime runtime = new ElapsedTime();
     //these values should be determined based off hardware being used
     /*
@@ -19,6 +22,18 @@ public class auto1 extends TeamMethods {
     private static final double wheelDiameter = 1;
     private static final double ticksPerInch = (ticksPerRev * gearRatio) / (wheelDiameter * 3.1415); //the math changes on mecanum. fix and find formula.
     */
+@TeleOp(name="test2", group="test") //fix this
+public class auto1 extends OpMode {
+
+    private DcMotor motor1;          //RDRIVEFRONT
+    private DcMotor motor2;          //LDRIVEFRONT
+    private DcMotor motor3;          //LDRIVEBACK
+    private DcMotor motor4;          //RDRIVEBACK
+    private DcMotor[] DcMotorArray = new DcMotor[]{motor1,motor2,motor3,motor4};
+    private DcMotorGroup MotorGroup = new DcMotorGroup(DcMotorArray);
+    private GyroSensor robotGyro;
+    imu = hardwareMap.get(BNO055IMU.class, "imu");
+    private ElapsedTime runtime = new ElapsedTime();
 
     //Initialized by: Initialization Button (i think)
     public void init() {
@@ -33,7 +48,7 @@ public class auto1 extends TeamMethods {
         motor4 = hardwareMap.get(DcMotor.class, "right_drive_back");
         //frontODS = hardwareMap.colorSensor.get("bottom_color");
         //bottomODS = hardwareMap.colorSensor.get("front_color");
-        imu = hardwareMap.get(BNO055IMU.class, "imu");
+
 
         // Most robots need the motor on one side to be reversed to drive forward
         // Reverse the motor that runs backwards when connected directly to the battery
@@ -83,58 +98,85 @@ public class auto1 extends TeamMethods {
             driveToPosition(-46.75, 0, 0);
             driveToPosition(0, -25, 0);
             while (frontODS.argb() < averageColorFront)
+
+            MotorGroup.driveToPosition(0, -65.75, 0);
+            MotorGroup.driveToPosition(20, 0, 0);
+            MotorGroup.driveToPosition(0, 47.5, 0);
+            MotorGroup.driveToPosition(0, -47.5, 0);
+            MotorGroup.driveToPosition(-46.75, 0, 0);
+            MotorGroup.driveToPosition(0, -25, 0);
+            while (frontOds < averageColorFront)
             {
-                driveToPosition(-1, 0, 0);
+                MotorGroup.driveToPosition(-1, 0, 0);
                 offset++;
             }
 
             // at this point, the robot will pick up the skystone
 
-            driveToPosition(offset,0,0);
-            driveToPosition(0,-43,0);
-            driveToPosition(26.75,0,0);
-            driveToPosition(0,68,0);
-            driveToPosition(20,0,0);
-            driveToPosition(0,0,180);
+            MotorGroup.driveToPosition(offset,0,0);
+            MotorGroup.driveToPosition(0,-43,0);
+            MotorGroup.driveToPosition(26.75,0,0);
+            MotorGroup.driveToPosition(0,68,0);
+            MotorGroup.driveToPosition(20,0,0);
+            MotorGroup.driveToPosition(0,0,180);
 
             //At this point, the robot will place the stone in the foundation.
+
 
             driveToPosition(0,0,180);
             driveToPosition(-20,0,0);
             driveToPosition(0,-68,0);
             while(bottomODS.argb() < avarageColorBottom)
+
+            MotorGroup.driveToPosition(0,0,180);
+            MotorGroup.driveToPosition(-20,0,0);
+            MotorGroup.driveToPosition(0,-68,0);
+            while(bottomOds < avarageColorBottom)
+
             {
-                driveToPosition(-1,0,0);
+                MotorGroup.driveToPosition(-1,0,0);
             }
 
             position = 3;
         }
         if (position == 2) {
             //Starting at wall, facing away, and 50" away from other wall.
+
             driveToPosition(0,29,0);
             while (frontODS.argb() < averageColorFront)
+
+            MotorGroup.driveToPosition(0,29,0);
+            while (frontOds < averageColorFront)
+
             {
-                driveToPosition(-1, 0, 0);
+                MotorGroup.driveToPosition(-1, 0, 0);
                 offset++;
             }
 
             //At this point, the robot will pick up the skystone.
 
-            driveToPosition(offset,0,0);
-            driveToPosition(0,-43,0);
-            driveToPosition(26.75,0,0);
-            driveToPosition(0,68,0);
-            driveToPosition(20,0,0);
-            driveToPosition(0,0,180);
+            MotorGroup.driveToPosition(offset,0,0);
+            MotorGroup.driveToPosition(0,-43,0);
+            MotorGroup.driveToPosition(26.75,0,0);
+            MotorGroup.driveToPosition(0,68,0);
+            MotorGroup.driveToPosition(20,0,0);
+            MotorGroup.driveToPosition(0,0,180);
 
             //At this point, the robot will place the stone in the foundation.
+
 
             driveToPosition(0,0,180);
             driveToPosition(-20,0,0);
             driveToPosition(0,-68,0);
             while(bottomODS.argb() < avarageColorBottom)
+
+            MotorGroup.driveToPosition(0,0,180);
+            MotorGroup.driveToPosition(-20,0,0);
+            MotorGroup.driveToPosition(0,-68,0);
+            while(bottomOds < avarageColorBottom)
+
             {
-                driveToPosition(-1,0,0);
+                MotorGroup.driveToPosition(-1,0,0);
             }
             
             position = 3;
