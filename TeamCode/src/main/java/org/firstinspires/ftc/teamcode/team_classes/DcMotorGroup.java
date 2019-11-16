@@ -1,12 +1,9 @@
-package org.firstinspires.ftc.teamcode.team_methods;
+package org.firstinspires.ftc.teamcode.team_classes;
 
-import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.GyroSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.robotcore.external.navigation.Position;
 import org.firstinspires.ftc.teamcode.general_classes.Position2D;
 import org.firstinspires.ftc.teamcode.general_classes.Position2DAngle;
 

@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.general_classes.Position2DAngle;
-import org.firstinspires.ftc.teamcode.team_methods.Robot;
+import org.firstinspires.ftc.teamcode.team_classes.Robot;
 
 
 @TeleOp(name="test", group="test") //fix this

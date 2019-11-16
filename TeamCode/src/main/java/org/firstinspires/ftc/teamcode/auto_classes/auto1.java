@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.teamcode.team_methods.Robot;
+import org.firstinspires.ftc.teamcode.team_classes.Robot;
 
 @Autonomous(name="Auto1", group="test") //fix this
 public class auto1 extends OpMode {

@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.team_methods;
+package org.firstinspires.ftc.teamcode.team_classes;
 
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
