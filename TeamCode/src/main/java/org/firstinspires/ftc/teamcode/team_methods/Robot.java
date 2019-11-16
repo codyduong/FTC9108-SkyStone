@@ -8,6 +8,6 @@ public class Robot {
     public DcMotorGroup DCG;
 
     public void initialize(HardwareMap HM, Telemetry T) {
-        DCG.initialize(HM, T);
+        DCG.initialization(HM, T);
     }
 }
