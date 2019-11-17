@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.general_classes.Position2DAngle;
+import org.firstinspires.ftc.teamcode.team_classes.Mecanum;
 import org.firstinspires.ftc.teamcode.team_classes.Robot;
 
 
@@ -46,8 +47,8 @@ public class teleOpMecanum extends OpMode {
             turn = 0;
         }
         Position2DAngle relativeValues;
-        relativeValues = Robot.DCG.relativeValues(new Position2DAngle(drivex,drivey,turn), Robot.IMU);
-        Robot.DCG.driveToPositionAngle(relativeValues, true);
+        relativeValues = Robot.DCGm.relativeValues(new Position2DAngle(drivex,drivey,turn), Robot.IMU);
+        Robot.DCGm.driveToPositionAngle(relativeValues, true);
         telemetry.addData("Status", "Run Time: " + runtime.toString());
         telemetry.update();
     }
@@ -55,6 +56,6 @@ public class teleOpMecanum extends OpMode {
     //Initialized by: Stop / runs once
     @Override
     public void stop() {
-        Robot.DCG.setPower(new double[]{0,0,0,0});
+        Robot.DCGm.setPower(new double[]{0,0,0,0});
     }
 }
