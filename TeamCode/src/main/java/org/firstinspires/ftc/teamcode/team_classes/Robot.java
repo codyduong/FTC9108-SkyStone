@@ -9,6 +9,7 @@ public class Robot {
     public Mecanum DCGm;
     public ColorSensorGroup CSG;
     public BNOIMU IMU;
+    public Gyro Gyro;
 
     //constructor
     public Robot() {
@@ -21,5 +22,6 @@ public class Robot {
         DCGm.initialize(HM, T);
         CSG.initialize(HM, T);
         IMU.initialize(HM, T);
+        Gyro.initialize(HM, T);
     }
 }
