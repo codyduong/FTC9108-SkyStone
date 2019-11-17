@@ -13,6 +13,7 @@ public class Gyro {
 
     public void initialize(HardwareMap Hmap, Telemetry Tm) {
         Sensor = Hmap.get(GyroSensor.class, "gyro_sensor");
+        //Sensor.init(); (For Simulator)
         Sensor.isCalibrating();
         while(Sensor.isCalibrating()){}
     }

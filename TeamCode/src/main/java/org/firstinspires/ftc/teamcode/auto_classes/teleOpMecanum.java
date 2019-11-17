@@ -37,7 +37,7 @@ public class teleOpMecanum extends OpMode {
     public void loop() {
         double drivey = gamepad1.left_stick_y;
         double drivex = -gamepad1.left_stick_x;
-        double turn = -gamepad1.right_stick_x;
+        double turn = gamepad1.right_stick_x;
         if (Math.abs((double)drivey) < .05) {
             drivey = 0;
         }

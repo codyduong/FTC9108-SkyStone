@@ -16,6 +16,7 @@ public class Robot {
         DCGm = new Mecanum();
         CSG = new ColorSensorGroup(null);
         IMU = new BNOIMU(null);
+        Gyro = new Gyro(null);
     }
 
     public void initialize(HardwareMap HM, Telemetry T) {
