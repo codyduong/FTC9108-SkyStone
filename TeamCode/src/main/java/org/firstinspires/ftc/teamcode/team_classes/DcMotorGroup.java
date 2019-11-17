@@ -39,9 +39,9 @@ public class DcMotorGroup {
         this.DcMotors[1] = Hmap.get(DcMotor.class, "left_drive_front");
         this.DcMotors[2] = Hmap.get(DcMotor.class, "left_drive_back");
         this.DcMotors[3] = Hmap.get(DcMotor.class, "right_drive_back");
-        this.DcMotors[0].setDirection(DcMotor.Direction.FORWARD);
+        this.DcMotors[0].setDirection(DcMotor.Direction.REVERSE);
         this.DcMotors[1].setDirection(DcMotor.Direction.FORWARD);
-        this.DcMotors[2].setDirection(DcMotor.Direction.REVERSE);
+        this.DcMotors[2].setDirection(DcMotor.Direction.FORWARD);
         this.DcMotors[3].setDirection(DcMotor.Direction.REVERSE);
         Tm.addData("Encoders","Resetting");
         this.DcMotors[0].setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);

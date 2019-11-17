@@ -33,10 +33,20 @@ public class teleOpMecanum extends OpMode {
     //Initialized by: After Start, Before Stop / loops
     @Override
     public void loop() {
-        double drivex = -gamepad1.left_stick_y;
-        double drivey = gamepad1.left_stick_x;
-        double turn  =  gamepad1.right_stick_x;
-        Position2DAngle relativeValues = Robot.DCG.relativeValues(new Position2DAngle(drivex,drivey,turn), Robot.IMU);
+        double drivey = gamepad1.left_stick_y;
+        double drivex = gamepad1.left_stick_x;
+        double turn = -gamepad1.right_stick_x;
+        if (Math.abs(drivey) < .05) {
+            drivey = 0;
+        }
+        if (Math.abs(drivex) < .05) {
+            drivex = 0;
+        }
+        if (Math.abs(turn) < .05) {
+            turn = 0;
+        }
+        Position2DAngle relativeValues;
+        relativeValues = Robot.DCG.relativeValues(new Position2DAngle(drivex,drivey,turn), Robot.IMU);
         Robot.DCG.driveToPositionAngle(relativeValues, true);
         telemetry.addData("Status", "Run Time: " + runtime.toString());
         telemetry.update();
