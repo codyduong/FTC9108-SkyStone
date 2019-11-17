@@ -132,7 +132,7 @@ public class BNOIMU {
         Orientation angles;
 
         angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.RADIANS);
-        return -angles.firstAngle;   // Not sure why this is negative, could be the simulator
+        return angles.firstAngle;
 
         /*
         angles.firstAngle is the heading, measured COUNTER-CLOCKWISE, from the orientation the bot was in when the
