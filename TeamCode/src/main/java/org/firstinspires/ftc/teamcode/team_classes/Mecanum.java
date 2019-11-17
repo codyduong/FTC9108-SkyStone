@@ -22,10 +22,10 @@ public class Mecanum extends DcMotorGroup {
 
     //METHOD 1: self-explanatory
     public void initialize(HardwareMap Hmap, Telemetry Tm) {
-        this.DcMotors[0] = Hmap.get(DcMotor.class, "right_drive_front");
-        this.DcMotors[1] = Hmap.get(DcMotor.class, "left_drive_front");
-        this.DcMotors[2] = Hmap.get(DcMotor.class, "left_drive_back");
-        this.DcMotors[3] = Hmap.get(DcMotor.class, "right_drive_back");
+        this.DcMotors[0] = Hmap.get(DcMotor.class, "front_right_motor");
+        this.DcMotors[1] = Hmap.get(DcMotor.class, "front_left_motor");
+        this.DcMotors[2] = Hmap.get(DcMotor.class, "back_left_motor");
+        this.DcMotors[3] = Hmap.get(DcMotor.class, "back_right_motor");
         this.DcMotors[0].setDirection(DcMotor.Direction.REVERSE);
         this.DcMotors[1].setDirection(DcMotor.Direction.FORWARD);
         this.DcMotors[2].setDirection(DcMotor.Direction.FORWARD);
@@ -114,8 +114,9 @@ public class Mecanum extends DcMotorGroup {
     }
 
     //FUNCTION 2: lots of trig going on, so have fun trying to figure it out
-    public Position2DAngle relativeValues(Position2DAngle PosAngle, BNOIMU IMU) {
+    public Position2DAngle relativeValues(Position2DAngle PosAngle, double THETA_robot) {
         double THETA_triangle;
+        double THETA_subtract = THETA_robot%360;
         if (PosAngle.X==0 && PosAngle.Y!=0) {
             if (PosAngle.Y > 0) {
                 THETA_triangle = 90;
@@ -133,7 +134,7 @@ public class Mecanum extends DcMotorGroup {
         } else {
             THETA_triangle = Math.toDegrees(Math.atan2(PosAngle.Y,PosAngle.X));
         }
-        double THETA_relative = (THETA_triangle - IMU.getAngle());
+        double THETA_relative = (THETA_triangle - THETA_subtract);
         double L_hypotnuse = PosAngle.getMagnitude();
         double X_New = L_hypotnuse * Math.cos(Math.toRadians(THETA_relative));
         double Y_New = L_hypotnuse * Math.sin(Math.toRadians(THETA_relative));
