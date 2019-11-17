@@ -56,41 +56,44 @@ public class DcMotorGroup {
         Tm.update();
     }
 
+    //X = a, Y = b
+    //The distances are in inches
+    private final double Xdistance = 9.27;
+    private final double Ydistance = 10.02;
+    private double XYcombinedD = Xdistance + Ydistance;
     public void driveToPositionAngle(Position2DAngle PositionAngle, boolean teleOp) {
-
-        //X = a, Y = b
-        //The distances are in inches
-        final double Xdistance = 9.27;
-        final double Ydistance = 10.02;
-        double XYcombinedD = Xdistance + Ydistance;
-
+        
         double relativeY = PositionAngle.X;
         double relativeX = PositionAngle.Y;
         double degreesAngle = PositionAngle.ANGLE;
 
         //NOTE: This uses displacement instead of velocity, since in practice the ratio of velocity_X to velocity_Y, will be equal to ratio of displacement_X to displacement_Y.
-        double V1 = relativeY - relativeX + degreesAngle*(XYcombinedD);
-        double V2 = relativeY + relativeX - degreesAngle*(XYcombinedD);
-        double V3 = relativeY - relativeX - degreesAngle*(XYcombinedD);
-        double V4 = relativeY + relativeX + degreesAngle*(XYcombinedD);
+        double V1 = relativeY - relativeX + degreesAngle /* *(XYcombinedD)*/;
+        double V2 = relativeY + relativeX - degreesAngle /* *(XYcombinedD)*/;
+        double V3 = relativeY - relativeX - degreesAngle /* *(XYcombinedD)*/;
+        double V4 = relativeY + relativeX + degreesAngle /* *(XYcombinedD)*/;
 
         double largest = Math.max(Math.max(V1,V2),Math.max(V3,V4));
         double smallest = Math.min(Math.min(V1,V2),Math.min(V3,V4));
         double divisor = Math.max(Math.abs(largest), Math.abs(smallest));
 
-        V1 = 100*(V1/divisor);
-        V2 = 100*(V2/divisor);
-        V3 = 100*(V3/divisor);
-        V4 = 100*(V4/divisor);
+        if (V1!=0) {
+            V1 = (V1/divisor);
+            V2 = (V2/divisor);
+            V3 = (V3/divisor);
+            V4 = (V4/divisor);
+        }
 
+        this.setPower(new double[]{V1,V2,V3,V4});
+        /*
         double EncoderMax1 = inchToEncoder(0);
 
         if (teleOp == false) {
             //WHILE ENCODER LOOP HERE
         } else if (teleOp == true) {
-            this.setPower(new double[]{V1,V2,V3,V4});
-        }
 
+        }
+         */
     }
 
     //IF undeclared teleop, assumes auto drive method
