@@ -63,8 +63,8 @@ public class DcMotorGroup {
     private double XYcombinedD = Xdistance + Ydistance;
     public void driveToPositionAngle(Position2DAngle PositionAngle, boolean teleOp) {
 
-        double relativeY = PositionAngle.X;
-        double relativeX = PositionAngle.Y;
+        double relativeY = PositionAngle.Y;
+        double relativeX = PositionAngle.X;
         double degreesAngle = PositionAngle.ANGLE;
 
         //NOTE: This uses displacement instead of velocity, since in practice the ratio of velocity_X to velocity_Y, will be equal to ratio of displacement_X to displacement_Y.
