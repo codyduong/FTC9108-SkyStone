@@ -73,9 +73,9 @@ public class DcMotorGroup {
         double V3 = relativeY - relativeX - degreesAngle /* *(XYcombinedD)*/;
         double V4 = relativeY + relativeX + degreesAngle /* *(XYcombinedD)*/;
 
-        double largest = Math.max(Math.max(V1,V2),Math.max(V3,V4));
-        double smallest = Math.min(Math.min(V1,V2),Math.min(V3,V4));
-        double divisor = Math.max(Math.abs(largest), Math.abs(smallest));
+        double largest = Math.max((double)Math.max((double)V1,(double)V2),(double)Math.max((double)V3,(double)V4));
+        double smallest = Math.min((double)Math.min((double)V1,(double)V2),(double)Math.min((double)V3,(double)V4));
+        double divisor = Math.max((double)Math.abs((double)largest), (double)Math.abs((double)smallest));
 
         if (V1!=0) {
             V1 = (V1/divisor);

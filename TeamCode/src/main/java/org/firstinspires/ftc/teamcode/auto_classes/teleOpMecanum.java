@@ -36,13 +36,13 @@ public class teleOpMecanum extends OpMode {
         double drivey = gamepad1.left_stick_y;
         double drivex = gamepad1.left_stick_x;
         double turn = -gamepad1.right_stick_x;
-        if (Math.abs(drivey) < .05) {
+        if (Math.abs((double)drivey) < .05) {
             drivey = 0;
         }
-        if (Math.abs(drivex) < .05) {
+        if (Math.abs((double)drivex) < .05) {
             drivex = 0;
         }
-        if (Math.abs(turn) < .05) {
+        if (Math.abs((double)turn) < .05) {
             turn = 0;
         }
         Position2DAngle relativeValues;
