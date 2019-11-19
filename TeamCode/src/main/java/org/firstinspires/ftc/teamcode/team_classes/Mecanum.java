@@ -17,7 +17,7 @@ public class Mecanum extends DcMotorGroup {
 
     //Constructor
     public Mecanum() {
-        super(new DcMotor[]{null,null,null,null});
+        super(new DcMotor[4]);
     }
 
     //METHOD 1: self-explanatory

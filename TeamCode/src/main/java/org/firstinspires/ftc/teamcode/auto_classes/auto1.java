@@ -10,7 +10,7 @@ import org.firstinspires.ftc.teamcode.team_classes.Robot;
 public class auto1 extends OpMode {
 
     private ElapsedTime runtime = new ElapsedTime();
-    private Robot Robot;
+    private Robot Robot = new Robot();
 
     public void init() {
         telemetry.addData("Status", "Initializing");
