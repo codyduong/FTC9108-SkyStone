@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.robotcore.external.navigation.Position;
 import org.firstinspires.ftc.teamcode.general_classes.Position2D;
 import org.firstinspires.ftc.teamcode.general_classes.Position2DAngle;
 
@@ -39,6 +40,10 @@ public class Mecanum extends DcMotorGroup {
         this.DcMotors[1].setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         this.DcMotors[2].setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         this.DcMotors[3].setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        this.DcMotors[0].setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        this.DcMotors[1].setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        this.DcMotors[2].setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        this.DcMotors[3].setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         Tm.addData("DcMotorGroup Initialization","Complete");
         Tm.update();
     }
@@ -64,23 +69,57 @@ public class Mecanum extends DcMotorGroup {
         double smallest = Math.min((double)Math.min((double)V1,(double)V2),(double)Math.min((double)V3,(double)V4));
         double divisor = Math.max((double)Math.abs((double)largest), (double)Math.abs((double)smallest));
 
+        double V1n = V1;
+        double V2n = V2;
+        double V3n = V3;
+        double V4n = V4;
+
         if (V1!=0) {
-            V1 = (V1/divisor);
-            V2 = (V2/divisor);
-            V3 = (V3/divisor);
-            V4 = (V4/divisor);
+            V1n = (V1/divisor);
+            V2n = (V2/divisor);
+            V3n = (V3/divisor);
+            V4n = (V4/divisor);
         }
+        double EncoderMax = inchToEncoder(Math.hypot(PositionAngle.X,PositionAngle.Y));
 
-        this.setPower(new double[]{V1,V2,V3,V4});
-        /*
-        double EncoderMax1 = inchToEncoder(0);
-
-        if (teleOp == false) {
+        if (!teleOp) {
             //WHILE ENCODER LOOP HERE
-        } else if (teleOp == true) {
-
+            if (divisor == Math.abs(V1)) {
+                this.DcMotors[0].setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                while (this.DcMotors[0].getCurrentPosition() < EncoderMax){
+                    double ratio = this.DcMotors[0].getCurrentPosition()/EncoderMax;
+                    double m = -Math.pow(ratio,2)+1; //m = multipler
+                    this.setPower(new double[]{m*V1n,m*V2n,m*V3n,m*V4n});
+                }
+                this.setPower(new double[]{0,0,0,0});
+            } else if (divisor == Math.abs(V2)) {
+                this.DcMotors[1].setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                while (this.DcMotors[1].getCurrentPosition() < EncoderMax){
+                    double ratio = this.DcMotors[1].getCurrentPosition()/EncoderMax;
+                    double m = -Math.pow(ratio,2)+1; //m = multipler
+                    this.setPower(new double[]{m*V1n,m*V2n,m*V3n,m*V4n});
+                }
+                this.setPower(new double[]{0,0,0,0});
+            } else if (divisor == Math.abs(V3)) {
+                this.DcMotors[2].setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                while (this.DcMotors[2].getCurrentPosition() < EncoderMax){
+                    double ratio = this.DcMotors[2].getCurrentPosition()/EncoderMax;
+                    double m = -Math.pow(ratio,2)+1; //m = multipler
+                    this.setPower(new double[]{m*V1n,m*V2n,m*V3n,m*V4n});
+                }
+                this.setPower(new double[]{0,0,0,0});
+            } else if (divisor == Math.abs(V4)) {
+                this.DcMotors[3].setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                while (this.DcMotors[3].getCurrentPosition() < EncoderMax){
+                    double ratio = this.DcMotors[3].getCurrentPosition()/EncoderMax;
+                    double m = -Math.pow(ratio,2)+1; //m = multipler
+                    this.setPower(new double[]{m*V1n,m*V2n,m*V3n,m*V4n});
+                }
+                this.setPower(new double[]{0,0,0,0});
+            }
+        } else if (teleOp) {
+            this.setPower(new double[]{V1n,V2n,V3n,V4n});
         }
-         */
     }
 
     //IF undeclared teleop, assumes auto drive method
