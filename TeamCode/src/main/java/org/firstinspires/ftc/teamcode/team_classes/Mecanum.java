@@ -10,7 +10,7 @@ import org.firstinspires.ftc.teamcode.general_classes.Position2DAngle;
 
 public class Mecanum extends DcMotorGroup {
     //Constant Properties
-    private static final double     COUNTS_PER_MOTOR_REV    = 0 ;       // 5202 Series Yellow Jacket Planetary Gear Motor
+    private static final double     COUNTS_PER_MOTOR_REV    = 753.2 ;   // SKU: 5202-0002-0027
     private static final double     DRIVE_GEAR_REDUCTION    = 1.0 ;     // This is < 1.0 if geared UP
     private static final double     WHEEL_DIAMETER_MM       = 100;      // goBilda metric wheels are 100mm
     private static final double     WHEEL_DIAMETER_INCHES   = WHEEL_DIAMETER_MM/25.4;
