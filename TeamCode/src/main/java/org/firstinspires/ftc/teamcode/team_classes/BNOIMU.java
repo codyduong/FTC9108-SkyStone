@@ -131,7 +131,8 @@ public class BNOIMU {
     public double getHeadingRadians() {
         Orientation angles;
 
-        angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.RADIANS);
+        /*angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.RADIANS);*/ //THIS WORKS ONLY WHEN RevHub is flat
+        angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.YXZ, AngleUnit.RADIANS);
         return angles.firstAngle;
 
         /*

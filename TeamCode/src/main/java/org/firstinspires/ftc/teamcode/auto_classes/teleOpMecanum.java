@@ -35,6 +35,7 @@ public class teleOpMecanum extends OpMode {
     //Initialized by: After Start, Before Stop / loops
     @Override
     public void loop() {
+        //DRIVING
         double drivey = gamepad1.left_stick_y;
         double drivex = -gamepad1.left_stick_x;
         double turn = gamepad1.right_stick_x;
@@ -52,6 +53,14 @@ public class teleOpMecanum extends OpMode {
         Robot.DCGm.driveToPositionAngle(relativeValues, true);
         telemetry.addData("Status", "Run Time: " + runtime.toString());
         telemetry.update();
+
+        //SERVOS
+        if (gamepad1.a) {
+            Robot.SG.Servos[0].setPosition(0);
+        }
+        if (gamepad1.y) {
+            Robot.SG.Servos[0].setPosition(.9);
+        }
     }
 
     //Initialized by: Stop / runs once
