@@ -46,7 +46,7 @@ public class BNOIMU {
         // returned as 0 to +180 or 0 to -180 rolling back to -179 or +179 when rotation passes
         // 180 degrees. We detect this transition and track the total cumulative angle of rotation.
 
-        Orientation angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.YXZ, AngleUnit.DEGREES);
+        Orientation angles = imu.getAngularOrientation(AxesReference.EXTRINSIC, AxesOrder.XZY, AngleUnit.DEGREES);
 
         double deltaAngle = angles.firstAngle - lastAngles.firstAngle;
 
@@ -64,9 +64,14 @@ public class BNOIMU {
 
     private void resetAngle()
     {
-        lastAngles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.YXZ, AngleUnit.DEGREES);
+        lastAngles = imu.getAngularOrientation(AxesReference.EXTRINSIC, AxesOrder.XZY, AngleUnit.DEGREES);
 
         globalAngle = 0;
+    }
+
+    public void setAngle(double inputAngle) {
+       lastAngles =  imu.getAngularOrientation(AxesReference.EXTRINSIC, AxesOrder.XZY, AngleUnit.DEGREES);
+       globalAngle = inputAngle;
     }
 
     public void composeTelemetry(Telemetry telemetry) {
@@ -79,7 +84,7 @@ public class BNOIMU {
             // to do that in each of the three items that need that info, as that's
             // three times the necessary expense.
             //angles   = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
-            angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.YXZ, AngleUnit.RADIANS);
+            angles = imu.getAngularOrientation(AxesReference.EXTRINSIC, AxesOrder.XZY, AngleUnit.RADIANS);
             gravity  = imu.getGravity();
         }
         });
@@ -133,7 +138,7 @@ public class BNOIMU {
         Orientation angles;
 
         /*angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.RADIANS);*/ //THIS WORKS ONLY WHEN RevHub is flat
-        angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.YXZ, AngleUnit.RADIANS);
+        angles = imu.getAngularOrientation(AxesReference.EXTRINSIC, AxesOrder.XZY, AngleUnit.RADIANS);
         return angles.firstAngle;
 
         /*
