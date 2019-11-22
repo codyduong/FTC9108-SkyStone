@@ -109,8 +109,6 @@ public class auto1 extends OpMode {
             position = 3;
         }
 
-    }
-
 
     //Initialized by: After Start, Before Stop / loops
     @Override
