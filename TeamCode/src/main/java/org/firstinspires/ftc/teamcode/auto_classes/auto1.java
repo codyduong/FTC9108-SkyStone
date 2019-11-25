@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.teamcode.team_classes.Robot;
 
 
-@Autonomous(name="Old Auto", group="test") //This is not to be used anymore
+@Autonomous(name="Old Auto (don't use)", group="test") //This is not to be used anymore
 public class auto1 extends OpMode {
     
 
