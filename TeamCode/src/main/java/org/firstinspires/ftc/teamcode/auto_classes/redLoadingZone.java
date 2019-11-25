@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.team_classes.Robot;
 
-@Autonomous(name="Red Loading Zone", group="test") //fix this
+@Autonomous(name="Loading Zone", group="Red")
 public class redLoadingZone extends OpMode {
 
     private ElapsedTime runtime = new ElapsedTime();
