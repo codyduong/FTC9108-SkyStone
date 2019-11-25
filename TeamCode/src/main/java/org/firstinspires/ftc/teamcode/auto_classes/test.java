@@ -2,18 +2,12 @@ package org.firstinspires.ftc.teamcode.auto_classes;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.team_classes.Robot;
 
-
-@Autonomous(name="Old Auto", group="test") //This is not to be used anymore
-public class auto1 extends OpMode {
-    
-
-
-    private ElapsedTime runtime = new ElapsedTime();
-    private Robot Robot = new Robot();
+@Autonomous(name="supertest", group="Auto") //fix this
+public class test extends OpMode {
+    Robot Robot = new Robot();
 
     public void init() {
         telemetry.addData("Status", "Initializing");
@@ -23,25 +17,15 @@ public class auto1 extends OpMode {
         telemetry.update();
     }
 
-    //Position 1 is building zone, and position 2 is loading zone.
-    private int position = 1;
-    private int offset = 0;
-    private int avarageColorBottom = 0;
-    private int averageColorFront = 0;
-
-
     //Initialized by: Start / runs once
     @Override
     public void start() {
-
+        Robot.DCGm.setPower(new double[]{100,100,100,100});
     }
-
 
     //Initialized by: After Start, Before Stop / loops
     @Override
-    public void loop() {
-
-    }
+    public void loop() { }
 
     //Initialized by: Stop / runs once
     @Override
@@ -49,3 +33,4 @@ public class auto1 extends OpMode {
         Robot.DCGm.setPower(new double[]{0,0,0,0});
     }
 }
+
