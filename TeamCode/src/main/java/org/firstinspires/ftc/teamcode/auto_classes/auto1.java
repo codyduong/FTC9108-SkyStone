@@ -51,7 +51,7 @@ public class auto1 extends OpMode {
                 }
 
                 // at this point, the robot will pick up the skystone
-                Robot.DCGm.driveToPosition(offset,0,0);
+                Robot.DCGm.driveToPosition(offset, 0, 0);
                 Robot.DCGm.driveToPosition(0,     -43, 0);
                 Robot.DCGm.driveToPosition(26.75, 0,   0);
                 Robot.DCGm.driveToPosition(0,     68,  0);
