@@ -76,7 +76,7 @@ public class auto1 extends OpMode {
         if (position == 2) {
 
             //Starting at wall, facing away, and 50" away from other wall.
-            Robot.DCGm.driveToPosition(0,40,0);
+            Robot.DCGm.driveToPosition(0, 40, 0);
 
             //At this point, the robot will pick up the skystone.
             // Robot.DCGm.driveToPosition(offset,0,0);
