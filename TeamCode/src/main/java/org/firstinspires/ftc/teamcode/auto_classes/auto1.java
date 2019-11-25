@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.team_classes.Robot;
 
-@Autonomous(name="Auto1", group="test") //fix this
+@Autonomous(name="AUTO1", group="Auto") //fix this
 public class auto1 extends OpMode {
 
     private ElapsedTime runtime = new ElapsedTime();
@@ -67,9 +67,9 @@ public class auto1 extends OpMode {
             }
 
 
+
             while(Robot.CSG.BottomColorSensor.argb() < avarageColorBottom) {
                Robot.DCGm.driveToPosition(-1,0,0);
-            }
 
             position = 3;
         }
@@ -78,36 +78,28 @@ public class auto1 extends OpMode {
             //Starting at wall, facing away, and 50" away from other wall.
             Robot.DCGm.driveToPosition(0,40,0);
 
-            while (getRuntime() < 20) {
-                while (Robot.CSG.FrontColorSensor.argb() < averageColorFront) {
-                    Robot.DCGm.driveToPosition(-1, 0, 0);
-                }
-                offset++;
-                }
+            //At this point, the robot will pick up the skystone.
+            // Robot.DCGm.driveToPosition(offset,0,0);
+            Robot.DCGm.driveToPosition(0,     -43, 0);
+            Robot.DCGm.driveToPosition(26.75, 0,   0);
+            Robot.DCGm.driveToPosition(0,     68,  0);
+            Robot.DCGm.driveToPosition(20,    0,   0);
+            Robot.DCGm.driveToPosition(0,     0,   180);
 
-                //At this point, the robot will pick up the skystone.
-                // Robot.DCGm.driveToPosition(offset,0,0);
-                Robot.DCGm.driveToPosition(0,     -43, 0);
-                Robot.DCGm.driveToPosition(26.75, 0,   0);
-                Robot.DCGm.driveToPosition(0,     68,  0);
-                Robot.DCGm.driveToPosition(20,    0,   0);
-                Robot.DCGm.driveToPosition(0,     0,   180);
-
-                //At this point, the robot will place the stone in the foundation.
-                Robot.DCGm.driveToPosition(0,     0,   180);
-                Robot.DCGm.driveToPosition(-20,   0,   0);
-                Robot.DCGm.driveToPosition(0,     -68, 0);
-                Robot.DCGm.driveToPosition(-26.75,0,   0);
-                Robot.DCGm.driveToPosition(0,     43,     0);
-            }
-
-
-            while(Robot.CSG.BottomColorSensor.argb() < avarageColorBottom) {
-                Robot.DCGm.driveToPosition(-1,0,0);
-            }
-            
-            position = 3;
+            //At this point, the robot will place the stone in the foundation.
+            Robot.DCGm.driveToPosition(0,     0,   180);
+            Robot.DCGm.driveToPosition(-20,   0,   0);
+            Robot.DCGm.driveToPosition(0,     -68, 0);
+            Robot.DCGm.driveToPosition(-26.75,0,   0);
+            Robot.DCGm.driveToPosition(0,     43,     0);
         }
+          
+        while(Robot.CSG.BottomColorSensor.argb() < avarageColorBottom) {
+            Robot.DCGm.driveToPosition(-1,0,0);
+        }
+            
+        position = 3;
+    }
 
 
     //Initialized by: After Start, Before Stop / loops
