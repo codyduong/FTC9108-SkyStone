@@ -91,7 +91,7 @@ public class auto1 extends OpMode {
             Robot.DCGm.driveToPosition(-20,   0,   0);
             Robot.DCGm.driveToPosition(0,     -68, 0);
             Robot.DCGm.driveToPosition(-26.75,0,   0);
-            Robot.DCGm.driveToPosition(0,     43,     0);
+            Robot.DCGm.driveToPosition(0,     43,  0);
         }
           
         while(Robot.CSG.BottomColorSensor.argb() < avarageColorBottom) {
