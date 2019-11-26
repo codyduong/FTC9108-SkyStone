@@ -1,13 +1,13 @@
 package org.firstinspires.ftc.teamcode.auto_classes;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.team_classes.Robot;
 
 @Disabled
-@Autonomous(name="Old Auto (don't use)", group="test") //This is not to be used anymore
 public class auto1 extends OpMode {
     
 
