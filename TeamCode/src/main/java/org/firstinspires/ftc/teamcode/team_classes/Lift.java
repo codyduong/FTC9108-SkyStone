@@ -25,4 +25,17 @@ public class Lift extends DcMotorGroup {
     public void initialize(HardwareMap Hmap, Telemetry Tm) {
         this.DcMotors[0] = Hmap.get(DcMotor.class, "Lift_motor");
     }
+
+    public void raiseToInch(double inch, double speed){
+        double encoderInch = inchToEncoder(inch);
+        double direction = inch / java.lang.Math.abs(inch);
+        double encoderValue = 0; // Used temporarily.
+        while (encoderValue < encoderInch){
+            this.setPower(new double[] {direction * (speed/100)} );
+        }
+    }
+
+    public double inchToEncoder(double inches){
+        return inches*COUNTS_PER_INCH;
+    }
 }
