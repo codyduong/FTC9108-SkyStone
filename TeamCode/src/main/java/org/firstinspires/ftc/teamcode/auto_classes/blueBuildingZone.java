@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.team_classes.Robot;
 
-@Autonomous(name="Building Zone", group="Blue")
+@Autonomous(name="Blue Building Zone", group="Blue")
 public class blueBuildingZone extends OpMode {
 
     private ElapsedTime runtime = new ElapsedTime();
