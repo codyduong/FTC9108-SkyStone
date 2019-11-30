@@ -53,13 +53,18 @@ public class teleOpMecanum extends OpMode {
         telemetry.addData("Status", "Run Time: " + runtime.toString());
         telemetry.update();
 
-        //SERVOS
-        if (gamepad1.a) {
-            Robot.SG.Servos[0].setPosition(0);
+        //Lift
+        double lift = gamepad2.left_stick_y;
+        double speed = lift * 100;
+        Robot.DCGl.raiseToInch(0.1,speed);
+
+        if (gamepad2.a) {
+            Robot.DCGl.raiseToBlock(-1,75);
         }
-        if (gamepad1.y) {
-            Robot.SG.Servos[0].setPosition(.9);
+        if (gamepad2.y) {
+            Robot.DCGl.raiseToBlock(1,75);
         }
+
     }
 
     //Initialized by: Stop / runs once

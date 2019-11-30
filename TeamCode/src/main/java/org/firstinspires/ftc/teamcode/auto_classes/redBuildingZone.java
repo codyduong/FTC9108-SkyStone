@@ -56,9 +56,9 @@ public class redBuildingZone extends OpMode {
             Robot.DCGm.driveToPosition(0,      68,  0);
             Robot.DCGm.driveToPosition(-20,    0,   0);
             Robot.DCGm.driveToPosition(0,      0,   180);
-            Robot.DCGl.raiseToBlock(blockNumber,50);
+            Robot.DCGl.raiseToBlock(blockNumber + 2.25,50);
             //At this point, the robot will output the stone in the foundation.
-            Robot.DCGl.raiseToBlock(-blockNumber,50);
+            Robot.DCGl.raiseToBlock(-blockNumber - 2.25,50);
             Robot.DCGm.driveToPosition(0,      0,   180);
             Robot.DCGm.driveToPosition(20,     0,   0);
             Robot.DCGm.driveToPosition(0,      -68, 0);
