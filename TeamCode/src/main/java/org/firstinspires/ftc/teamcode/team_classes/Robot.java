@@ -12,6 +12,7 @@ public class Robot {
     public BNOIMU IMU;
     public Gyro Gyro;
     public ServoGroup SG;
+    public Lift DCGl;
 
     //constructor
     public Robot() {
@@ -19,7 +20,7 @@ public class Robot {
         CSG = new ColorSensorGroup(new ColorSensor[2]);
         IMU = new BNOIMU(null);
         SG = new ServoGroup(new Servo[1]);
-        //Gyro = new Gyro(null);
+        DCGl = new Lift();
     }
 
     public void initialize(HardwareMap HM, Telemetry T) {
@@ -27,6 +28,7 @@ public class Robot {
         CSG.initialize(HM, T);
         IMU.initialize(HM, T);
         SG.initialize(HM, T);
-        //Gyro.initialize(HM, T);
+        DCGl.initialize(HM, T);
+
     }
 }
