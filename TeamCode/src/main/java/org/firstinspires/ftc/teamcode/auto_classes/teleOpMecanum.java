@@ -30,6 +30,7 @@ public class teleOpMecanum extends OpMode {
         runtime.reset();
     }
 
+    boolean on;
 
     //Initialized by: After Start, Before Stop / loops
     @Override
@@ -58,11 +59,30 @@ public class teleOpMecanum extends OpMode {
         double speed = lift * 100;
         Robot.DCGl.raiseToInch(0.1,speed);
 
+
+
+
         if (gamepad2.a) {
             Robot.DCGl.raiseToBlock(-1,75);
         }
         if (gamepad2.y) {
             Robot.DCGl.raiseToBlock(1,75);
+        }
+
+        //Intake
+        if(on = true){
+            Robot.DCGi.setPower(new double[]{1});
+        }
+        if(on = false){
+            Robot.DCGi.setPower(new double[]{0});
+        }
+
+        if (gamepad2.left_trigger == 1){
+            on = true;
+        }
+
+        if (gamepad2.right_trigger == 1){
+            on = false;
         }
 
     }
