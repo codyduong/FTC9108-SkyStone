@@ -35,6 +35,10 @@ public class Lift extends DcMotorGroup {
         }
     }
 
+    public void raiseToBlock(double blockNumber, double speed){
+        raiseToInch((blockNumber * 4)+ 2.25,speed);
+    }
+
     public double inchToEncoder(double inches){
         return inches*COUNTS_PER_INCH;
     }

@@ -21,9 +21,10 @@ public class blueBuildingZone extends OpMode {
     }
 
     //Position 1 is building zone, and position 2 is loading zone.
-    private int offset = 0;
+    private int offset;
     private int avarageColorBottom = 0;
     private int averageColorFront = 0;
+    private int blockNumber = 0;
     //Initialized by: Start / runs once
     @Override
     public void start() {
@@ -39,6 +40,7 @@ public class blueBuildingZone extends OpMode {
         Robot.DCGm.driveToPosition(-46.75, 0,      0);
         Robot.DCGm.driveToPosition(0,      -25,    0);
 
+
         while (getRuntime() < 20) {
 
             offset = 0;
@@ -47,24 +49,23 @@ public class blueBuildingZone extends OpMode {
             offset++;
             }
 
-            // at this point, the robot will pick up the skystone
-
+            // at this point, the robot will intake the skystone
             Robot.DCGm.driveToPosition(offset,0,0);
             Robot.DCGm.driveToPosition(0,     -43, 0);
             Robot.DCGm.driveToPosition(26.75, 0,   0);
             Robot.DCGm.driveToPosition(0,     68,  0);
             Robot.DCGm.driveToPosition(20,    0,   0);
             Robot.DCGm.driveToPosition(0,     0,   180);
-
-            //At this point, the robot will place the stone in the foundation.
-
-            Robot.DCGm.driveToPosition(0,   0,   180);
-            Robot.DCGm.driveToPosition(-20, 0,   0);
-            Robot.DCGm.driveToPosition(0,   -68, 0);
+            Robot.DCGl.raiseToBlock(blockNumber,50);
+            //At this point, the robot will output the stone in the foundation.
+            Robot.DCGl.raiseToBlock(-blockNumber,50);
+            blockNumber++;
+            Robot.DCGm.driveToPosition(0,      0,      180);
+            Robot.DCGm.driveToPosition(-20,    0,      0);
+            Robot.DCGm.driveToPosition(0,      -68,    0);
             Robot.DCGm.driveToPosition(-26.75, 0,      0);
             Robot.DCGm.driveToPosition(0,      -43,    0);
         }
-
 
         while(Robot.CSG.BottomColorSensor.argb() < avarageColorBottom) {
             Robot.DCGm.driveToPosition(-1,0,0);
