@@ -34,10 +34,10 @@ public class redBuildingZone extends OpMode {
 
         //starting facing wall, and 42.25'' away from the other wall
         Robot.DCGm.driveToPosition(0,      -65.75, 0);
-        Robot.DCGm.driveToPosition(-20,     0,      0);
+        Robot.DCGm.driveToPosition(-20,    0,      0);
         Robot.DCGm.driveToPosition(0,      47.5,   0);
         Robot.DCGm.driveToPosition(0,      -47.5,  0);
-        Robot.DCGm.driveToPosition(46.75, 0,      0);
+        Robot.DCGm.driveToPosition(46.75,  0,      0);
         Robot.DCGm.driveToPosition(0,      -25,    0);
 
         while (getRuntime() < 20) {
@@ -51,19 +51,19 @@ public class redBuildingZone extends OpMode {
             // at this point, the robot will pick up the skystone
 
             Robot.DCGm.driveToPosition(-offset,0,0);
-            Robot.DCGm.driveToPosition(0,     -43, 0);
+            Robot.DCGm.driveToPosition(0,      -43, 0);
             Robot.DCGm.driveToPosition(-26.75, 0,   0);
-            Robot.DCGm.driveToPosition(0,     68,  0);
+            Robot.DCGm.driveToPosition(0,      68,  0);
             Robot.DCGm.driveToPosition(-20,    0,   0);
-            Robot.DCGm.driveToPosition(0,     0,   180);
+            Robot.DCGm.driveToPosition(0,      0,   180);
             Robot.DCGl.raiseToBlock(blockNumber,50);
             //At this point, the robot will output the stone in the foundation.
             Robot.DCGl.raiseToBlock(-blockNumber,50);
-            Robot.DCGm.driveToPosition(0,   0,   180);
-            Robot.DCGm.driveToPosition(20, 0,   0);
-            Robot.DCGm.driveToPosition(0,   -68, 0);
-            Robot.DCGm.driveToPosition(26.75, 0,      0);
-            Robot.DCGm.driveToPosition(0,      -43,    0);
+            Robot.DCGm.driveToPosition(0,      0,   180);
+            Robot.DCGm.driveToPosition(20,     0,   0);
+            Robot.DCGm.driveToPosition(0,      -68, 0);
+            Robot.DCGm.driveToPosition(26.75,  0,   0);
+            Robot.DCGm.driveToPosition(0,      -43, 0);
         }
 
 
