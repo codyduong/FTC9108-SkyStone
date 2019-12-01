@@ -81,7 +81,7 @@ public class teleOpMecanum extends OpMode {
             on = true;
         }
 
-        if (gamepad2.right_trigger == 1){
+        if (gamepad2.right_trigger == 1) {
             on = false;
         }
 
