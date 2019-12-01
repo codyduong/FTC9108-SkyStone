@@ -70,7 +70,7 @@ public class teleOpMecanum extends OpMode {
         }
 
         //Intake
-        if(on = true){
+        if (on == true) {
             Robot.DCGi.setPower(new double[]{1});
         }
         if(on = false){
