@@ -5,8 +5,15 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.robotcore.external.navigation.Position;
+import org.firstinspires.ftc.teamcode.general_classes.Position2D;
+import org.firstinspires.ftc.teamcode.general_classes.Position2DAngle;
 
 public class Robot {
+    public Position2D Position;
+    public Position2D EstimatedPosition;
+    public double Angle;
+
     public Mecanum DCGm;
     public ColorSensorGroup CSG;
     public BNOIMU IMU;
@@ -31,5 +38,9 @@ public class Robot {
         SG.initialize(HM, T);
         DCGl.initialize(HM, T);
         DCGi.initialize(HM, T);
+    }
+
+    public void updateRobot() {
+        this.Angle = Math.toDegrees(IMU.getHeadingRadians());
     }
 }

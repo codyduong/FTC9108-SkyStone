@@ -4,13 +4,13 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.robotcore.external.navigation.Position;
 import org.firstinspires.ftc.teamcode.general_classes.Position2DAngle;
-import org.firstinspires.ftc.teamcode.team_classes.Mecanum;
 import org.firstinspires.ftc.teamcode.team_classes.Robot;
 
 
-@TeleOp(name="Mecanum", group="9108") //fix this
-public class teleOpMecanum extends OpMode {
+@TeleOp(name="Luke", group="Driver") //fix this
+public class driver_luke extends OpMode {
 
     private ElapsedTime runtime = new ElapsedTime();
     private Robot Robot = new Robot();
@@ -36,10 +36,11 @@ public class teleOpMecanum extends OpMode {
     //Initialized by: After Start, Before Stop / loops
     @Override
     public void loop() {
-        //DRIVING
+        //Joysticks
         double drivey = gamepad1.left_stick_y;
         double drivex = -gamepad1.left_stick_x;
         double turn = gamepad1.right_stick_x;
+        double PERCENTAGE = Math.hypot(drivey, drivex);
         if (Math.abs((double)drivey) < .05) {
             drivey = 0;
         }
@@ -51,36 +52,18 @@ public class teleOpMecanum extends OpMode {
         }
         double Heading = (Math.toDegrees(Robot.IMU.getHeadingRadians()));
         Position2DAngle relativeValues = Robot.DCGm.relativeValues(new Position2DAngle(drivex,drivey,turn), Heading);
-        Robot.DCGm.driveToPositionAngle(relativeValues, true);
+        Position2DAngle adjustedValues = new Position2DAngle( relativeValues.X * PERCENTAGE
+                                                            , relativeValues.Y * PERCENTAGE
+                                                            , relativeValues.ANGLE);
+        Robot.DCGm.driveToPositionAngle(adjustedValues, true);
 
+        //Buttons
+        //DPad_UP
 
-        //Lift
-        double lift = gamepad2.left_stick_y;
-        double speed = lift * 100;
-        Robot.DCGl.raiseToInch(0.1,speed);
+        //DPad_RIGHT
 
-        if (gamepad2.a) {
-            Robot.DCGl.raiseToBlock(-1,75);
-        }
-        if (gamepad2.y) {
-            Robot.DCGl.raiseToBlock(1,75);
-        }
+        //DPad_D
 
-        //Intake
-        if (on == true) {
-            Robot.DCGi.setPower(new double[]{1});
-        }
-        if (on == false) { 
-            Robot.DCGi.setPower(new double[]{0});
-        }
-
-        if (gamepad2.left_trigger == 1) {
-            on = true;
-        }
-
-        if (gamepad2.right_trigger == 1) {
-            on = false;
-        }
 
         telemetry.addData("Status", "Run Time: " + runtime.toString());
     }
