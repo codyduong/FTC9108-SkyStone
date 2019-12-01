@@ -77,7 +77,7 @@ public class teleOpMecanum extends OpMode {
             Robot.DCGi.setPower(new double[]{0});
         }
 
-        if (gamepad2.left_trigger == 1){
+        if (gamepad2.left_trigger == 1) {
             on = true;
         }
 
