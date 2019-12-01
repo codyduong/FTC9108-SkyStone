@@ -17,6 +17,7 @@ public class teleOpMecanum extends OpMode {
 
     //Initialized by: Initialization Button (i think)
     public void init() {
+        telemetry.setAutoClear(false);
         telemetry.addData("Status", "Initializing");
         telemetry.update();
         Robot.initialize(hardwareMap,telemetry);

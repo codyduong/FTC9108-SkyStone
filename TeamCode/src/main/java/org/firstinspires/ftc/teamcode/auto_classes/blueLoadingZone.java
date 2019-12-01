@@ -13,6 +13,7 @@ public class blueLoadingZone extends OpMode {
     private Robot Robot = new Robot();
 
     public void init() {
+        telemetry.setAutoClear(false);
         telemetry.addData("Status", "Initializing");
         telemetry.update();
         Robot.initialize(hardwareMap, telemetry);
