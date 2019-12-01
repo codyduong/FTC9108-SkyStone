@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.team_classes.Robot;
 
-@Autonomous(name="Loading Zone", group="Blue")
+@Autonomous(name="Blue Loading Zone", group="Blue")
 public class blueLoadingZone extends OpMode {
 
     private ElapsedTime runtime = new ElapsedTime();
@@ -24,6 +24,7 @@ public class blueLoadingZone extends OpMode {
     private int offset = 0;
     private int avarageColorBottom = 0;
     private int averageColorFront = 0;
+    private int blockNumber = 0;
     //Initialized by: Start / runs once
     @Override
     public void start() {
@@ -42,18 +43,19 @@ public class blueLoadingZone extends OpMode {
 
             //At this point, the robot will pick up the skystone.
             // Robot.DCGm.driveToPosition(offset,0,0);
-            Robot.DCGm.driveToPosition(0, -43, 0);
-            Robot.DCGm.driveToPosition(26.75, 0, 0);
-            Robot.DCGm.driveToPosition(0, 68, 0);
-            Robot.DCGm.driveToPosition(20, 0, 0);
-            Robot.DCGm.driveToPosition(0, 0, 180);
-
-            //At this point, the robot will place the stone in the foundation.
-            Robot.DCGm.driveToPosition(0, 0, 180);
-            Robot.DCGm.driveToPosition(-20, 0, 0);
-            Robot.DCGm.driveToPosition(0, -68, 0);
-            Robot.DCGm.driveToPosition(-26.75, 0, 0);
-            Robot.DCGm.driveToPosition(0, 43, 0);
+            Robot.DCGm.driveToPosition(0,     -43, 0);
+            Robot.DCGm.driveToPosition(26.75, 0,   0);
+            Robot.DCGm.driveToPosition(0,     68,  0);
+            Robot.DCGm.driveToPosition(20,    0,   0);
+            Robot.DCGm.driveToPosition(0,     0,   180);
+            Robot.DCGl.raiseToBlock(blockNumber + 2.25,50);
+            //At this point, the robot will output the stone in the foundation.
+            Robot.DCGl.raiseToBlock(-blockNumber - 2.25,50);
+            Robot.DCGm.driveToPosition(0,      0,   180);
+            Robot.DCGm.driveToPosition(-20,    0,   0);
+            Robot.DCGm.driveToPosition(0,      -68, 0);
+            Robot.DCGm.driveToPosition(-26.75, 0,   0);
+            Robot.DCGm.driveToPosition(0,      43,  0);
         }
 
 

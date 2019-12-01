@@ -5,7 +5,6 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.general_classes.Position2DAngle;
-import org.firstinspires.ftc.teamcode.team_classes.Gyro;
 import org.firstinspires.ftc.teamcode.team_classes.Mecanum;
 import org.firstinspires.ftc.teamcode.team_classes.Robot;
 
@@ -31,6 +30,7 @@ public class teleOpMecanum extends OpMode {
         runtime.reset();
     }
 
+    boolean on;
 
     //Initialized by: After Start, Before Stop / loops
     @Override
@@ -48,19 +48,43 @@ public class teleOpMecanum extends OpMode {
         if (Math.abs((double)turn) < .05) {
             turn = 0;
         }
-        double AverageHeading = (/*Robot.Gyro.Sensor.getHeading() + */Math.toDegrees(Robot.IMU.getHeadingRadians()))/*/2*/;
+        double AverageHeading = (Math.toDegrees(Robot.IMU.getHeadingRadians()));
         Position2DAngle relativeValues = Robot.DCGm.relativeValues(new Position2DAngle(drivex,drivey,turn), AverageHeading);
         Robot.DCGm.driveToPositionAngle(relativeValues, true);
         telemetry.addData("Status", "Run Time: " + runtime.toString());
         telemetry.update();
 
-        //SERVOS
-        if (gamepad1.a) {
-            Robot.SG.Servos[0].setPosition(0);
+        //Lift
+        double lift = gamepad2.left_stick_y;
+        double speed = lift * 100;
+        Robot.DCGl.raiseToInch(0.1,speed);
+
+
+
+
+        if (gamepad2.a) {
+            Robot.DCGl.raiseToBlock(-1,75);
         }
-        if (gamepad1.y) {
-            Robot.SG.Servos[0].setPosition(.9);
+        if (gamepad2.y) {
+            Robot.DCGl.raiseToBlock(1,75);
         }
+
+        //Intake
+        if (on == true) {
+            Robot.DCGi.setPower(new double[]{1});
+        }
+        if (on == false) { 
+            Robot.DCGi.setPower(new double[]{0});
+        }
+
+        if (gamepad2.left_trigger == 1) {
+            on = true;
+        }
+
+        if (gamepad2.right_trigger == 1) {
+            on = false;
+        }
+
     }
 
     //Initialized by: Stop / runs once
