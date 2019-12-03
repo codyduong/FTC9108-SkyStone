@@ -6,8 +6,8 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.team_classes.Robot;
 
-@Autonomous(name="Blue Building Zone", group="Blue")
-public class blueBuildingZone extends OpMode {
+@Autonomous(name="Blue Loading Zone", group="Blue")
+public class BlueLoadingZone extends OpMode {
 
     private ElapsedTime runtime = new ElapsedTime();
     private Robot Robot = new Robot();
@@ -22,7 +22,7 @@ public class blueBuildingZone extends OpMode {
     }
 
     //Position 1 is building zone, and position 2 is loading zone.
-    private int offset;
+    private int offset = 0;
     private int avarageColorBottom = 0;
     private int averageColorFront = 0;
     private int blockNumber = 0;
@@ -30,46 +30,38 @@ public class blueBuildingZone extends OpMode {
     @Override
     public void start() {
 
-        runtime.reset();
-
-
-        //starting facing wall, and 42.25'' away from the other wall
-        Robot.DCGm.driveToPosition(0,      65.75, 0);
-        Robot.DCGm.driveToPosition(20,     0,      0);
-        Robot.DCGm.driveToPosition(0,      -47.5,   0);
-        Robot.DCGm.driveToPosition(0,      47.5,  0);
-        Robot.DCGm.driveToPosition(-46.75, 0,      0);
-        Robot.DCGm.driveToPosition(0,      25,    0);
-
+        //Starting at wall, facing away, and 50" away from other wall.
+        Robot.DCGm.driveToPosition(0, 40, 0);
 
         while (getRuntime() < 20) {
 
             offset = 0;
             while (Robot.CSG.FrontColorSensor.argb() < averageColorFront) {
-            Robot.DCGm.driveToPosition(-1, 0, 0);
-            offset++;
+                Robot.DCGm.driveToPosition(-1, 0, 0);
             }
+            offset++;
 
-            // at this point, the robot will intake the skystone
-            Robot.DCGm.driveToPosition(offset,   0,0);
-            Robot.DCGm.driveToPosition(0,     43, 0);
+
+            //At this point, the robot will pick up the skystone.
+            // Robot.DCGm.driveToPosition(offset,0,0);
+            Robot.DCGm.driveToPosition(0,     -43, 0);
             Robot.DCGm.driveToPosition(26.75, 0,   0);
-            Robot.DCGm.driveToPosition(0,     -68,  0);
+            Robot.DCGm.driveToPosition(0,     68,  0);
             Robot.DCGm.driveToPosition(20,    0,   0);
             Robot.DCGm.driveToPosition(0,     0,   180);
             Robot.DCGl.raiseToBlock(blockNumber + 2.25,50);
             //At this point, the robot will output the stone in the foundation.
             Robot.DCGl.raiseToBlock(-blockNumber - 2.25,50);
-            blockNumber++;
-            Robot.DCGm.driveToPosition(0,      0,      180);
-            Robot.DCGm.driveToPosition(-20,    0,      0);
-            Robot.DCGm.driveToPosition(0,      68,    0);
-            Robot.DCGm.driveToPosition(-26.75, 0,      0);
-            Robot.DCGm.driveToPosition(0,      43,    0);
+            Robot.DCGm.driveToPosition(0,      0,   180);
+            Robot.DCGm.driveToPosition(-20,    0,   0);
+            Robot.DCGm.driveToPosition(0,      -68, 0);
+            Robot.DCGm.driveToPosition(-26.75, 0,   0);
+            Robot.DCGm.driveToPosition(0,      43,  0);
         }
 
-        while(Robot.CSG.BottomColorSensor.argb() < avarageColorBottom) {
-            Robot.DCGm.driveToPosition(-1,0,0);
+
+        while (Robot.CSG.BottomColorSensor.argb() < avarageColorBottom) {
+            Robot.DCGm.driveToPosition(-1, 0, 0);
         }
     }
 
@@ -86,3 +78,6 @@ public class blueBuildingZone extends OpMode {
         Robot.DCGm.setPower(new double[]{0,0,0,0});
     }
 }
+
+
+//Initialized by: Start / runs once

@@ -10,7 +10,7 @@ import org.firstinspires.ftc.teamcode.team_classes.Robot;
 
 
 @TeleOp(name="Mecanum", group="9108") //fix this
-public class teleOpMecanum extends OpMode {
+public class TeleOpMecanum extends OpMode {
 
     private ElapsedTime runtime = new ElapsedTime();
     private Robot Robot = new Robot();
