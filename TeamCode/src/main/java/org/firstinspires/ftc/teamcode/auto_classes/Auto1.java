@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.teamcode.team_classes.Robot;
 
 @Disabled
-public class auto1 extends OpMode {
+public class Auto1 extends OpMode {
     
 
 

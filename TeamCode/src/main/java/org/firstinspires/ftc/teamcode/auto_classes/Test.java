@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import org.firstinspires.ftc.teamcode.team_classes.Robot;
 
 @Autonomous(name="supertest", group="Auto") //fix this
-public class test extends OpMode {
+public class Test extends OpMode {
     Robot Robot = new Robot();
 
     public void init() {
