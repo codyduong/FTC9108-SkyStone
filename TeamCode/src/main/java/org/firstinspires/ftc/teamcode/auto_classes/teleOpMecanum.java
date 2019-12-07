@@ -29,8 +29,7 @@ public class teleOpMecanum extends OpMode {
     public void start() {
         runtime.reset();
     }
-
-    boolean on;
+    
 
     //Initialized by: After Start, Before Stop / loops
     @Override
