@@ -70,21 +70,12 @@ public class teleOpMecanum extends OpMode {
         }
 
         //Intake
-        if (on == true) {
-            Robot.DCGi.setPower(new double[]{1});
+        if(gamepad2.left_trigger == 1){
+            Robot.SGi.grab();
         }
-        if (on == false) { 
-            Robot.DCGi.setPower(new double[]{0});
+        if (gamepad2.right_trigger == 1){
+            Robot.SGi.drop();
         }
-
-        if (gamepad2.left_trigger == 1) {
-            on = true;
-        }
-
-        if (gamepad2.right_trigger == 1) {
-            on = false;
-        }
-
     }
 
     //Initialized by: Stop / runs once
