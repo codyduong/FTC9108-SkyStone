@@ -49,22 +49,23 @@ public class blueBuildingZone extends OpMode {
             offset++;
             }
 
+
             Robot.SGi.grab();
-            Robot.DCGm.driveToPosition(offset,   0,0);
-            Robot.DCGm.driveToPosition(0,     43, 0);
+            Robot.DCGm.driveToPosition(offset,   0,   0);
+            Robot.DCGm.driveToPosition(0,     43,  0);
             Robot.DCGm.driveToPosition(26.75, 0,   0);
-            Robot.DCGm.driveToPosition(0,     -68,  0);
+            Robot.DCGm.driveToPosition(0,     -68, 0);
             Robot.DCGm.driveToPosition(20,    0,   0);
             Robot.DCGm.driveToPosition(0,     0,   180);
             Robot.DCGl.raiseToBlock(blockNumber + 2.25,50);
             Robot.SGi.drop();
             Robot.DCGl.raiseToBlock(-blockNumber - 2.25,50);
             blockNumber++;
-            Robot.DCGm.driveToPosition(0,      0,      180);
-            Robot.DCGm.driveToPosition(-20,    0,      0);
-            Robot.DCGm.driveToPosition(0,      68,    0);
-            Robot.DCGm.driveToPosition(-26.75, 0,      0);
-            Robot.DCGm.driveToPosition(0,      43,    0);
+            Robot.DCGm.driveToPosition(0,      0,  180);
+            Robot.DCGm.driveToPosition(-20,    0,  0);
+            Robot.DCGm.driveToPosition(0,      68, 0);
+            Robot.DCGm.driveToPosition(-26.75, 0,  0);
+            Robot.DCGm.driveToPosition(0,      43, 0);
         }
 
         while(Robot.CSG.BottomColorSensor.argb() < avarageColorBottom) {
