@@ -57,10 +57,7 @@ public class teleOpMecanum extends OpMode {
         //Lift
         double lift = gamepad2.left_stick_y;
         double speed = lift * 100;
-        Robot.DCGl.raiseToInch(0.1,speed);
-
-
-
+        Robot.DCGl.raiseToInch(0.01,speed);
 
         if (gamepad2.a) {
             Robot.DCGl.raiseToBlock(-1,75);
@@ -76,6 +73,7 @@ public class teleOpMecanum extends OpMode {
         if (gamepad2.right_trigger == 1){
             Robot.SGi.drop();
         }
+
     }
 
     //Initialized by: Stop / runs once
