@@ -12,7 +12,7 @@ public class Robot {
     public BNOIMU IMU;
     public ServoGroup SG;
     public Lift DCGl;
-    public Intake DCGi;
+    public Intake SGi;
 
     //constructor
     public Robot() {
@@ -21,7 +21,7 @@ public class Robot {
         IMU = new BNOIMU(null);
         SG = new ServoGroup(new Servo[1]);
         DCGl = new Lift();
-        DCGi = new Intake();
+        SGi = new Intake();
     }
 
     public void initialize(HardwareMap HM, Telemetry T) {
@@ -30,6 +30,6 @@ public class Robot {
         IMU.initialize(HM, T);
         SG.initialize(HM, T);
         DCGl.initialize(HM, T);
-        DCGi.initialize(HM, T);
+        SGi.initialize(HM, T);
     }
 }

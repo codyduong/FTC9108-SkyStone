@@ -20,13 +20,9 @@ public class test extends OpMode {
     //Initialized by: Start / runs once
     @Override
     public void start() {
-        Robot.DCGm.driveToPosition(0,0,180);
-        //Robot.DCGm.setPower(new double[]{-100,-100,-100,-100});
-        Robot.DCGm.driveToPosition(0,1,0);
-        Robot.DCGm.driveToPosition(0,-1,0);
-        Robot.DCGm.driveToPosition(1,0,0);
-        Robot.DCGm.driveToPosition(-1,0,0);
-        Robot.DCGm.driveToPosition(0,0,180);
+
+        Robot.DCGm.setPower(new double[]{-100,-100,-100,-100});
+
     }
 
     //Initialized by: After Start, Before Stop / loops

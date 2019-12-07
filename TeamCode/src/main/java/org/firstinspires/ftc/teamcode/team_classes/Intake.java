@@ -1,21 +1,32 @@
 package org.firstinspires.ftc.teamcode.team_classes;
 
-import com.qualcomm.robotcore.hardware.DcMotor;
+
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.robotcore.external.navigation.Position;
-import org.firstinspires.ftc.teamcode.general_classes.Position2D;
-import org.firstinspires.ftc.teamcode.general_classes.Position2DAngle;
-
-public class Intake extends DcMotorGroup {
 
 
-    public Intake() { super(new DcMotor[1]); }
+public class Intake extends ServoGroup {
+
+
+    public Intake() { super(new Servo[1]); }
 
     public void initialize(HardwareMap Hmap, Telemetry Tm) {
-        this.DcMotors[0] = Hmap.get(DcMotor.class, "Intake_motor");
+        this.Servos[0] = Hmap.get(Servo.class, "Intake_servo");
     }
 
+    public void grab(){
+        this.Servos[0].setPosition(1);
+    }
+
+    public void drop(){
+        this.Servos[0].setPosition(0);
+    }
+
+    public void rotateToAngle(double angleTheta){
+        double possition = angleTheta / 180;
+        this.Servos[0].setPosition(possition);
+    }
 
 }
