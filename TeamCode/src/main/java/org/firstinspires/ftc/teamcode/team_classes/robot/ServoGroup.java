@@ -1,13 +1,11 @@
-package org.firstinspires.ftc.teamcode.team_classes;
+package org.firstinspires.ftc.teamcode.team_classes.robot;
 
-import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 public class ServoGroup {
-
     //Properties
     public Servo[] Servos;
     public int ServoCount;
@@ -24,7 +22,7 @@ public class ServoGroup {
         Servos[0] = Hmap.servo.get("servo");
         Servos[0].setDirection(Servo.Direction.FORWARD);
         Servos[0].scaleRange(Servos[0].MIN_POSITION, Servos[0].MAX_POSITION);
-        Tm.addData("DcMotorGroup Initialization","Complete");
+        Tm.addData("Servo Initialization","Complete");
         Tm.update();
     }
 }

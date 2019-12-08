@@ -1,12 +1,10 @@
-package org.firstinspires.ftc.teamcode.team_classes;
+package org.firstinspires.ftc.teamcode.team_classes.robot;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.robotcore.external.navigation.Position;
-import org.firstinspires.ftc.teamcode.general_classes.Position2D;
-import org.firstinspires.ftc.teamcode.general_classes.Position2DAngle;
+import org.firstinspires.ftc.teamcode.team_classes.robot.DcMotorGroup;
 
 public class Lift extends DcMotorGroup {
     //Constant Properties
@@ -24,6 +22,7 @@ public class Lift extends DcMotorGroup {
     //METHOD 1: self-explanatory
     public void initialize(HardwareMap Hmap, Telemetry Tm) {
         this.DcMotors[0] = Hmap.get(DcMotor.class, "Lift_motor");
+        Tm.addData("Lift Initialization","Complete");
     }
 
     public void raiseToInch(double inch, double speed){

@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode.auto_classes;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
-import org.firstinspires.ftc.teamcode.team_classes.Robot;
+import org.firstinspires.ftc.teamcode.team_classes.robot.Robot;
 
 @Autonomous(name="supertest", group="Auto") //fix this
 public class Test extends OpMode {

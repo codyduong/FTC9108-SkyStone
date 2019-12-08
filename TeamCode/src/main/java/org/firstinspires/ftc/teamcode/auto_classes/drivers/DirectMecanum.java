@@ -1,19 +1,18 @@
-package org.firstinspires.ftc.teamcode.auto_classes;
+package org.firstinspires.ftc.teamcode.auto_classes.drivers;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.general_classes.Position2DAngle;
-import org.firstinspires.ftc.teamcode.team_classes.Mecanum;
-import org.firstinspires.ftc.teamcode.team_classes.Robot;
+import org.firstinspires.ftc.teamcode.team_classes.robot.Robot;
 
 
-@TeleOp(name="Mecanum", group="9108") //fix this
-public class TeleOpMecanum extends OpMode {
+@TeleOp(name="Default Direct", group="9108") //fix this
+public class DirectMecanum extends OpMode {
 
     private ElapsedTime runtime = new ElapsedTime();
-    private Robot Robot = new Robot();
+    private Robot Robot = new Robot(gamepad1, gamepad2);
 
     //Initialized by: Initialization Button (i think)
     public void init() {
@@ -29,6 +28,7 @@ public class TeleOpMecanum extends OpMode {
     @Override
     public void start() {
         runtime.reset();
+        telemetry.setAutoClear(true);
     }
 
     boolean on;
@@ -49,19 +49,13 @@ public class TeleOpMecanum extends OpMode {
         if (Math.abs((double)turn) < .05) {
             turn = 0;
         }
-        double AverageHeading = (Math.toDegrees(Robot.IMU.getHeadingRadians()));
-        Position2DAngle relativeValues = Robot.DCGm.relativeValues(new Position2DAngle(drivex,drivey,turn), AverageHeading);
-        Robot.DCGm.driveToPositionAngle(relativeValues, true);
-        telemetry.addData("Status", "Run Time: " + runtime.toString());
-        telemetry.update();
+        Robot.DCGm.driveToPositionAngle(new Position2DAngle(drivex,drivey,turn), true);
 
+        /*
         //Lift
         double lift = gamepad2.left_stick_y;
         double speed = lift * 100;
         Robot.DCGl.raiseToInch(0.1,speed);
-
-
-
 
         if (gamepad2.a) {
             Robot.DCGl.raiseToBlock(-1,75);
@@ -85,7 +79,10 @@ public class TeleOpMecanum extends OpMode {
         if (gamepad2.right_trigger == 1) {
             on = false;
         }
+         */
 
+        Robot.DCGm.composeTelemetry(telemetry);
+        telemetry.addData("Status", "Run Time: " + runtime.toString());
     }
 
     //Initialized by: Stop / runs once
