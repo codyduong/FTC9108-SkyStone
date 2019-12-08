@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.auto_classes;
+package org.firstinspires.ftc.teamcode.auto_classes.drivers;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -9,7 +9,7 @@ import org.firstinspires.ftc.teamcode.team_classes.Mecanum;
 import org.firstinspires.ftc.teamcode.team_classes.Robot;
 
 
-@TeleOp(name="Default Relative", group="9108") //fix this
+@TeleOp(name="Default Normal", group="9108") //fix this
 public class TeleOpMecanum extends OpMode {
 
     private ElapsedTime runtime = new ElapsedTime();

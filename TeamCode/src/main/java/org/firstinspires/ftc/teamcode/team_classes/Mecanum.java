@@ -1,11 +1,9 @@
 package org.firstinspires.ftc.teamcode.team_classes;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.robotcore.external.navigation.Position;
 import org.firstinspires.ftc.teamcode.general_classes.Position2D;
 import org.firstinspires.ftc.teamcode.general_classes.Position2DAngle;
 
@@ -131,7 +129,7 @@ public class Mecanum extends DcMotorGroup {
                 }
                 this.setPower(new double[]{0,0,0,0});
             }
-        } else if (teleOp) {
+        } else {
             this.setPower(new double[]{V1n,V2n,V3n,V4n});
         }
     }
@@ -247,7 +245,7 @@ public class Mecanum extends DcMotorGroup {
      * @param THETA_robot The current angle of the robot.
      * @return
      */
-    public Position2DAngle relativeValues(Position2DAngle PosAngle, double THETA_robot) {
+    private Position2DAngle relativeValues(Position2DAngle PosAngle, double THETA_robot) {
         double THETA_triangle;
         double THETA_subtract = THETA_robot%360;
         if (PosAngle.X==0 && PosAngle.Y!=0) {
@@ -290,7 +288,7 @@ public class Mecanum extends DcMotorGroup {
 
 
     /**
-     * Converts an encoder value into
+     * Converts an encoder value into a ratio dependent on the unit circle
      * @param encoder
      * @param angle
      * @return

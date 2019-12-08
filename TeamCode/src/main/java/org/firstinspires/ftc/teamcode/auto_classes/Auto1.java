@@ -9,9 +9,6 @@ import org.firstinspires.ftc.teamcode.team_classes.Robot;
 
 @Disabled
 public class Auto1 extends OpMode {
-    
-
-
     private ElapsedTime runtime = new ElapsedTime();
     private Robot Robot = new Robot();
 
