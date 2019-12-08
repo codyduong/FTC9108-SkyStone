@@ -53,18 +53,15 @@ public class TeleOpMecanum extends OpMode {
         telemetry.setAutoClear(true);
     }
 
-    boolean on;
-
     //Initialized by: After Start, Before Stop / loops
     @Override
     public void loop() {
         Robot.run();
 
-        /*
         //Lift
         double lift = gamepad2.left_stick_y;
         double speed = lift * 100;
-        Robot.DCGl.raiseToInch(0.1,speed);
+        Robot.DCGl.raiseToInch(0.01,speed);
 
         if (gamepad2.a) {
             Robot.DCGl.raiseToBlock(-1,75);
@@ -74,21 +71,12 @@ public class TeleOpMecanum extends OpMode {
         }
 
         //Intake
-        if (on == true) {
-            Robot.DCGi.setPower(new double[]{1});
-        }
-        if (on == false) { 
-            Robot.DCGi.setPower(new double[]{0});
-        }
-
         if (gamepad2.left_trigger == 1) {
-            on = true;
+            Robot.SGi.grab();
         }
-
         if (gamepad2.right_trigger == 1) {
-            on = false;
+            Robot.SGi.drop();
         }
-         */
 
         Robot.IMU.composeTelemetry(telemetry);
         Robot.DCGm.composeTelemetry(telemetry);

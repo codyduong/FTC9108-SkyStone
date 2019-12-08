@@ -9,7 +9,7 @@ import org.firstinspires.ftc.teamcode.team_classes.robot.Robot;
 @Disabled
 public class Auto1 extends OpMode {
     private ElapsedTime runtime = new ElapsedTime();
-    private Robot Robot = new Robot();
+    private Robot Robot = new Robot(gamepad1,gamepad2);
 
     public void init() {
         telemetry.setAutoClear(false);

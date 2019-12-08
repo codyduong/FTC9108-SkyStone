@@ -10,7 +10,7 @@ import org.firstinspires.ftc.teamcode.team_classes.robot.Robot;
 public class RedLoadingZone extends OpMode {
 
     private ElapsedTime runtime = new ElapsedTime();
-    private Robot Robot = new Robot();
+    private Robot Robot = new Robot(gamepad1,gamepad2);
 
     public void init() {
         telemetry.setAutoClear(false);
@@ -38,25 +38,25 @@ public class RedLoadingZone extends OpMode {
             offset = 0;
             while (Robot.CSG.FrontColorSensor.argb() < averageColorFront) {
                 Robot.DCGm.driveToPosition(1, 0, 0);
+                offset++;
             }
-            offset++;
 
-
-            //At this point, the robot will pick up the skystone.
-            Robot.DCGm.driveToPosition(-offset,   0,   0);
-            Robot.DCGm.driveToPosition(0,      -43, 0);
-            Robot.DCGm.driveToPosition(-26.75, 0,   0);
-            Robot.DCGm.driveToPosition(0,      68,  0);
-            Robot.DCGm.driveToPosition(-20,    0,   0);
-            Robot.DCGm.driveToPosition(0,      0,   180);
-            Robot.DCGl.raiseToBlock(blockNumber + 2.25,50);
-            //At this point, the robot will output the stone in the foundation.
-            Robot.DCGl.raiseToBlock(-blockNumber - 2.25,50);
-            Robot.DCGm.driveToPosition(0,     0,   180);
-            Robot.DCGm.driveToPosition(20,    0,   0);
-            Robot.DCGm.driveToPosition(0,     -68, 0);
-            Robot.DCGm.driveToPosition(26.75, 0,   0);
+            Robot.SGi.grab(); //At this point, the robot will pick up the skystone.
+            Robot.DCGm.driveToPosition(offset,   0,   0);
             Robot.DCGm.driveToPosition(0,     43,  0);
+            Robot.DCGm.driveToPosition(26.75, 0,   0);
+            Robot.DCGm.driveToPosition(0,     -68, 0);
+            Robot.DCGm.driveToPosition(20,    0,   0);
+            Robot.DCGm.driveToPosition(0,     0,   180);
+            Robot.DCGl.raiseToBlock(blockNumber + 2.25,50);
+            Robot.SGi.drop(); //At this point, the robot will output the stone in the foundation.
+            Robot.DCGl.raiseToBlock(-blockNumber - 2.25,50);
+            blockNumber++;
+            Robot.DCGm.driveToPosition(0,      0,  180);
+            Robot.DCGm.driveToPosition(-20,    0,  0);
+            Robot.DCGm.driveToPosition(0,      68, 0);
+            Robot.DCGm.driveToPosition(-26.75, 0,  0);
+            Robot.DCGm.driveToPosition(0,      43, 0);
         }
 
 

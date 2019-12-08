@@ -129,6 +129,8 @@ public class Mecanum extends DcMotorGroup {
                     this.setPower(new double[]{m*V1n,m*V2n,m*V3n,m*V4n});
                 }
                 this.setPower(new double[]{0,0,0,0});
+            } else {
+                this.setPower(new double[]{0,0,0,0});
             }
         } else {
             this.setPower(new double[]{V1n,V2n,V3n,V4n});
