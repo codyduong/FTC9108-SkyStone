@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.team_classes;
 
 import com.qualcomm.robotcore.hardware.ColorSensor;
+import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
@@ -15,6 +16,8 @@ public class Robot {
     public Position2D EstimatedPosition;
     public double Angle;
 
+    public DriverConfiguration Driver1; //these DriverConfigurations use circular references which hurt my brain.
+    public DriverConfiguration Driver2;
     public Mecanum DCGm;
     public ColorSensorGroup CSG;
     public BNOIMU IMU;
@@ -23,8 +26,10 @@ public class Robot {
     public Intake DCGi;
     public RevHubGroup RHG;
 
-    //constructor
-    public Robot() {
+    //Constructor (hardware maps everything)
+    public Robot(Gamepad gamepad1, Gamepad gamepad2) {
+        Driver1 = new DriverConfiguration(this, gamepad1);
+        Driver2 = new DriverConfiguration(this, gamepad2);
         DCGm = new Mecanum();
         CSG = new ColorSensorGroup(new ColorSensor[2]);
         IMU = new BNOIMU(null);
@@ -45,7 +50,15 @@ public class Robot {
         T.addData("Robot Initialization","Complete");
     }
 
-    public void updateRobot() {
+    private void updateRobot() {
         this.Angle = Math.toDegrees(IMU.getHeadingRadians());
+    }
+
+    /**
+     * A method that runs all the essential processes of the robot. Including drivetrain, servos, etc...
+     */
+    public void run() {
+        updateRobot();
+        DCGm.teleOpDrive(new Position2DAngle((Driver1.drivex()),(Driver1.drivey()),(Driver1.turn())),Angle);
     }
 }

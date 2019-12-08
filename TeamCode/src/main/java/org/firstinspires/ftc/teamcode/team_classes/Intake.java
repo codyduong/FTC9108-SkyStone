@@ -10,7 +10,6 @@ import org.firstinspires.ftc.teamcode.general_classes.Position2DAngle;
 
 public class Intake extends DcMotorGroup {
 
-
     public Intake() { super(new DcMotor[1]); }
 
     public void initialize(HardwareMap Hmap, Telemetry Tm) {

@@ -2,18 +2,22 @@ package org.firstinspires.ftc.teamcode.auto_classes.drivers;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.general_classes.Position2DAngle;
+import org.firstinspires.ftc.teamcode.team_classes.DriverConfiguration;
+import org.firstinspires.ftc.teamcode.team_classes.GamepadInput;
 import org.firstinspires.ftc.teamcode.team_classes.Mecanum;
 import org.firstinspires.ftc.teamcode.team_classes.Robot;
+import org.firstinspires.ftc.teamcode.team_classes.SIGN;
 
 
 @TeleOp(name="Default Normal", group="9108") //fix this
 public class TeleOpMecanum extends OpMode {
 
     private ElapsedTime runtime = new ElapsedTime();
-    private Robot Robot = new Robot();
+    private Robot Robot = new Robot(gamepad1,gamepad2);
 
     //Initialized by: Initialization Button (i think)
     public void init() {
@@ -30,6 +34,11 @@ public class TeleOpMecanum extends OpMode {
     public void start() {
         runtime.reset();
         telemetry.setAutoClear(true);
+        Robot.Driver1.assignDebounce(500);
+        Robot.Driver1.assignAnalog(GamepadInput.Analog.left_stick_x, DriverConfiguration.ActionAnalog.drivex);
+        Robot.Driver1.assignAnalog(GamepadInput.Analog.left_stick_y, DriverConfiguration.ActionAnalog.drivey);
+        Robot.Driver1.assignSign(GamepadInput.Analog.left_stick_y, SIGN.NEGATIVE);
+        Robot.Driver1.assignAnalog(GamepadInput.Analog.right_stick_x, DriverConfiguration.ActionAnalog.turn);
         Robot.DCGm.setRelativeDrive(true);
         Robot.RHG.Hubs[0].setLedColor(255,255,255);
     }
@@ -39,6 +48,7 @@ public class TeleOpMecanum extends OpMode {
     //Initialized by: After Start, Before Stop / loops
     @Override
     public void loop() {
+
         //DRIVING
         double drivey = gamepad1.left_stick_y;
         double drivex = -gamepad1.left_stick_x;
