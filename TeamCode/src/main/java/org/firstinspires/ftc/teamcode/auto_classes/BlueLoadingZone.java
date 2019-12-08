@@ -10,13 +10,13 @@ import org.firstinspires.ftc.teamcode.team_classes.robot.Robot;
 public class BlueLoadingZone extends OpMode {
 
     private ElapsedTime runtime = new ElapsedTime();
-    private Robot Robot = new Robot(gamepad1,gamepad2);
+    private Robot Robot = new Robot(gamepad1, gamepad2, telemetry, hardwareMap);
 
     public void init() {
         telemetry.setAutoClear(false);
         telemetry.addData("Status", "Initializing");
         telemetry.update();
-        Robot.initialize(hardwareMap, telemetry);
+        Robot.initialize();
         telemetry.addData("Status", "Complete");
         telemetry.update();
     }

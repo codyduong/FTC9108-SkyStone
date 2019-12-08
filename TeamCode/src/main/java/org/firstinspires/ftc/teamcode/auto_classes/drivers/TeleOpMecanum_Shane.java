@@ -14,8 +14,8 @@ import static org.firstinspires.ftc.teamcode.team_classes.driver_configuration.A
 import static org.firstinspires.ftc.teamcode.team_classes.driver_configuration.ButtonBinary.Binary.*;
 import static org.firstinspires.ftc.teamcode.team_classes.driver_configuration.Action.Binary_Action.*;
 
-@TeleOp(name="Default Normal", group="9108") //fix this
-public class TeleOpMecanum extends OpMode {
+@TeleOp(name="Driver Shane", group="9108") //fix this
+public class TeleOpMecanum_Shane extends OpMode {
 
     private ElapsedTime runtime = new ElapsedTime();
     private Robot Robot = new Robot(gamepad1, gamepad2, telemetry, hardwareMap);
@@ -32,16 +32,16 @@ public class TeleOpMecanum extends OpMode {
         Robot.Driver1.assignAnalog(left_stick_x, drivex);
         Robot.Driver1.assignAnalog(left_stick_y, drivey);
         Robot.Driver1.assignSign  (left_stick_y, ButtonAnalog.SIGN.NEGATIVE);
-        Robot.Driver1.assignAnalog(left_trigger, ANALOG_turnLeft);
-        Robot.Driver1.assignAnalog(right_trigger, ANALOG_turnRight);
         Robot.Driver1.assignAnalog(right_stick_y, turn);
-        Robot.Driver1.assignBinary(dpad_up, faceUp);
-        Robot.Driver1.assignBinary(dpad_right, faceRight);
-        Robot.Driver1.assignBinary(dpad_down, faceDown);
-        Robot.Driver1.assignBinary(dpad_left, faceLeft);
-        Robot.Driver1.assignBinary(start, swapDriveMode);
-        Robot.Driver1.assignBinary(back, resetGyro);
-        Robot.Driver1.assignToggle(back, ButtonBinary.ACTUATE.TOGGLE);
+        Robot.Driver1.assignBinary(y, faceUp);
+        Robot.Driver1.assignBinary(b, faceRight);
+        Robot.Driver1.assignBinary(a, faceDown);
+        Robot.Driver1.assignBinary(x, faceLeft);
+        Robot.Driver1.assignBinary(dpad_left, BINARY_turnLeft);
+        Robot.Driver1.assignBinary(dpad_right, BINARY_turnRight);
+        Robot.Driver1.assignBinary(y, swapDriveMode);
+        Robot.Driver1.assignBinary(ButtonBinary.Binary.none, resetGyro);
+        Robot.Driver1.assignToggle(ButtonBinary.Binary.none, ButtonBinary.ACTUATE.TOGGLE);
         /*STARTDRIVER2*/
         Robot.Driver2 = new DriverConfiguration(Robot, gamepad2);
         Robot.Driver2.assignDebounce(500);

@@ -12,14 +12,14 @@ import org.firstinspires.ftc.teamcode.team_classes.robot.Robot;
 public class DirectMecanum extends OpMode {
 
     private ElapsedTime runtime = new ElapsedTime();
-    private Robot Robot = new Robot(gamepad1, gamepad2);
+    private Robot Robot = new Robot(gamepad1, gamepad2, telemetry, hardwareMap);
 
     //Initialized by: Initialization Button (i think)
     public void init() {
         telemetry.setAutoClear(false);
         telemetry.addData("Status", "Initializing");
         telemetry.update();
-        Robot.initialize(hardwareMap,telemetry);
+        Robot.initialize();
         telemetry.addData("Status","Complete");
         telemetry.update();
     }
@@ -49,7 +49,7 @@ public class DirectMecanum extends OpMode {
         if (Math.abs((double)turn) < .05) {
             turn = 0;
         }
-        Robot.DCGm.driveToPositionAngle(new Position2DAngle(drivex,drivey,turn), true);
+        Robot.DCGm.driveToPositionAngle(new Position2DAngle(drivex,drivey,turn), true, 1);
 
         /*
         //Lift

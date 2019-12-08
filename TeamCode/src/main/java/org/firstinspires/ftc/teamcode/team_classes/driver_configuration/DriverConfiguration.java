@@ -6,6 +6,7 @@ import org.firstinspires.ftc.teamcode.team_classes.robot.Robot;
 
 import static org.firstinspires.ftc.teamcode.team_classes.driver_configuration.ButtonAnalog.getAnalogLength;
 import static org.firstinspires.ftc.teamcode.team_classes.driver_configuration.ButtonBinary.getBinaryLength;
+import static org.firstinspires.ftc.teamcode.team_classes.driver_configuration.ButtonBinary.getBinaryNumber;
 
 /**
  * When I look back on this, I will have no idea how I did it.
@@ -13,8 +14,8 @@ import static org.firstinspires.ftc.teamcode.team_classes.driver_configuration.B
  */
 public class DriverConfiguration {
     private org.firstinspires.ftc.teamcode.team_classes.robot.Robot Robot;
-    private ButtonAnalog[] Analogs;
-    private ButtonBinary[] Binarys;
+    public ButtonAnalog[] Analogs;
+    public ButtonBinary[] Binarys;
     private Gamepad GP;     //gamepad reference
     private int lastRetDeb;
     private int debounce; //measured in an unknown (if even consistent) unit? (gamepad uses bytebuffer and im not smart enough for that)
@@ -85,7 +86,7 @@ public class DriverConfiguration {
     public float retrieveAnalogFromAction(Action.Analog_Action ABS_Action) {
         for (int i=0; i<Analogs.length; i++) {
             if (Analogs[i].Action == ABS_Action) {
-                return ButtonAnalog.checkAnalog(GP, Analogs[i].Button);
+                return retrieveAnalog(Analogs[i].Button);
             }
         }
         throw new IllegalArgumentException("No button is assigned to that action");
@@ -119,9 +120,15 @@ public class DriverConfiguration {
      * @return boolean
      */
     public boolean retrieveBinary(ButtonBinary.Binary ABS_Button) {
-        if (GP.timestamp > lastRetDeb) {
-            return (ButtonBinary.checkBinary(GP, ABS_Button));
+        if (Binarys[getBinaryNumber(ABS_Button)].Actuate == ButtonBinary.ACTUATE.TOGGLE) {
+            if (GP.timestamp > lastRetDeb) {
+                Binarys[getBinaryNumber(ABS_Button)].Toggled = !Binarys[getBinaryNumber(ABS_Button)].Toggled;
+            }
+            return Binarys[getBinaryNumber(ABS_Button)].Toggled;
         } else {
+            if (GP.timestamp > lastRetDeb) {
+                return (ButtonBinary.checkBinary(GP, ABS_Button));
+            }
             return false;
         }
     }
