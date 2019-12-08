@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.team_classes;
+package org.firstinspires.ftc.teamcode.team_classes.robot;
 
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -22,8 +22,8 @@ public class ColorSensorGroup {
     }
 
     public void initialize(HardwareMap Hmap, Telemetry Tm) {
-        //ColorSensors[0] = Hmap.colorSensor.get("bottom_color");
-        //ColorSensors[1] = Hmap.colorSensor.get("front_color");
+        ColorSensors[0] = Hmap.colorSensor.get("bottom_color");
+        ColorSensors[1] = Hmap.colorSensor.get("front_color");
         Tm.addData("ColorSensorGroup","Complete");
         Tm.update();
     }

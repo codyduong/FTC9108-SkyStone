@@ -5,14 +5,14 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.general_classes.Position2DAngle;
-import org.firstinspires.ftc.teamcode.team_classes.Robot;
+import org.firstinspires.ftc.teamcode.team_classes.robot.Robot;
 
 
 @TeleOp(name="Default Direct", group="9108") //fix this
 public class DirectMecanum extends OpMode {
 
     private ElapsedTime runtime = new ElapsedTime();
-    private Robot Robot = new Robot();
+    private Robot Robot = new Robot(gamepad1, gamepad2);
 
     //Initialized by: Initialization Button (i think)
     public void init() {

@@ -2,16 +2,28 @@ package org.firstinspires.ftc.teamcode.auto_classes.drivers;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.general_classes.Position2DAngle;
-import org.firstinspires.ftc.teamcode.team_classes.DriverConfiguration;
-import org.firstinspires.ftc.teamcode.team_classes.GamepadInput;
-import org.firstinspires.ftc.teamcode.team_classes.Mecanum;
-import org.firstinspires.ftc.teamcode.team_classes.Robot;
-import org.firstinspires.ftc.teamcode.team_classes.SIGN;
+import org.firstinspires.ftc.teamcode.team_classes.driver_configuration.ButtonAnalog;
+import org.firstinspires.ftc.teamcode.team_classes.driver_configuration.ButtonBinary;
+import org.firstinspires.ftc.teamcode.team_classes.driver_configuration.DriverConfiguration;
+import org.firstinspires.ftc.teamcode.team_classes.robot.Robot;
 
+import static org.firstinspires.ftc.teamcode.team_classes.driver_configuration.Action.Analog_Action.drivex;
+import static org.firstinspires.ftc.teamcode.team_classes.driver_configuration.Action.Analog_Action.drivey;
+import static org.firstinspires.ftc.teamcode.team_classes.driver_configuration.Action.Analog_Action.turn;
+import static org.firstinspires.ftc.teamcode.team_classes.driver_configuration.Action.Binary_Action.faceDown;
+import static org.firstinspires.ftc.teamcode.team_classes.driver_configuration.Action.Binary_Action.faceLeft;
+import static org.firstinspires.ftc.teamcode.team_classes.driver_configuration.Action.Binary_Action.faceRight;
+import static org.firstinspires.ftc.teamcode.team_classes.driver_configuration.Action.Binary_Action.faceUp;
+import static org.firstinspires.ftc.teamcode.team_classes.driver_configuration.Action.Binary_Action.resetGyro;
+import static org.firstinspires.ftc.teamcode.team_classes.driver_configuration.Action.Binary_Action.swapDriveMode;
+import static org.firstinspires.ftc.teamcode.team_classes.driver_configuration.Action.Binary_Action.turnLeft;
+import static org.firstinspires.ftc.teamcode.team_classes.driver_configuration.Action.Binary_Action.turnRight;
+import static org.firstinspires.ftc.teamcode.team_classes.driver_configuration.ButtonAnalog.Analog.left_stick_x;
+import static org.firstinspires.ftc.teamcode.team_classes.driver_configuration.ButtonAnalog.Analog.left_stick_y;
+import static org.firstinspires.ftc.teamcode.team_classes.driver_configuration.ButtonAnalog.Analog.right_stick_y;
 
 @TeleOp(name="Default Normal", group="9108") //fix this
 public class TeleOpMecanum extends OpMode {
@@ -25,6 +37,23 @@ public class TeleOpMecanum extends OpMode {
         telemetry.addData("Status", "Initializing");
         telemetry.update();
         Robot.initialize(hardwareMap,telemetry);
+        Robot.Driver1 = new DriverConfiguration(Robot, gamepad1);
+        Robot.Driver2 = new DriverConfiguration(Robot, gamepad2);
+        Robot.Driver1.assignDebounce(500);
+        Robot.Driver1.assignAnalog(                         left_stick_x, drivex);
+        Robot.Driver1.assignAnalog(                         left_stick_y, drivey);
+        Robot.Driver1.assignSign(                           left_stick_y, ButtonAnalog.SIGN.NEGATIVE);
+        Robot.Driver1.assignAnalog(                         right_stick_y, turn);
+        Robot.Driver1.assignBinary(ButtonBinary.Binary.     y, swapDriveMode);
+        Robot.Driver1.assignBinary(ButtonBinary.Binary.     dpad_up, faceUp);
+        Robot.Driver1.assignBinary(ButtonBinary.Binary.     dpad_right, faceRight);
+        Robot.Driver1.assignBinary(ButtonBinary.Binary.     dpad_down, faceDown);
+        Robot.Driver1.assignBinary(ButtonBinary.Binary.     dpad_left, faceLeft);
+        Robot.Driver1.assignBinary(ButtonBinary.Binary.     left_bumper, turnLeft);
+        Robot.Driver1.assignBinary(ButtonBinary.Binary.     right_bumper, turnRight);
+        Robot.Driver1.assignBinary(ButtonBinary.Binary.     back, resetGyro);
+        Robot.DCGm.setRelativeDrive(true);
+        Robot.RHG.Hubs[0].setLedColor(255,255,255);
         telemetry.addData("Status","Complete");
         telemetry.update();
     }
@@ -34,13 +63,6 @@ public class TeleOpMecanum extends OpMode {
     public void start() {
         runtime.reset();
         telemetry.setAutoClear(true);
-        Robot.Driver1.assignDebounce(500);
-        Robot.Driver1.assignAnalog(GamepadInput.Analog.left_stick_x, DriverConfiguration.ActionAnalog.drivex);
-        Robot.Driver1.assignAnalog(GamepadInput.Analog.left_stick_y, DriverConfiguration.ActionAnalog.drivey);
-        Robot.Driver1.assignSign(GamepadInput.Analog.left_stick_y, SIGN.NEGATIVE);
-        Robot.Driver1.assignAnalog(GamepadInput.Analog.right_stick_x, DriverConfiguration.ActionAnalog.turn);
-        Robot.DCGm.setRelativeDrive(true);
-        Robot.RHG.Hubs[0].setLedColor(255,255,255);
     }
 
     boolean on;
@@ -48,37 +70,7 @@ public class TeleOpMecanum extends OpMode {
     //Initialized by: After Start, Before Stop / loops
     @Override
     public void loop() {
-
-        //DRIVING
-        double drivey = gamepad1.left_stick_y;
-        double drivex = -gamepad1.left_stick_x;
-        double turn = gamepad1.right_stick_x;
-        if (Math.abs((double)drivey) < .05) {
-            drivey = 0;
-        }
-        if (Math.abs((double)drivex) < .05) {
-            drivex = 0;
-        }
-        if (Math.abs((double)turn) < .05) {
-            turn = 0;
-        }
-        double Heading = (Math.toDegrees(Robot.IMU.getHeadingRadians()));
-        Robot.DCGm.teleOpDrive(new Position2DAngle(drivex,drivey,turn),Heading);
-
-        final int debounceTime = 500; //in ms
-        double runtimeRef = 0;
-        double runtimeRef2 = runtimeRef + debounceTime;
-        if(gamepad1.a) {
-            if (runtimeRef2 < runtime.milliseconds()) {
-                Robot.DCGm.setRelativeDriveToggle();
-                if (Robot.DCGm.relativeDrive) {
-                    Robot.RHG.Hubs[0].setLedColor(255,255,255);
-                } else {
-                    Robot.RHG.Hubs[0].setLedColor(255,0,0);
-                }
-                runtimeRef = runtime.milliseconds();
-            }
-        }
+        Robot.run();
 
         /*
         //Lift
@@ -110,6 +102,7 @@ public class TeleOpMecanum extends OpMode {
         }
          */
 
+        Robot.IMU.composeTelemetry(telemetry);
         Robot.DCGm.composeTelemetry(telemetry);
         telemetry.addData("Status", "Run Time: " + runtime.toString());
     }

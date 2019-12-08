@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.team_classes;
+package org.firstinspires.ftc.teamcode.team_classes.robot;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -15,6 +15,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.Velocity;
 
 import java.util.Locale;
 
+//code is a little bit bloated//deprecated, will maybe fix...
 public class BNOIMU {
     public BNO055IMU imu;
 
@@ -63,7 +64,7 @@ public class BNOIMU {
         return globalAngle;
     }
 
-    private void resetAngle()
+    public void resetAngle()
     {
         lastAngles = imu.getAngularOrientation(AxesReference.EXTRINSIC, AxesOrder.XZY, AngleUnit.DEGREES);
 
