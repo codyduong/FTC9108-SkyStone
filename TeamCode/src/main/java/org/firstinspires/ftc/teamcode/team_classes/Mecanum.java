@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.team_classes;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -12,6 +13,8 @@ import org.firstinspires.ftc.teamcode.general_classes.Position2DAngle;
  * For all stuff Mecanum Drivetrain related
  */
 public class Mecanum extends DcMotorGroup {
+    public boolean relativeDrive = false;
+
     //Constant Properties
     private static final double     COUNTS_PER_MOTOR_REV    = 753.2 ;   // SKU: 5202-0002-0027
     private static final double     DRIVE_GEAR_REDUCTION    = 1.0 ;     // This is < 1.0 if geared UP
@@ -38,7 +41,7 @@ public class Mecanum extends DcMotorGroup {
         this.DcMotors[3] = Hmap.get(DcMotor.class, "back_right_motor");
         this.DcMotors[0].setDirection(DcMotor.Direction.REVERSE);
         this.DcMotors[1].setDirection(DcMotor.Direction.FORWARD);
-        this.DcMotors[2].setDirection(DcMotor.Direction.REVERSE);
+        this.DcMotors[2].setDirection(DcMotor.Direction.FORWARD);
         this.DcMotors[3].setDirection(DcMotor.Direction.REVERSE);
         Tm.addData("Encoders","Resetting");
         this.DcMotors[0].setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -49,11 +52,11 @@ public class Mecanum extends DcMotorGroup {
         this.DcMotors[1].setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         this.DcMotors[2].setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         this.DcMotors[3].setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        this.DcMotors[0].setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        this.DcMotors[1].setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        this.DcMotors[2].setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        this.DcMotors[3].setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        Tm.addData("DcMotorGroup Initialization","Complete");
+        this.DcMotors[0].setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        this.DcMotors[1].setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        this.DcMotors[2].setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        this.DcMotors[3].setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        Tm.addData("Mecanum Initialization","Complete");
         Tm.update();
     }
 
@@ -75,10 +78,10 @@ public class Mecanum extends DcMotorGroup {
         double degreesAngle = PositionAngle.ANGLE;
 
         //NOTE: This uses displacement instead of velocity, since in practice the ratio of velocity_X to velocity_Y, will be equal to ratio of displacement_X to displacement_Y.
-        double V1 = relativeY - relativeX + degreesAngle * (XYcombinedD);
-        double V2 = relativeY + relativeX - degreesAngle * (XYcombinedD);
-        double V3 = relativeY - relativeX - degreesAngle * (XYcombinedD);
-        double V4 = relativeY + relativeX + degreesAngle * (XYcombinedD);
+        double V1 = relativeY - relativeX + degreesAngle /* * (XYcombinedD)*/;
+        double V2 = relativeY + relativeX - degreesAngle /* * (XYcombinedD)*/;
+        double V3 = relativeY - relativeX - degreesAngle /* * (XYcombinedD)*/;
+        double V4 = relativeY + relativeX + degreesAngle /* * (XYcombinedD)*/;
 
         double largest = Math.max((double)Math.max((double)V1,(double)V2),(double)Math.max((double)V3,(double)V4));
         double smallest = Math.min((double)Math.min((double)V1,(double)V2),(double)Math.min((double)V3,(double)V4));
@@ -101,28 +104,28 @@ public class Mecanum extends DcMotorGroup {
             //WHILE ENCODER LOOP HERE
             if (divisor == Math.abs(V1)) {
                 this.DcMotors[0].setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-                while (this.DcMotors[0].getCurrentPosition() < EncoderMax){
+                while (Math.abs(this.DcMotors[0].getCurrentPosition()) < EncoderMax){
                     double m = nonlinearEncoderPercentagePower(this.DcMotors[0].getCurrentPosition(), EncoderMax);
                     this.setPower(new double[]{m*V1n,m*V2n,m*V3n,m*V4n});
                 }
                 this.setPower(new double[]{0,0,0,0});
             } else if (divisor == Math.abs(V2)) {
                 this.DcMotors[1].setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-                while (this.DcMotors[1].getCurrentPosition() < EncoderMax){
+                while (Math.abs(this.DcMotors[1].getCurrentPosition()) < EncoderMax){
                     double m = nonlinearEncoderPercentagePower(this.DcMotors[1].getCurrentPosition(), EncoderMax);
                     this.setPower(new double[]{m*V1n,m*V2n,m*V3n,m*V4n});
                 }
                 this.setPower(new double[]{0,0,0,0});
             } else if (divisor == Math.abs(V3)) {
                 this.DcMotors[2].setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-                while (this.DcMotors[2].getCurrentPosition() < EncoderMax){
+                while (Math.abs(this.DcMotors[2].getCurrentPosition()) < EncoderMax){
                     double m = nonlinearEncoderPercentagePower(this.DcMotors[2].getCurrentPosition(), EncoderMax);
                     this.setPower(new double[]{m*V1n,m*V2n,m*V3n,m*V4n});
                 }
                 this.setPower(new double[]{0,0,0,0});
             } else if (divisor == Math.abs(V4)) {
                 this.DcMotors[3].setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-                while (this.DcMotors[3].getCurrentPosition() < EncoderMax){
+                while (Math.abs(this.DcMotors[3].getCurrentPosition()) < EncoderMax){
                     double m = nonlinearEncoderPercentagePower(this.DcMotors[3].getCurrentPosition(), EncoderMax);
                     this.setPower(new double[]{m*V1n,m*V2n,m*V3n,m*V4n});
                 }
@@ -279,7 +282,7 @@ public class Mecanum extends DcMotorGroup {
      * @param inches The amount of inches to become an encoder value.
      * @return returns the encoder value.
      */
-    public double inchToEncoder(double inches){
+    private double inchToEncoder(double inches){
         return inches*COUNTS_PER_INCH;
     }
 
@@ -294,6 +297,30 @@ public class Mecanum extends DcMotorGroup {
      */
     public double EncoderRatioAngle(double encoder, double angle){
         return 0;
+    }
+
+    public void composeTelemetry(Telemetry Tm) {
+        Tm.addData("FR_Motor", this.DcMotors[0].getCurrentPosition());
+        Tm.addData("FL_Motor", this.DcMotors[1].getCurrentPosition());
+        Tm.addData("BL_Motor", this.DcMotors[2].getCurrentPosition());
+        Tm.addData("BR_Motor", this.DcMotors[3].getCurrentPosition());
+    }
+
+    public void setRelativeDrive(boolean inputBool) {
+        relativeDrive = inputBool;
+    }
+
+    public void setRelativeDriveToggle() {
+        relativeDrive = !relativeDrive;
+    }
+
+    public void teleOpDrive(Position2DAngle input, double Heading) {
+        if (relativeDrive) {
+            Position2DAngle newRelative = relativeValues(input, Heading);
+            driveToPositionAngle(newRelative, true);
+        } else {
+            driveToPositionAngle(input, true);
+        }
     }
 
 }

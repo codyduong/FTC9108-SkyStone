@@ -15,6 +15,7 @@ public class Intake extends DcMotorGroup {
 
     public void initialize(HardwareMap Hmap, Telemetry Tm) {
         this.DcMotors[0] = Hmap.get(DcMotor.class, "Intake_motor");
+        Tm.addData("Intake Initialization","Complete");
     }
 
 

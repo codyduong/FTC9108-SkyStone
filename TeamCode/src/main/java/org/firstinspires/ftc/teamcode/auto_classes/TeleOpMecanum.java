@@ -9,7 +9,7 @@ import org.firstinspires.ftc.teamcode.team_classes.Mecanum;
 import org.firstinspires.ftc.teamcode.team_classes.Robot;
 
 
-@TeleOp(name="Mecanum", group="9108") //fix this
+@TeleOp(name="Default Relative", group="9108") //fix this
 public class TeleOpMecanum extends OpMode {
 
     private ElapsedTime runtime = new ElapsedTime();
@@ -29,6 +29,9 @@ public class TeleOpMecanum extends OpMode {
     @Override
     public void start() {
         runtime.reset();
+        telemetry.setAutoClear(true);
+        Robot.DCGm.setRelativeDrive(true);
+        Robot.RHG.Hubs[0].setLedColor(255,255,255);
     }
 
     boolean on;
@@ -50,10 +53,24 @@ public class TeleOpMecanum extends OpMode {
             turn = 0;
         }
         double Heading = (Math.toDegrees(Robot.IMU.getHeadingRadians()));
-        Position2DAngle relativeValues = Robot.DCGm.relativeValues(new Position2DAngle(drivex,drivey,turn), Heading);
-        Robot.DCGm.driveToPositionAngle(relativeValues, true);
+        Robot.DCGm.teleOpDrive(new Position2DAngle(drivex,drivey,turn),Heading);
 
+        final int debounceTime = 500; //in ms
+        double runtimeRef = 0;
+        double runtimeRef2 = runtimeRef + debounceTime;
+        if(gamepad1.a) {
+            if (runtimeRef2 < runtime.milliseconds()) {
+                Robot.DCGm.setRelativeDriveToggle();
+                if (Robot.DCGm.relativeDrive) {
+                    Robot.RHG.Hubs[0].setLedColor(255,255,255);
+                } else {
+                    Robot.RHG.Hubs[0].setLedColor(255,0,0);
+                }
+                runtimeRef = runtime.milliseconds();
+            }
+        }
 
+        /*
         //Lift
         double lift = gamepad2.left_stick_y;
         double speed = lift * 100;
@@ -81,7 +98,9 @@ public class TeleOpMecanum extends OpMode {
         if (gamepad2.right_trigger == 1) {
             on = false;
         }
+         */
 
+        Robot.DCGm.composeTelemetry(telemetry);
         telemetry.addData("Status", "Run Time: " + runtime.toString());
     }
 

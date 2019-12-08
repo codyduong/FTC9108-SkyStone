@@ -8,6 +8,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.Position;
 import org.firstinspires.ftc.teamcode.general_classes.Position2D;
 import org.firstinspires.ftc.teamcode.general_classes.Position2DAngle;
+import org.openftc.revextensions2.ExpansionHubEx;
 
 public class Robot {
     public Position2D Position;
@@ -20,6 +21,7 @@ public class Robot {
     public ServoGroup SG;
     public Lift DCGl;
     public Intake DCGi;
+    public RevHubGroup RHG;
 
     //constructor
     public Robot() {
@@ -29,6 +31,7 @@ public class Robot {
         SG = new ServoGroup(new Servo[1]);
         DCGl = new Lift();
         DCGi = new Intake();
+        RHG = new RevHubGroup(new ExpansionHubEx[2]);
     }
 
     public void initialize(HardwareMap HM, Telemetry T) {
@@ -38,6 +41,8 @@ public class Robot {
         SG.initialize(HM, T);
         DCGl.initialize(HM, T);
         DCGi.initialize(HM, T);
+        RHG.initialize(HM, T);
+        T.addData("Robot Initialization","Complete");
     }
 
     public void updateRobot() {

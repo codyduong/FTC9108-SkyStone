@@ -37,6 +37,7 @@ public class BNOIMU {
         this.imu.initialize(parameters);
         this.imu.startAccelerationIntegration(new Position(), new Velocity(), 1000);
         this.resetAngle();
+        Tm.addData("BNOIMU Initialization","Complete");
     }
 
     public double getAngle()
