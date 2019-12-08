@@ -25,23 +25,36 @@ public class TeleOpMecanum extends OpMode {
         telemetry.addData("Status", "Initializing");
         telemetry.update();
         Robot.initialize(hardwareMap,telemetry);
+        /*STARTDRIVER1*/
         Robot.Driver1 = new DriverConfiguration(Robot, gamepad1);
-        Robot.Driver2 = new DriverConfiguration(Robot, gamepad2);
         Robot.Driver1.assignDebounce(500);
         Robot.Driver1.assignAnalog(left_stick_x, drivex);
         Robot.Driver1.assignAnalog(left_stick_y, drivey);
-        Robot.Driver1.assignSign(left_stick_y, ButtonAnalog.SIGN.NEGATIVE);
+        Robot.Driver1.assignSign  (left_stick_y, ButtonAnalog.SIGN.NEGATIVE);
+        Robot.Driver1.assignAnalog(left_trigger, ANALOG_turnLeft);
+        Robot.Driver1.assignAnalog(right_trigger, ANALOG_turnRight);
         Robot.Driver1.assignAnalog(right_stick_y, turn);
         Robot.Driver1.assignBinary(y, swapDriveMode);
+        /* deprecated code
         Robot.Driver1.assignBinary(dpad_up, faceUp);
         Robot.Driver1.assignBinary(dpad_right, faceRight);
         Robot.Driver1.assignBinary(dpad_down, faceDown);
         Robot.Driver1.assignBinary(dpad_left, faceLeft);
-        Robot.Driver1.assignBinary(left_bumper, turnLeft);
-        Robot.Driver1.assignBinary(right_bumper, turnRight);
+        Robot.Driver1.assignBinary(left_bumper, BINARY_turnLeft);
+        Robot.Driver1.assignBinary(right_bumper, BINARY_turnRight);
+         */
         Robot.Driver1.assignBinary(back, resetGyro);
+        /*STARTDRIVER2*/
+        Robot.Driver2 = new DriverConfiguration(Robot, gamepad2);
+        Robot.Driver2.assignDebounce(500);
+        Robot.Driver2.assignAnalog(left_stick_y, elevatorDrive);
+        Robot.Driver2.assignAnalog(left_trigger, intakeGrab);
+        Robot.Driver2.assignAnalog(right_trigger, intakeDrop);
+        Robot.Driver2.assignBinary(a, elevatorLowerAbs);
+        Robot.Driver2.assignBinary(y, elevatorRaiseAbs);
+        /*ENCONFIG*/
         Robot.DCGm.setRelativeDrive(true);
-        Robot.RHG.Hubs[0].setLedColor(255,255,255);
+        Robot.RHG.Hubs[0].setLedColor(0,255,255);
         telemetry.addData("Status","Complete");
         telemetry.update();
     }
@@ -57,27 +70,6 @@ public class TeleOpMecanum extends OpMode {
     @Override
     public void loop() {
         Robot.run();
-
-        //Lift
-        double lift = gamepad2.left_stick_y;
-        double speed = lift * 100;
-        Robot.DCGl.raiseToInch(0.01,speed);
-
-        if (gamepad2.a) {
-            Robot.DCGl.raiseToBlock(-1,75);
-        }
-        if (gamepad2.y) {
-            Robot.DCGl.raiseToBlock(1,75);
-        }
-
-        //Intake
-        if (gamepad2.left_trigger == 1) {
-            Robot.SGi.grab();
-        }
-        if (gamepad2.right_trigger == 1) {
-            Robot.SGi.drop();
-        }
-
         Robot.IMU.composeTelemetry(telemetry);
         Robot.DCGm.composeTelemetry(telemetry);
         telemetry.addData("Status", "Run Time: " + runtime.toString());

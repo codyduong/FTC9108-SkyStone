@@ -8,14 +8,12 @@ import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.general_classes.Position2D;
 import org.firstinspires.ftc.teamcode.general_classes.Position2DAngle;
-import org.firstinspires.ftc.teamcode.team_classes.Intake;
 import org.firstinspires.ftc.teamcode.team_classes.driver_configuration.Action;
 import org.firstinspires.ftc.teamcode.team_classes.driver_configuration.DriverConfiguration;
 import org.openftc.revextensions2.ExpansionHubEx;
 
-import static org.firstinspires.ftc.teamcode.team_classes.driver_configuration.Action.Analog_Action.drivex;
-import static org.firstinspires.ftc.teamcode.team_classes.driver_configuration.Action.Analog_Action.drivey;
-import static org.firstinspires.ftc.teamcode.team_classes.driver_configuration.Action.Analog_Action.turn;
+import static org.firstinspires.ftc.teamcode.team_classes.driver_configuration.Action.Analog_Action.*;
+import static org.firstinspires.ftc.teamcode.team_classes.driver_configuration.Action.Binary_Action.*;
 
 public class Robot {
     public Position2D Position;
@@ -67,10 +65,20 @@ public class Robot {
         updateRobot();
         robotMecanumDrive();
         swapDrive();
+        /*
         faceUp();
         faceRight();
         faceDown();
         faceLeft();
+         */
+        elevatorDrive();
+        elevatorRaiseAbs();
+        elevatorLowerAbs();
+        intakeGrab();
+        intakeDrop();
+        turnLeft();
+        turnRight();
+        resetGyro();
     }
 
     public void robotMecanumDrive() {
@@ -91,12 +99,12 @@ public class Robot {
     }
 
     public void swapDrive() {
-        if (Driver1.retrieveBinaryFromAction(Action.Binary_Action.swapDriveMode)) {
+        if (Driver1.retrieveBinaryFromAction(swapDriveMode)) {
             DCGm.setRelativeDriveToggle();
             if (DCGm.relativeDrive) {
-                RHG.Hubs[0].setLedColor(255,255,255);
+                RHG.Hubs[0].setLedColor(0,255,255);
             } else {
-                RHG.Hubs[0].setLedColor(255,0,0);
+                RHG.Hubs[0].setLedColor(100,0,255);
             }
         }
     }
@@ -106,28 +114,61 @@ public class Robot {
     }
 
     public void faceRight() {
-
     }
 
     public void faceDown() {
-
     }
 
     public void faceLeft() {
-
     }
 
     public void turnLeft() {
-
+        double speed = Driver1.retrieveAnalogFromAction(ANALOG_turnLeft)*90;
+        Position2DAngle InputDrive = new Position2DAngle(0,0,speed);
+        DCGm.teleOpDrive(InputDrive,Angle);
     }
 
     public void turnRight() {
-
+        double speed = Driver1.retrieveAnalogFromAction(ANALOG_turnRight)*-90;
+        Position2DAngle InputDrive = new Position2DAngle(0,0,speed);
+        DCGm.teleOpDrive(InputDrive,Angle);
     }
 
     public void resetGyro() {
-        if(Driver1.retrieveBinaryFromAction(Action.Binary_Action.resetGyro)) {
+        if (Driver1.retrieveBinaryFromAction(resetGyro)) {
             IMU.resetAngle();
+        }
+    }
+
+    public void elevatorDrive() {
+        double lifts = Driver2.retrieveAnalogFromAction(elevatorDrive);
+        if (Math.abs(lifts) < 0.05) {
+            lifts = 0;
+        }
+        DCGl.raiseToInch(0.01,lifts);
+    }
+
+    public void elevatorRaiseAbs() {
+        if (Driver2.retrieveBinaryFromAction(elevatorRaiseAbs)) {
+            DCGl.raiseToBlock(1,75);
+        }
+    }
+
+    public void elevatorLowerAbs() {
+        if (Driver2.retrieveBinaryFromAction(elevatorLowerAbs)) {
+            DCGl.raiseToBlock(-1,75);
+        }
+    }
+
+    public void intakeGrab() {
+        if (Driver2.retrieveAnalogFromAction(intakeGrab) > 0.9) {
+            SGi.grab();
+        }
+    }
+
+    public void intakeDrop() {
+        if (Driver2.retrieveAnalogFromAction(intakeDrop) > 0.9) {
+            SGi.drop();
         }
     }
 }

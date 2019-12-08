@@ -7,6 +7,11 @@ public class Action {
         drivey,
         turn,
         turnSpecial,
+        elevatorDrive,
+        intakeGrab,
+        intakeDrop,
+        ANALOG_turnLeft,
+        ANALOG_turnRight,
     }
 
     public enum Binary_Action {
@@ -15,8 +20,10 @@ public class Action {
         faceRight,
         faceDown,
         faceLeft,
-        turnLeft,
-        turnRight,
+        BINARY_turnLeft,
+        BINARY_turnRight,
         resetGyro,
+        elevatorRaiseAbs,
+        elevatorLowerAbs,
     }
 }

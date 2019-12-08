@@ -1,8 +1,5 @@
 package org.firstinspires.ftc.teamcode.team_classes.driver_configuration;
 
-import android.widget.Button;
-
-import com.qualcomm.robotcore.hardware.AnalogInput;
 import com.qualcomm.robotcore.hardware.Gamepad;
 
 import org.firstinspires.ftc.teamcode.team_classes.robot.Robot;

@@ -1,7 +1,5 @@
 package org.firstinspires.ftc.teamcode.team_classes.driver_configuration;
 
-import android.widget.Button;
-
 import com.qualcomm.robotcore.hardware.Gamepad;
 
 import static org.firstinspires.ftc.teamcode.team_classes.driver_configuration.ButtonSimple.TYPE.BINARY;
