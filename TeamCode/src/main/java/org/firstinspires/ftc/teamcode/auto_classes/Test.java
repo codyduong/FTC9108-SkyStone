@@ -7,12 +7,12 @@ import org.firstinspires.ftc.teamcode.team_classes.robot.Robot;
 
 @Autonomous(name="supertest", group="Auto") //fix this
 public class Test extends OpMode {
-    Robot Robot = new Robot(gamepad1,gamepad2);
+    Robot Robot = new Robot(gamepad1, gamepad2, telemetry, hardwareMap);
 
     public void init() {
         telemetry.setAutoClear(false);
         telemetry.addData("Status", "Initializing");
-        Robot.initialize(hardwareMap,telemetry);
+        Robot.initialize();
         telemetry.addData("Status","Complete");
     }
 

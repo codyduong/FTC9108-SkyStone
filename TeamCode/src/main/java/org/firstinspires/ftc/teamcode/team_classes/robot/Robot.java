@@ -9,6 +9,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.general_classes.Position2D;
 import org.firstinspires.ftc.teamcode.general_classes.Position2DAngle;
 import org.firstinspires.ftc.teamcode.team_classes.driver_configuration.Action;
+import org.firstinspires.ftc.teamcode.team_classes.driver_configuration.ButtonBinary;
 import org.firstinspires.ftc.teamcode.team_classes.driver_configuration.DriverConfiguration;
 import org.openftc.revextensions2.ExpansionHubEx;
 
@@ -19,6 +20,9 @@ public class Robot {
     public Position2D Position;
     public Position2D EstimatedPosition;
     public double Angle;
+
+    private Telemetry tmtr;
+    private HardwareMap hMap;
 
     public DriverConfiguration Driver1; //these DriverConfigurations use circular references which hurt my brain.
     public DriverConfiguration Driver2;
@@ -31,7 +35,7 @@ public class Robot {
     public RevHubGroup RHG;
 
     //Constructor (hardware maps everything)
-    public Robot(Gamepad gamepad1, Gamepad gamepad2) {
+    public Robot(Gamepad gamepad1, Gamepad gamepad2, Telemetry telemetry, HardwareMap hardwareMap) {
         Driver1 = new DriverConfiguration(this, gamepad1);
         Driver2 = new DriverConfiguration(this, gamepad2);
         DCGm = new Mecanum();
@@ -43,15 +47,15 @@ public class Robot {
         RHG = new RevHubGroup(new ExpansionHubEx[2]);
     }
 
-    public void initialize(HardwareMap HM, Telemetry T) {
-        DCGm.initialize(HM, T);
-        CSG.initialize(HM, T);
-        IMU.initialize(HM, T);
-        SG.initialize(HM, T);
-        DCGl.initialize(HM, T);
-        SGi.initialize(HM, T);
-        RHG.initialize(HM, T);
-        T.addData("Robot Initialization","Complete");
+    public void initialize() {
+        DCGm.initialize(hMap, tmtr);
+        CSG.initialize(hMap, tmtr);
+        IMU.initialize(hMap, tmtr);
+        SG.initialize(hMap, tmtr);
+        DCGl.initialize(hMap, tmtr);
+        SGi.initialize(hMap, tmtr);
+        RHG.initialize(hMap, tmtr);
+        tmtr.addData("Robot Initialization","Complete");
     }
 
     private void updateRobot() {
@@ -95,7 +99,7 @@ public class Robot {
             turn = 0;
         }
         Position2DAngle InputDrive = new Position2DAngle(drivex,drivey,turn);
-        DCGm.teleOpDrive(InputDrive, Angle);
+        DCGm.teleOpDrive(InputDrive, Angle, InputDrive.getMagnitude());
     }
 
     public void swapDrive() {
@@ -123,20 +127,53 @@ public class Robot {
     }
 
     public void turnLeft() {
-        double speed = Driver1.retrieveAnalogFromAction(ANALOG_turnLeft)*90;
-        Position2DAngle InputDrive = new Position2DAngle(0,0,speed);
-        DCGm.teleOpDrive(InputDrive,Angle);
+        double speed;
+        try {
+            speed = Driver1.retrieveAnalogFromAction(ANALOG_turnLeft)*90;
+            Position2DAngle InputDrive = new Position2DAngle(0,0,speed);
+            DCGm.teleOpDrive(InputDrive, Angle, speed);
+        } catch(IllegalArgumentException e1) {
+            if (Driver1.retrieveBinaryFromAction(BINARY_turnLeft)) {
+                speed = 90;
+            } else {
+                speed = 0;
+            }
+            Position2DAngle InputDrive = new Position2DAngle(0,0,speed);
+            DCGm.teleOpDrive(InputDrive, Angle, speed);
+        }
     }
 
     public void turnRight() {
-        double speed = Driver1.retrieveAnalogFromAction(ANALOG_turnRight)*-90;
-        Position2DAngle InputDrive = new Position2DAngle(0,0,speed);
-        DCGm.teleOpDrive(InputDrive,Angle);
+        double speed;
+        try {
+            speed = Driver1.retrieveAnalogFromAction(ANALOG_turnRight)*-90;
+            Position2DAngle InputDrive = new Position2DAngle(0,0,speed);
+            DCGm.teleOpDrive(InputDrive, Angle, speed);
+        } catch(IllegalArgumentException e1) {
+            if (Driver1.retrieveBinaryFromAction(BINARY_turnRight)) {
+                speed = -90;
+            } else {
+                speed = 0;
+            }
+            Position2DAngle InputDrive = new Position2DAngle(0,0,speed);
+            DCGm.teleOpDrive(InputDrive, Angle, speed);
+        }
     }
 
+    private int tCount = 0;
     public void resetGyro() {
         if (Driver1.retrieveBinaryFromAction(resetGyro)) {
             IMU.resetAngle();
+            RHG.Hubs[0].setLedColor(255, 0, 0);
+            tCount += 1;
+            if (tCount > 10) {
+                tCount=0;
+                if (DCGm.relativeDrive) {
+                    RHG.Hubs[0].setLedColor(0,255,255);
+                } else {
+                    RHG.Hubs[0].setLedColor(100,0,255);
+                }
+            }
         }
     }
 

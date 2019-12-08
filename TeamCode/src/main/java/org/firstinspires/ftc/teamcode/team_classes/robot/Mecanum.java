@@ -69,8 +69,9 @@ public class Mecanum extends DcMotorGroup {
      * This drives the robot to a specified position relative to the robot.
      * @param PositionAngle A position and value parameter
      * @param teleOp A boolean for whether this is for teleOp.
+     * @param multiplier A number from -1 to 1.
      */
-    public void driveToPositionAngle(Position2DAngle PositionAngle, boolean teleOp) {
+    public void driveToPositionAngle(Position2DAngle PositionAngle, boolean teleOp, double multiplier) {
 
         double relativeY = PositionAngle.Y;
         double relativeX = PositionAngle.X;
@@ -86,16 +87,16 @@ public class Mecanum extends DcMotorGroup {
         double smallest = Math.min((double)Math.min((double)V1,(double)V2),(double)Math.min((double)V3,(double)V4));
         double divisor = Math.max((double)Math.abs((double)largest), (double)Math.abs((double)smallest));
 
-        double V1n = V1;
-        double V2n = V2;
-        double V3n = V3;
-        double V4n = V4;
+        double V1n = V1*multiplier;
+        double V2n = V2*multiplier;
+        double V3n = V3*multiplier;
+        double V4n = V4*multiplier;
 
         if (V1!=0) {
-            V1n = (V1/divisor);
-            V2n = (V2/divisor);
-            V3n = (V3/divisor);
-            V4n = (V4/divisor);
+            V1n = (V1/divisor)*multiplier;
+            V2n = (V2/divisor)*multiplier;
+            V3n = (V3/divisor)*multiplier;
+            V4n = (V4/divisor)*multiplier;
         }
         double EncoderMax = inchToEncoder(Math.hypot(PositionAngle.X,PositionAngle.Y));
 
@@ -143,7 +144,7 @@ public class Mecanum extends DcMotorGroup {
      * @param PositionAngle
      */
     public void driveToPositionAngle(Position2DAngle PositionAngle) {
-        driveToPositionAngle(PositionAngle,false);
+        driveToPositionAngle(PositionAngle,false, 1);
     }
 
     /**
@@ -154,7 +155,7 @@ public class Mecanum extends DcMotorGroup {
     public void strafeToAngle(Position2D Position, boolean teleOp) {
         double xlength = Position.X_POS;
         double ylength = Position.Y_POS;
-        driveToPositionAngle(new Position2DAngle(xlength,ylength,0), teleOp);
+        driveToPositionAngle(new Position2DAngle(xlength,ylength,0), teleOp, 1);
     }
 
     /**
@@ -163,7 +164,7 @@ public class Mecanum extends DcMotorGroup {
      * @param teleOp
      */
     public void turnToAngle(double angle, boolean teleOp) {
-        driveToPositionAngle(new Position2DAngle(0,0,angle), teleOp);
+        driveToPositionAngle(new Position2DAngle(0,0,angle), teleOp, 1);
     }
 
 
@@ -177,7 +178,7 @@ public class Mecanum extends DcMotorGroup {
      * @param Angle
      */
     public void driveToPosition(double X, double Y, double Angle) {
-        driveToPositionAngle(new Position2DAngle(X,Y,Angle),false);
+        driveToPositionAngle(new Position2DAngle(X,Y,Angle),false, 1);
     }
 
 
@@ -315,12 +316,12 @@ public class Mecanum extends DcMotorGroup {
         relativeDrive = !relativeDrive;
     }
 
-    public void teleOpDrive(Position2DAngle input, double Heading) {
+    public void teleOpDrive(Position2DAngle input, double Heading, double magnitude) {
         if (relativeDrive) {
             Position2DAngle newRelative = relativeValues(input, Heading);
-            driveToPositionAngle(newRelative, true);
+            driveToPositionAngle(newRelative, true, magnitude);
         } else {
-            driveToPositionAngle(input, true);
+            driveToPositionAngle(input, true, magnitude);
         }
     }
 
