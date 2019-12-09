@@ -20,13 +20,6 @@ public class Auto1 extends OpMode {
         telemetry.update();
     }
 
-    //Position 1 is building zone, and position 2 is loading zone.
-    private int position = 1;
-    private int offset = 0;
-    private int avarageColorBottom = 0;
-    private int averageColorFront = 0;
-
-
     //Initialized by: Start / runs once
     @Override
     public void start() {
