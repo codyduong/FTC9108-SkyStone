@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.team_classes;
+package org.firstinspires.ftc.teamcode.team_classes.robot;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -18,7 +18,10 @@ public class DcMotorGroup {
         DcMotorCount = DcMotorArray.length;
     }
 
-    //setPower to all of the motors
+    /**
+     * A method that sets all the motors in the DcMotorGroup to a power array.
+     * @param power an array of values, assigned in the order DcMotorGroup is assigned.
+     */
     public void setPower(double[] power) {
         for(int i=0; i<DcMotorCount; i++) {
             this.DcMotors[i].setPower(power[i]);

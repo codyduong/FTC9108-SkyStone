@@ -13,7 +13,6 @@ public class Position2DAngle {
     }
 
     public double getMagnitude() {
-        double magnitude = Math.hypot(X,Y);
-        return magnitude;
+        return Math.hypot(X,Y);
     }
 }

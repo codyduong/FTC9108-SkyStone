@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.team_classes;
+package org.firstinspires.ftc.teamcode.team_classes.robot;
 
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -6,11 +6,11 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
-
 public class Intake extends ServoGroup {
 
-
-    public Intake() { super(new Servo[1]); }
+    public Intake() {
+        super(new Servo[1]);
+    }
 
     public void initialize(HardwareMap Hmap, Telemetry Tm) {
         this.Servos[0] = Hmap.get(Servo.class, "Intake_servo");
