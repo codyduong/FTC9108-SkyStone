@@ -17,5 +17,9 @@ public class ServoGroup {
         ServoCount = Servos.length;
     }
 
+    public void rotateToAngle(double angleTheta){
+        double possition = angleTheta / 180;
+        this.Servos[0].setPosition(possition);
+    }
 
 }

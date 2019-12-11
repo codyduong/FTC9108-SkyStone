@@ -25,11 +25,6 @@ public class Intake extends ServoGroup {
         this.Servos[0].setPosition(0);
     }
 
-    public void rotateToAngle(double angleTheta){
-        double possition = angleTheta / 180;
-        this.Servos[0].setPosition(possition);
-    }
-
     public void activateIntake(){
         this.Servos[1].setPosition(1);
     }
