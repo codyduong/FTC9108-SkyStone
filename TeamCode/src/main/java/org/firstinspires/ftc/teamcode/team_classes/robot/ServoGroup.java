@@ -9,20 +9,13 @@ public class ServoGroup {
     //Properties
     public Servo[] Servos;
     public int ServoCount;
-    public Servo ServoFront;
+
 
     //Constructor
     ServoGroup(Servo[] ServoArray) {
         Servos = ServoArray;
         ServoCount = Servos.length;
-        ServoFront = Servos[0];
     }
 
-    public void initialize(HardwareMap Hmap, Telemetry Tm) {
-        Servos[0] = Hmap.servo.get("servo");
-        Servos[0].setDirection(Servo.Direction.FORWARD);
-        Servos[0].scaleRange(Servos[0].MIN_POSITION, Servos[0].MAX_POSITION);
-        Tm.addData("Servo Initialization","Complete");
-        Tm.update();
-    }
+
 }
