@@ -14,6 +14,7 @@ public class Intake extends ServoGroup {
 
     public void initialize(HardwareMap Hmap, Telemetry Tm) {
         this.Servos[0] = Hmap.get(Servo.class, "Intake_servo");
+        this.Servos[1] = Hmap.get(Servo.class,"Intake_Holder");
     }
 
     public void grab(){
