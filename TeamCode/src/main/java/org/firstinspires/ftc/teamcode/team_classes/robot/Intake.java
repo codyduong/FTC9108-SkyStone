@@ -9,7 +9,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 public class Intake extends ServoGroup {
 
     public Intake() {
-        super(new Servo[1]);
+        super(new Servo[2]);
     }
 
     public void initialize(HardwareMap Hmap, Telemetry Tm) {
@@ -29,4 +29,11 @@ public class Intake extends ServoGroup {
         this.Servos[0].setPosition(possition);
     }
 
+    public void activateIntake(){
+        this.Servos[1].setPosition(1);
+    }
+
+    public void deactivateIntake(){
+        this.Servos[1].setPosition(0);
+    }
 }

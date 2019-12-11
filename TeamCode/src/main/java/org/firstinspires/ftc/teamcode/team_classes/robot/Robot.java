@@ -41,7 +41,6 @@ public class Robot {
         DCGm = new Mecanum();
         CSG = new ColorSensorGroup(new ColorSensor[2]);
         IMU = new BNOIMU(null);
-        SG = new ServoGroup(new Servo[1]);
         DCGl = new Lift();
         SGi = new Intake();
         RHG = new RevHubGroup(new ExpansionHubEx[2]);
@@ -51,7 +50,6 @@ public class Robot {
         DCGm.initialize(hMap, tmtr);
         CSG.initialize(hMap, tmtr);
         IMU.initialize(hMap, tmtr);
-        SG.initialize(hMap, tmtr);
         DCGl.initialize(hMap, tmtr);
         SGi.initialize(hMap, tmtr);
         RHG.initialize(hMap, tmtr);
