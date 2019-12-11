@@ -29,7 +29,8 @@ public class RedLoadingZone extends OpMode {
     //Initialized by: Start / runs once
     @Override
     public void start() {
-
+        runtime.reset();
+        Robot.SGi.activateIntake();
         //Starting at wall, facing away, and 50" away from other wall.
         Robot.DCGm.driveToPosition(0, 40, 0);
 
