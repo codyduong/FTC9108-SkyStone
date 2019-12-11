@@ -29,7 +29,7 @@ public class Robot {
     public Mecanum DCGm;
     public ColorSensorGroup CSG;
     public BNOIMU IMU;
-    public ServoGroup SG;
+    //public ServoGroup SG;
     public Lift DCGl;
     public Intake SGi;
     public RevHubGroup RHG;
@@ -42,7 +42,7 @@ public class Robot {
         CSG = new ColorSensorGroup(new ColorSensor[2]);
         IMU = new BNOIMU(null);
         DCGl = new Lift();
-        SGi = new Intake();
+        //SGi = new Intake();
         RHG = new RevHubGroup(new ExpansionHubEx[2]);
     }
 
@@ -51,7 +51,7 @@ public class Robot {
         CSG.initialize(hMap, tmtr);
         IMU.initialize(hMap, tmtr);
         DCGl.initialize(hMap, tmtr);
-        SGi.initialize(hMap, tmtr);
+        //SGi.initialize(hMap, tmtr);
         RHG.initialize(hMap, tmtr);
         tmtr.addData("Robot Initialization","Complete");
     }
@@ -86,7 +86,7 @@ public class Robot {
     public void robotMecanumDrive() {
         double drivex = Driver1.retrieveAnalogFromAction(Action.Analog_Action.drivex);
         double drivey = Driver1.retrieveAnalogFromAction(Action.Analog_Action.drivey);
-        double turn = Driver1.retrieveAnalogFromAction(Action.Analog_Action.turn);
+        double turn   = Driver1.retrieveAnalogFromAction(Action.Analog_Action.turn);
         if (Math.abs(drivey) < .05) {
             drivey = 0;
         }
