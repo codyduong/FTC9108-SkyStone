@@ -32,6 +32,8 @@ public class RedBuildingZone extends OpMode {
 
         runtime.reset();
 
+        Robot.SGi.activateIntake();
+
 
         //starting facing wall, and 42.25'' away from the other wall
         Robot.DCGm.driveToPosition(0,      -65.75, 0);

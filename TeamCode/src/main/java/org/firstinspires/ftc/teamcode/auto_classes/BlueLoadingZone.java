@@ -29,7 +29,8 @@ public class BlueLoadingZone extends OpMode {
     //Initialized by: Start / runs once
     @Override
     public void start() {
-
+        runtime.reset();
+        Robot.SGi.activateIntake();
         //Starting at wall, facing away, and 50" away from other wall.
         Robot.DCGm.driveToPosition(0, 40, 0);
 
@@ -40,6 +41,8 @@ public class BlueLoadingZone extends OpMode {
                 Robot.DCGm.driveToPosition(-1, 0, 0);
                 offset++;
             }
+
+
 
             //At this point, the robot will pick up the skystone.
             Robot.SGi.grab();
