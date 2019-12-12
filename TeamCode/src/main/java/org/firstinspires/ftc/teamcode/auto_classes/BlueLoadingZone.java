@@ -30,7 +30,7 @@ public class BlueLoadingZone extends OpMode {
     @Override
     public void start() {
         runtime.reset();
-        Robot.SGi.activateIntake();
+
         //Starting at wall, facing away, and 50" away from other wall.
         Robot.DCGm.driveToPosition(0, 40, 0);
 
