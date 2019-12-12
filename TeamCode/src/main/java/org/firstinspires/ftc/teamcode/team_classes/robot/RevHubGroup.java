@@ -13,6 +13,7 @@ public class RevHubGroup {
     //Constructor
     RevHubGroup(ExpansionHubEx[] InputHubs){
         Hubs = InputHubs;
+        HubCount = Hubs.length;
     }
 
     public void initialize(HardwareMap Hmap, Telemetry Tm) {

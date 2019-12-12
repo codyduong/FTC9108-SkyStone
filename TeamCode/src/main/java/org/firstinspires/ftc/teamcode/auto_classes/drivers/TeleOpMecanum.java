@@ -16,15 +16,15 @@ import static org.firstinspires.ftc.teamcode.team_classes.driver_configuration.A
 
 @TeleOp(name="Default Normal", group="9108") //fix this
 public class TeleOpMecanum extends OpMode {
-
     private ElapsedTime runtime = new ElapsedTime();
-    private Robot Robot = new Robot(gamepad1, gamepad2, telemetry, hardwareMap);
+    private Robot Robot;
 
     //Initialized by: Initialization Button (i think)
     public void init() {
         telemetry.setAutoClear(false);
         telemetry.addData("Status", "Initializing");
         telemetry.update();
+        Robot = new Robot(gamepad1, gamepad2, telemetry, hardwareMap);
         Robot.initialize();
         /*STARTDRIVER1*/
         Robot.Driver1 = new DriverConfiguration(Robot, gamepad1);
@@ -62,15 +62,16 @@ public class TeleOpMecanum extends OpMode {
     public void start() {
         runtime.reset();
         telemetry.setAutoClear(true);
+        telemetry.clearAll();
+        Robot.IMU.composeTelemetry(telemetry);
     }
 
     //Initialized by: After Start, Before Stop / loops
     @Override
     public void loop() {
         Robot.run();
-        Robot.IMU.composeTelemetry(telemetry);
-        Robot.DCGm.composeTelemetry(telemetry);
         telemetry.addData("Status", "Run Time: " + runtime.toString());
+        Robot.DCGm.composeTelemetry(telemetry);
     }
 
     //Initialized by: Stop / runs once

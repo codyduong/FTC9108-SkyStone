@@ -28,7 +28,13 @@ public class DriverConfiguration {
         Robot = HardwareRobot;
         GP = Gamepad;
         Analogs = new ButtonAnalog[getAnalogLength()];
+        for (int i =0; i<Analogs.length; i++) {
+            Analogs[i] = new ButtonAnalog();
+        }
         Binarys = new ButtonBinary[getBinaryLength()];
+        for (int i =0; i<Binarys.length; i++) {
+            Binarys[i] = new ButtonBinary();
+        }
         lastRetDeb = 0;
         debounce = 0;
     }

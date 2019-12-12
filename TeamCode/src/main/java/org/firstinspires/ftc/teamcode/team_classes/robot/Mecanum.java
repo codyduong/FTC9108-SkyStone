@@ -30,8 +30,8 @@ public class Mecanum extends DcMotorGroup {
 
     /**
      * A method that initializes all of the proper hardware for usage.
-     * @param Hmap Hardware Map so we can obtain the DcMotors.
-     * @param Tm Telemetry to add data.
+     * @param Hmap - Hardware Map to obtain the DcMotors.
+     * @param Tm - Telemetry to add data.
      */
     public void initialize(HardwareMap Hmap, Telemetry Tm) {
         this.DcMotors[0] = Hmap.get(DcMotor.class, "front_right_motor");

@@ -9,9 +9,10 @@ import org.firstinspires.ftc.teamcode.team_classes.robot.Robot;
 @Disabled
 public class Auto1 extends OpMode {
     private ElapsedTime runtime = new ElapsedTime();
-    private Robot Robot = new Robot(gamepad1, gamepad2, telemetry, hardwareMap);
+    private Robot Robot;
 
     public void init() {
+        Robot = new Robot(gamepad1, gamepad2, telemetry, hardwareMap);
         telemetry.setAutoClear(false);
         telemetry.addData("Status", "Initializing");
         telemetry.update();

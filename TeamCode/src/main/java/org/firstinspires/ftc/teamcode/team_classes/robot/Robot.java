@@ -29,29 +29,29 @@ public class Robot {
     public Mecanum DCGm;
     public ColorSensorGroup CSG;
     public BNOIMU IMU;
-    public ServoGroup SG;
     public Lift DCGl;
     public Intake SGi;
     public RevHubGroup RHG;
 
     //Constructor (hardware maps everything)
     public Robot(Gamepad gamepad1, Gamepad gamepad2, Telemetry telemetry, HardwareMap hardwareMap) {
+        tmtr = telemetry;
+        hMap = hardwareMap;
         Driver1 = new DriverConfiguration(this, gamepad1);
         Driver2 = new DriverConfiguration(this, gamepad2);
         DCGm = new Mecanum();
         CSG = new ColorSensorGroup(new ColorSensor[2]);
         IMU = new BNOIMU(null);
-        SG = new ServoGroup(new Servo[1]);
         DCGl = new Lift();
         SGi = new Intake();
         RHG = new RevHubGroup(new ExpansionHubEx[2]);
     }
 
     public void initialize() {
+        tmtr.addData("Robot Initialization", "Start");
         DCGm.initialize(hMap, tmtr);
         CSG.initialize(hMap, tmtr);
         IMU.initialize(hMap, tmtr);
-        SG.initialize(hMap, tmtr);
         DCGl.initialize(hMap, tmtr);
         SGi.initialize(hMap, tmtr);
         RHG.initialize(hMap, tmtr);
@@ -75,20 +75,34 @@ public class Robot {
         faceDown();
         faceLeft();
          */
+        /*
         elevatorDrive();
         elevatorRaiseAbs();
         elevatorLowerAbs();
         intakeGrab();
         intakeDrop();
+         */
         turnLeft();
         turnRight();
         resetGyro();
     }
 
+    public void stop() {
+        if (DCGm.isBusy()) {
+            DCGm.setPower(new double[]{0,0,0,0});
+        }
+        if (DCGl.isBusy()) {
+            DCGl.setPower(new double[]{0});
+        }
+    }
+
     public void robotMecanumDrive() {
         double drivex = Driver1.retrieveAnalogFromAction(Action.Analog_Action.drivex);
+        tmtr.addData("drivex", drivex);
         double drivey = Driver1.retrieveAnalogFromAction(Action.Analog_Action.drivey);
+        tmtr.addData("drivey", drivey);
         double turn = Driver1.retrieveAnalogFromAction(Action.Analog_Action.turn);
+        tmtr.addData("turn", turn);
         if (Math.abs(drivey) < .05) {
             drivey = 0;
         }
@@ -199,13 +213,13 @@ public class Robot {
 
     public void intakeGrab() {
         if (Driver2.retrieveAnalogFromAction(intakeGrab) > 0.9) {
-            SGi.grab();
+            //SGi.grab();
         }
     }
 
     public void intakeDrop() {
         if (Driver2.retrieveAnalogFromAction(intakeDrop) > 0.9) {
-            SGi.drop();
+            //SGi.drop();
         }
     }
 }

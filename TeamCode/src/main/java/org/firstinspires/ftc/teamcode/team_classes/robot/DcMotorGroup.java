@@ -19,12 +19,27 @@ public class DcMotorGroup {
     }
 
     /**
-     * A method that sets all the motors in the DcMotorGroup to a power array.
-     * @param power an array of values, assigned in the order DcMotorGroup is assigned.
+     * Sets the power level of the motors, expressed as a fraction of the maximum possible power
+     * / speed supported according to the run mode in which the motor is operating.
+     * @param power - the new power level of the motors, a double array
+     * with values within the interval [-1.0, 1.0]
      */
     public void setPower(double[] power) {
         for(int i=0; i<DcMotorCount; i++) {
             this.DcMotors[i].setPower(power[i]);
         }
+    }
+
+    /**
+     * Returns true if any motor is currently advancing or retreating to a target position.
+     * @return the state of any motor, true or false.
+     */
+    public boolean isBusy() {
+        for(int i=0; i<DcMotorCount; i++) {
+            if(this.DcMotors[i].isBusy()) {
+                return true;
+            }
+        }
+        return false;
     }
 }
