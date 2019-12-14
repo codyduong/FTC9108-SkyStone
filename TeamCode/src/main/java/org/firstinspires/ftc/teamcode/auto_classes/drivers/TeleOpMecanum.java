@@ -32,7 +32,6 @@ public class TeleOpMecanum extends OpMode {
         Robot.Driver1.assignDebounce(500);
         Robot.Driver1.assignAnalog(left_stick_x, drivex);
         Robot.Driver1.assignAnalog(left_stick_y, drivey);
-        Robot.Driver1.assignSign  (left_stick_y, ButtonAnalog.SIGN.NEGATIVE);
         Robot.Driver1.assignAnalog(left_trigger, ANALOG_turnLeft);
         Robot.Driver1.assignAnalog(right_trigger, ANALOG_turnRight);
         Robot.Driver1.assignAnalog(right_stick_x, turn);
@@ -53,8 +52,8 @@ public class TeleOpMecanum extends OpMode {
         Robot.Driver2.assignBinary(a, elevatorLowerAbs);
         Robot.Driver2.assignBinary(y, elevatorRaiseAbs);
         /*ENCONFIG*/
-        Robot.DCGm.setRelativeDrive(true);
-        Robot.RHG.Hubs[0].setLedColor(0,255,255);
+        Robot.DCGm.setRelativeDrive(false);
+        Robot.RHG.Hubs[0].setLedColor(100,0,255);
         telemetry.addData("Status","Complete");
         telemetry.update();
     }

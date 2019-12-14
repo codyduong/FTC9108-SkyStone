@@ -27,4 +27,9 @@ public class ColorSensorGroup {
         Tm.addData("ColorSensorGroup","Complete");
         Tm.update();
     }
+
+    public void runOutput(Telemetry Tm) {
+        Tm.addData("bottom", ColorSensors[0].argb());
+        Tm.addData("front", ColorSensors[1].argb());
+    }
 }

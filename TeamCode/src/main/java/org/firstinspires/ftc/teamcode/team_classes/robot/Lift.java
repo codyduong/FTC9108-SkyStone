@@ -30,7 +30,9 @@ public class Lift extends DcMotorGroup {
         /*while (encoderValue < encoderInch){
             this.setPower(new double[] {direction * (speed/100)} );
         }*/
-        this.DcMotors[0].setTargetPosition((int)encoderInch);
+        if (encoderInch>=0) {
+            this.DcMotors[0].setTargetPosition((int)encoderInch);
+        }
     }
 
     public void raiseToBlock(double blockNumber, double speed){

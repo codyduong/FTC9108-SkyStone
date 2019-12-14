@@ -71,6 +71,7 @@ public class Robot {
      */
     public void run(ElapsedTime runtime) {
         updateRobot();
+        CSG.runOutput(tmtr);
         robotMecanumDrive(runtime);
         swapDrive(tmtr);
         /*

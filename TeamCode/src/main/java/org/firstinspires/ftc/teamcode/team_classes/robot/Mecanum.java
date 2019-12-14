@@ -44,10 +44,10 @@ public class Mecanum extends DcMotorGroup {
         this.DcMotors[1] = Hmap.get(DcMotor.class, "front_left_motor");
         this.DcMotors[2] = Hmap.get(DcMotor.class, "back_left_motor");
         this.DcMotors[3] = Hmap.get(DcMotor.class, "back_right_motor");
-        this.DcMotors[0].setDirection(DcMotor.Direction.REVERSE);
-        this.DcMotors[1].setDirection(DcMotor.Direction.FORWARD);
-        this.DcMotors[2].setDirection(DcMotor.Direction.FORWARD);
-        this.DcMotors[3].setDirection(DcMotor.Direction.REVERSE);
+        this.DcMotors[0].setDirection(DcMotor.Direction.FORWARD);
+        this.DcMotors[1].setDirection(DcMotor.Direction.REVERSE);
+        this.DcMotors[2].setDirection(DcMotor.Direction.REVERSE);
+        this.DcMotors[3].setDirection(DcMotor.Direction.FORWARD);
         Tm.addData("Encoders","Resetting");
         this.DcMotors[0].setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         this.DcMotors[1].setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -57,10 +57,10 @@ public class Mecanum extends DcMotorGroup {
         this.DcMotors[1].setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         this.DcMotors[2].setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         this.DcMotors[3].setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        this.DcMotors[0].setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-        this.DcMotors[1].setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-        this.DcMotors[2].setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-        this.DcMotors[3].setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        this.DcMotors[0].setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        this.DcMotors[1].setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        this.DcMotors[2].setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        this.DcMotors[3].setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         Tm.addData("Mecanum Initialization","Complete");
         Tm.update();
     }
