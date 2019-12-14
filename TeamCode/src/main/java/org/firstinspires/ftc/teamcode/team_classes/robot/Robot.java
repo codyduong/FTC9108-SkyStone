@@ -79,14 +79,14 @@ public class Robot {
         faceDown();
         faceLeft();
          */
-        //elevatorDrive();
+        elevatorDrive();
         elevatorRaiseAbs();
         elevatorLowerAbs();
         intakeGrab();
         intakeDrop();
-        turnLeft(runtime);
-        turnRight(runtime);
-        //resetGyro();
+        //turnLeft(runtime);
+        //turnRight(runtime);
+        resetGyro();
     }
 
     public void stop() {
@@ -98,13 +98,13 @@ public class Robot {
         }
     }
 
-    private double drivex;
-    private double drivey;
-    private double turn;
     public void robotMecanumDrive(ElapsedTime runtime) {
+        double drivex;
+        double drivey;
+        double turn;
         drivex = (double)Driver1.retrieveAnalogFromAction(Action.Analog_Action.drivex);
         tmtr.addData("drivex", drivex);
-        drivey = (double)Driver1.retrieveAnalogFromAction(Action.Analog_Action.drivey);
+        drivey = -(double)Driver1.retrieveAnalogFromAction(Action.Analog_Action.drivey);
         tmtr.addData("drivey", drivey);
         turn = (double)Driver1.retrieveAnalogFromAction(Action.Analog_Action.turn);
         tmtr.addData("turn", turn);
@@ -121,10 +121,11 @@ public class Robot {
         tmtr.addData("InputX", InputDrive.X);
         tmtr.addData("InputY", InputDrive.Y);
         tmtr.addData("InputTheta", InputDrive.ANGLE);
-        if (DCGm.relativeDrive) {
-            DCGm.driveToPositionAngle(DCGm.relativeValues(InputDrive, Angle), true, 1, runtime);;
+        DCGm.teleOpDrive(InputDrive, Angle, InputDrive.getMagnitude(), runtime);
+        if (drivex != 0 && drivey != 0 && turn != 0) {
+            turnLeft(runtime);
+            turnRight(runtime);
         }
-        //DCGm.teleOpDrive(InputDrive, Angle, InputDrive.getMagnitude(), 5000);
     }
 
     public void swapDrive(Telemetry tmtr) {
@@ -157,7 +158,8 @@ public class Robot {
         try {
             speed = Driver1.retrieveAnalogFromAction(ANALOG_turnLeft)*-90;
             Position2DAngle InputDrive = new Position2DAngle(0,0,speed);
-            DCGm.teleOpDrive(InputDrive, Angle, speed, runtime);
+            //DCGm.teleOpDrive(InputDrive, Angle, speed, runtime);
+            DCGm.driveToPositionAngle(InputDrive, true, 1, runtime);
         } catch(IllegalArgumentException e1) {
             if (Driver1.retrieveBinaryFromAction(BINARY_turnLeft)) {
                 speed = 90;
@@ -165,7 +167,8 @@ public class Robot {
                 speed = 0;
             }
             Position2DAngle InputDrive = new Position2DAngle(0,0,speed);
-            DCGm.teleOpDrive(InputDrive, Angle, speed, runtime);
+            //DCGm.teleOpDrive(InputDrive, Angle, speed, runtime);
+            DCGm.driveToPositionAngle(InputDrive, true, 1, runtime);
         }
     }
 
@@ -174,7 +177,8 @@ public class Robot {
         try {
             speed = Driver1.retrieveAnalogFromAction(ANALOG_turnRight)*90;
             Position2DAngle InputDrive = new Position2DAngle(0,0,speed);
-            DCGm.teleOpDrive(InputDrive, Angle, speed, runtime);
+            //DCGm.teleOpDrive(InputDrive, Angle, speed, runtime);
+            DCGm.driveToPositionAngle(InputDrive, true, 1, runtime);
         } catch(IllegalArgumentException e1) {
             if (Driver1.retrieveBinaryFromAction(BINARY_turnRight)) {
                 speed = -90;
@@ -182,7 +186,8 @@ public class Robot {
                 speed = 0;
             }
             Position2DAngle InputDrive = new Position2DAngle(0,0,speed);
-            DCGm.teleOpDrive(InputDrive, Angle, speed, runtime);
+            //DCGm.teleOpDrive(InputDrive, Angle, speed, runtime);
+            DCGm.driveToPositionAngle(InputDrive, true, 1, runtime);
         }
     }
 
@@ -200,34 +205,36 @@ public class Robot {
     }
 
     public void elevatorDrive() {
-        double lifts = Driver2.retrieveAnalogFromAction(elevatorDrive);
+        double lifts = -(double)Driver2.retrieveAnalogFromAction(elevatorDrive);
         if (Math.abs(lifts) < 0.05) {
             lifts = 0;
         }
-        DCGl.raiseToInch(0.01,lifts);
+        DCGl.DcMotors[0].setPower(lifts);
     }
 
     public void elevatorRaiseAbs() {
         if (Driver2.retrieveBinaryFromAction(elevatorRaiseAbs)) {
-            DCGl.raiseToBlock(1,75);
+            DCGl.raiseToBlock(1,-75);
+            //DCGl.DcMotors[0].setPower(1);
         }
     }
 
     public void elevatorLowerAbs() {
         if (Driver2.retrieveBinaryFromAction(elevatorLowerAbs)) {
             DCGl.raiseToBlock(-1,75);
+            //DCGl.DcMotors[0].setPower(1);
         }
     }
 
     public void intakeGrab() {
         if (Driver2.retrieveAnalogFromAction(intakeGrab) > 0.9) {
-            //SGi.grab();
+            SGi.grab();
         }
     }
 
     public void intakeDrop() {
         if (Driver2.retrieveAnalogFromAction(intakeDrop) > 0.9) {
-            //SGi.drop();
+            SGi.drop();
         }
     }
 }

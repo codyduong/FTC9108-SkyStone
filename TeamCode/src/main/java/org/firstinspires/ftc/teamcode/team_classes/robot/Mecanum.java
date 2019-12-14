@@ -111,28 +111,28 @@ public class Mecanum extends DcMotorGroup {
             //WHILE ENCODER LOOP HERE
             if (divisor == Math.abs(V1)) {
                 this.DcMotors[0].setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-                while (Math.abs(this.DcMotors[0].getCurrentPosition()) < EncoderMax && runtime.milliseconds() < timeOutMS){
+                while (Math.abs(this.DcMotors[0].getCurrentPosition()) < EncoderMax){
                     double m = nonlinearEncoderPercentagePower(this.DcMotors[0].getCurrentPosition(), EncoderMax);
                     this.setPower(new double[]{m*V1n,m*V2n,m*V3n,m*V4n});
                 }
                 this.setPower(new double[]{0,0,0,0});
             } else if (divisor == Math.abs(V2)) {
                 this.DcMotors[1].setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-                while (Math.abs(this.DcMotors[1].getCurrentPosition()) < EncoderMax && runtime.milliseconds() < timeOutMS){
+                while (Math.abs(this.DcMotors[1].getCurrentPosition()) < EncoderMax){
                     double m = nonlinearEncoderPercentagePower(this.DcMotors[1].getCurrentPosition(), EncoderMax);
                     this.setPower(new double[]{m*V1n,m*V2n,m*V3n,m*V4n});
                 }
                 this.setPower(new double[]{0,0,0,0});
             } else if (divisor == Math.abs(V3)) {
                 this.DcMotors[2].setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-                while (Math.abs(this.DcMotors[2].getCurrentPosition()) < EncoderMax && runtime.milliseconds() < timeOutMS){
+                while (Math.abs(this.DcMotors[2].getCurrentPosition()) < EncoderMax){
                     double m = nonlinearEncoderPercentagePower(this.DcMotors[2].getCurrentPosition(), EncoderMax);
                     this.setPower(new double[]{m*V1n,m*V2n,m*V3n,m*V4n});
                 }
                 this.setPower(new double[]{0,0,0,0});
             } else if (divisor == Math.abs(V4)) {
                 this.DcMotors[3].setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-                while (Math.abs(this.DcMotors[3].getCurrentPosition()) < EncoderMax && runtime.milliseconds() < timeOutMS){
+                while (Math.abs(this.DcMotors[3].getCurrentPosition()) < EncoderMax){
                     double m = nonlinearEncoderPercentagePower(this.DcMotors[3].getCurrentPosition(), EncoderMax);
                     this.setPower(new double[]{m*V1n,m*V2n,m*V3n,m*V4n});
                 }

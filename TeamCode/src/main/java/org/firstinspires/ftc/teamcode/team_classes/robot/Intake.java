@@ -19,11 +19,11 @@ public class Intake extends ServoGroup {
 
     public void grab(){
         this.Servos[0].setPosition(.75);
-        this.Servos[1].setPosition(-.25);
+        this.Servos[1].setPosition(.25);
     }
 
     public void drop(){
-        this.Servos[1].setPosition(.3);
+        this.Servos[1].setPosition(-.3);
         this.Servos[0].setPosition(0);
         this.Servos[1].setPosition(0);
     }
