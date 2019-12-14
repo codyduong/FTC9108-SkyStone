@@ -16,6 +16,7 @@ import static org.firstinspires.ftc.teamcode.team_classes.driver_configuration.A
 
 @TeleOp(name="Default Normal", group="9108") //fix this
 public class TeleOpMecanum extends OpMode {
+
     private ElapsedTime runtime = new ElapsedTime();
     private Robot Robot;
 
@@ -34,7 +35,7 @@ public class TeleOpMecanum extends OpMode {
         Robot.Driver1.assignSign  (left_stick_y, ButtonAnalog.SIGN.NEGATIVE);
         Robot.Driver1.assignAnalog(left_trigger, ANALOG_turnLeft);
         Robot.Driver1.assignAnalog(right_trigger, ANALOG_turnRight);
-        Robot.Driver1.assignAnalog(right_stick_y, turn);
+        Robot.Driver1.assignAnalog(right_stick_x, turn);
         Robot.Driver1.assignBinary(dpad_up, faceUp);
         Robot.Driver1.assignBinary(dpad_right, faceRight);
         Robot.Driver1.assignBinary(dpad_down, faceDown);
@@ -46,6 +47,7 @@ public class TeleOpMecanum extends OpMode {
         Robot.Driver2 = new DriverConfiguration(Robot, gamepad2);
         Robot.Driver2.assignDebounce(500);
         Robot.Driver2.assignAnalog(left_stick_y, elevatorDrive);
+        Robot.Driver2.assignSign  (left_stick_y, ButtonAnalog.SIGN.NEGATIVE);
         Robot.Driver2.assignAnalog(left_trigger, intakeGrab);
         Robot.Driver2.assignAnalog(right_trigger, intakeDrop);
         Robot.Driver2.assignBinary(a, elevatorLowerAbs);
@@ -71,12 +73,13 @@ public class TeleOpMecanum extends OpMode {
     public void loop() {
         Robot.run();
         telemetry.addData("Status", "Run Time: " + runtime.toString());
+        telemetry.addData("RobotAngle", Robot.Angle);
         Robot.DCGm.composeTelemetry(telemetry);
     }
 
     //Initialized by: Stop / runs once
     @Override
     public void stop() {
-        Robot.DCGm.setPower(new double[]{0,0,0,0});
+        Robot.stop();
     }
 }

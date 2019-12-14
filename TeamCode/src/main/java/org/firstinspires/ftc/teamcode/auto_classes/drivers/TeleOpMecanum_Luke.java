@@ -33,7 +33,7 @@ public class TeleOpMecanum_Luke extends OpMode {
         Robot.Driver1.assignAnalog(left_stick_x, drivex);
         Robot.Driver1.assignAnalog(left_stick_y, drivey);
         Robot.Driver1.assignSign  (left_stick_y, ButtonAnalog.SIGN.NEGATIVE);
-        Robot.Driver1.assignAnalog(right_stick_y, turn);
+        Robot.Driver1.assignAnalog(right_stick_x, turn);
         Robot.Driver1.assignBinary(dpad_up, faceUp);
         Robot.Driver1.assignBinary(dpad_right, faceRight);
         Robot.Driver1.assignBinary(dpad_down, faceDown);
@@ -63,20 +63,21 @@ public class TeleOpMecanum_Luke extends OpMode {
     public void start() {
         runtime.reset();
         telemetry.setAutoClear(true);
+        telemetry.clearAll();
+        Robot.IMU.composeTelemetry(telemetry);
     }
 
     //Initialized by: After Start, Before Stop / loops
     @Override
     public void loop() {
         Robot.run();
-        Robot.IMU.composeTelemetry(telemetry);
-        Robot.DCGm.composeTelemetry(telemetry);
         telemetry.addData("Status", "Run Time: " + runtime.toString());
+        Robot.DCGm.composeTelemetry(telemetry);
     }
 
     //Initialized by: Stop / runs once
     @Override
     public void stop() {
-        Robot.DCGm.setPower(new double[]{0,0,0,0});
+        Robot.stop();
     }
 }

@@ -1,7 +1,10 @@
 package org.firstinspires.ftc.teamcode.team_classes.robot;
 
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.general_classes.Position2D;
@@ -70,9 +73,10 @@ public class Mecanum extends DcMotorGroup {
      * @param PositionAngle A position and value parameter
      * @param teleOp A boolean for whether this is for teleOp.
      * @param multiplier A number from -1 to 1.
+     * @param timeOutMS Time in milliseconds before the robot times out and moves on to next action
      */
-    public void driveToPositionAngle(Position2DAngle PositionAngle, boolean teleOp, double multiplier) {
-
+    public void driveToPositionAngle(Position2DAngle PositionAngle, boolean teleOp, double multiplier, double timeOutMS) {
+        ElapsedTime runtime = new ElapsedTime();
         double relativeY = PositionAngle.Y;
         double relativeX = PositionAngle.X;
         double degreesAngle = PositionAngle.ANGLE;
@@ -104,28 +108,28 @@ public class Mecanum extends DcMotorGroup {
             //WHILE ENCODER LOOP HERE
             if (divisor == Math.abs(V1)) {
                 this.DcMotors[0].setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-                while (Math.abs(this.DcMotors[0].getCurrentPosition()) < EncoderMax){
+                while (Math.abs(this.DcMotors[0].getCurrentPosition()) < EncoderMax && runtime.milliseconds() < timeOutMS){
                     double m = nonlinearEncoderPercentagePower(this.DcMotors[0].getCurrentPosition(), EncoderMax);
                     this.setPower(new double[]{m*V1n,m*V2n,m*V3n,m*V4n});
                 }
                 this.setPower(new double[]{0,0,0,0});
             } else if (divisor == Math.abs(V2)) {
                 this.DcMotors[1].setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-                while (Math.abs(this.DcMotors[1].getCurrentPosition()) < EncoderMax){
+                while (Math.abs(this.DcMotors[1].getCurrentPosition()) < EncoderMax && runtime.milliseconds() < timeOutMS){
                     double m = nonlinearEncoderPercentagePower(this.DcMotors[1].getCurrentPosition(), EncoderMax);
                     this.setPower(new double[]{m*V1n,m*V2n,m*V3n,m*V4n});
                 }
                 this.setPower(new double[]{0,0,0,0});
             } else if (divisor == Math.abs(V3)) {
                 this.DcMotors[2].setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-                while (Math.abs(this.DcMotors[2].getCurrentPosition()) < EncoderMax){
+                while (Math.abs(this.DcMotors[2].getCurrentPosition()) < EncoderMax && runtime.milliseconds() < timeOutMS){
                     double m = nonlinearEncoderPercentagePower(this.DcMotors[2].getCurrentPosition(), EncoderMax);
                     this.setPower(new double[]{m*V1n,m*V2n,m*V3n,m*V4n});
                 }
                 this.setPower(new double[]{0,0,0,0});
             } else if (divisor == Math.abs(V4)) {
                 this.DcMotors[3].setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-                while (Math.abs(this.DcMotors[3].getCurrentPosition()) < EncoderMax){
+                while (Math.abs(this.DcMotors[3].getCurrentPosition()) < EncoderMax && runtime.milliseconds() < timeOutMS){
                     double m = nonlinearEncoderPercentagePower(this.DcMotors[3].getCurrentPosition(), EncoderMax);
                     this.setPower(new double[]{m*V1n,m*V2n,m*V3n,m*V4n});
                 }
@@ -143,8 +147,8 @@ public class Mecanum extends DcMotorGroup {
      * Without a teleOp parameter assumes it is autonomous.
      * @param PositionAngle
      */
-    public void driveToPositionAngle(Position2DAngle PositionAngle) {
-        driveToPositionAngle(PositionAngle,false, 1);
+    public void driveToPositionAngle(Position2DAngle PositionAngle, double timeOutMS) {
+        driveToPositionAngle(PositionAngle,false, 1, timeOutMS);
     }
 
     /**
@@ -152,10 +156,10 @@ public class Mecanum extends DcMotorGroup {
      * @param Position
      * @param teleOp
      */
-    public void strafeToAngle(Position2D Position, boolean teleOp) {
+    public void strafeToAngle(Position2D Position, boolean teleOp, double timeOutMS) {
         double xlength = Position.X_POS;
         double ylength = Position.Y_POS;
-        driveToPositionAngle(new Position2DAngle(xlength,ylength,0), teleOp, 1);
+        driveToPositionAngle(new Position2DAngle(xlength,ylength,0), teleOp, 1, timeOutMS);
     }
 
     /**
@@ -163,8 +167,8 @@ public class Mecanum extends DcMotorGroup {
      * @param angle
      * @param teleOp
      */
-    public void turnToAngle(double angle, boolean teleOp) {
-        driveToPositionAngle(new Position2DAngle(0,0,angle), teleOp, 1);
+    public void turnToAngle(double angle, boolean teleOp, double timeOutMS) {
+        driveToPositionAngle(new Position2DAngle(0,0,angle), teleOp, 1, timeOutMS);
     }
 
 
@@ -177,8 +181,8 @@ public class Mecanum extends DcMotorGroup {
      * @param Y
      * @param Angle
      */
-    public void driveToPosition(double X, double Y, double Angle) {
-        driveToPositionAngle(new Position2DAngle(X,Y,Angle),false, 1);
+    public void driveToPosition(double X, double Y, double Angle, double timeOutMS) {
+        driveToPositionAngle(new Position2DAngle(X,Y,Angle),false, 1, timeOutMS);
     }
 
 
@@ -249,7 +253,7 @@ public class Mecanum extends DcMotorGroup {
      * @param THETA_robot The current angle of the robot.
      * @return
      */
-    private Position2DAngle relativeValues(Position2DAngle PosAngle, double THETA_robot) {
+    public Position2DAngle relativeValues(Position2DAngle PosAngle, double THETA_robot) {
         double THETA_triangle;
         double THETA_subtract = THETA_robot%360;
         if (PosAngle.X==0 && PosAngle.Y!=0) {
@@ -316,12 +320,12 @@ public class Mecanum extends DcMotorGroup {
         relativeDrive = !relativeDrive;
     }
 
-    public void teleOpDrive(Position2DAngle input, double Heading, double magnitude) {
+    public void teleOpDrive(Position2DAngle input, double Heading, double magnitude, double timeOutMS) {
         if (relativeDrive) {
             Position2DAngle newRelative = relativeValues(input, Heading);
-            driveToPositionAngle(newRelative, true, magnitude);
+            driveToPositionAngle(newRelative, true, 1, timeOutMS);
         } else {
-            driveToPositionAngle(input, true, magnitude);
+            driveToPositionAngle(input, true, 1, timeOutMS);
         }
     }
 

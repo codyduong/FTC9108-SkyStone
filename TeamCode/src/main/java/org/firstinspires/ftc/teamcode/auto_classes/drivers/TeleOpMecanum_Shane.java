@@ -33,7 +33,7 @@ public class TeleOpMecanum_Shane extends OpMode {
         Robot.Driver1.assignAnalog(left_stick_x, drivex);
         Robot.Driver1.assignAnalog(left_stick_y, drivey);
         Robot.Driver1.assignSign  (left_stick_y, ButtonAnalog.SIGN.NEGATIVE);
-        Robot.Driver1.assignAnalog(right_stick_y, turn);
+        Robot.Driver1.assignAnalog(right_stick_x, turn);
         Robot.Driver1.assignBinary(y, faceUp);
         Robot.Driver1.assignBinary(b, faceRight);
         Robot.Driver1.assignBinary(a, faceDown);

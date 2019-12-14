@@ -128,7 +128,9 @@ public class DriverConfiguration {
     public boolean retrieveBinary(ButtonBinary.Binary ABS_Button) {
         if (Binarys[getBinaryNumber(ABS_Button)].Actuate == ButtonBinary.ACTUATE.TOGGLE) {
             if (GP.timestamp > lastRetDeb) {
-                Binarys[getBinaryNumber(ABS_Button)].Toggled = !Binarys[getBinaryNumber(ABS_Button)].Toggled;
+                if (ButtonBinary.checkBinary(GP, ABS_Button)) {
+                    Binarys[getBinaryNumber(ABS_Button)].Toggled = !Binarys[getBinaryNumber(ABS_Button)].Toggled;
+                }
             }
             return Binarys[getBinaryNumber(ABS_Button)].Toggled;
         } else {

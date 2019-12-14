@@ -50,7 +50,9 @@ public class DirectMecanum extends OpMode {
         if (Math.abs((double)turn) < .05) {
             turn = 0;
         }
-        Robot.DCGm.driveToPositionAngle(new Position2DAngle(drivex,drivey,turn), true, 1);
+        Robot.DCGm.driveToPositionAngle(new Position2DAngle(drivex,drivey,turn), true, 1, 500);
+        //Position2DAngle InputDrive = new Position2DAngle(drivex,drivey,turn);
+        //Robot.DCGm.teleOpDrive(InputDrive, Robot.Angle, InputDrive.getMagnitude(),500);
 
         /*
         //Lift

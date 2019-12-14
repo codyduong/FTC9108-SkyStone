@@ -20,27 +20,27 @@ public class Test extends OpMode {
     //Initialized by: Start / runs once
     @Override
     public void start() {
-        Robot.DCGm.driveToPosition(0,0,180);
+        Robot.DCGm.driveToPosition(0,0,180, 5000);
         telemetry.addData("Status","180Turn");
         telemetry.update();
 
-        Robot.DCGm.driveToPosition(0,1,0);
+        Robot.DCGm.driveToPosition(0,1,0, 5000);
         telemetry.addData("Status","Forwards");
         telemetry.update();
 
-        Robot.DCGm.driveToPosition(0,-1,0);
+        Robot.DCGm.driveToPosition(0,-1,0, 5000);
         telemetry.addData("Status","Backwards");
         telemetry.update();
 
-        Robot.DCGm.driveToPosition(1,0,0);
+        Robot.DCGm.driveToPosition(1,0,0, 5000);
         telemetry.addData("Status","Right");
         telemetry.update();
 
-        Robot.DCGm.driveToPosition(-1,0,0);
+        Robot.DCGm.driveToPosition(-1,0,0, 5000);
         telemetry.addData("Status","Left");
         telemetry.update();
 
-        Robot.DCGm.driveToPosition(0,0,180);
+        Robot.DCGm.driveToPosition(0,0,180, 5000);
         telemetry.addData("Status","180Turn");
         telemetry.update();
 

@@ -9,10 +9,12 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.general_classes.Position2D;
 import org.firstinspires.ftc.teamcode.general_classes.Position2DAngle;
 import org.firstinspires.ftc.teamcode.team_classes.driver_configuration.Action;
+import org.firstinspires.ftc.teamcode.team_classes.driver_configuration.ButtonAnalog;
 import org.firstinspires.ftc.teamcode.team_classes.driver_configuration.ButtonBinary;
 import org.firstinspires.ftc.teamcode.team_classes.driver_configuration.DriverConfiguration;
 import org.openftc.revextensions2.ExpansionHubEx;
 
+import static java.lang.Thread.sleep;
 import static org.firstinspires.ftc.teamcode.team_classes.driver_configuration.Action.Analog_Action.*;
 import static org.firstinspires.ftc.teamcode.team_classes.driver_configuration.Action.Binary_Action.*;
 
@@ -75,16 +77,14 @@ public class Robot {
         faceDown();
         faceLeft();
          */
-        /*
-        elevatorDrive();
+        //elevatorDrive();
         elevatorRaiseAbs();
         elevatorLowerAbs();
-        intakeGrab();
-        intakeDrop();
-         */
+        //intakeGrab();
+        //intakeDrop();
         turnLeft();
         turnRight();
-        resetGyro();
+        //resetGyro();
     }
 
     public void stop() {
@@ -96,12 +96,15 @@ public class Robot {
         }
     }
 
+    private double drivex;
+    private double drivey;
+    private double turn;
     public void robotMecanumDrive() {
-        double drivex = Driver1.retrieveAnalogFromAction(Action.Analog_Action.drivex);
+        drivex = (double)Driver1.retrieveAnalogFromAction(Action.Analog_Action.drivex);
         tmtr.addData("drivex", drivex);
-        double drivey = Driver1.retrieveAnalogFromAction(Action.Analog_Action.drivey);
+        drivey = (double)Driver1.retrieveAnalogFromAction(Action.Analog_Action.drivey);
         tmtr.addData("drivey", drivey);
-        double turn = Driver1.retrieveAnalogFromAction(Action.Analog_Action.turn);
+        turn = (double)Driver1.retrieveAnalogFromAction(Action.Analog_Action.turn);
         tmtr.addData("turn", turn);
         if (Math.abs(drivey) < .05) {
             drivey = 0;
@@ -113,7 +116,13 @@ public class Robot {
             turn = 0;
         }
         Position2DAngle InputDrive = new Position2DAngle(drivex,drivey,turn);
-        DCGm.teleOpDrive(InputDrive, Angle, InputDrive.getMagnitude());
+        tmtr.addData("InputX", InputDrive.X);
+        tmtr.addData("InputY", InputDrive.Y);
+        tmtr.addData("InputTheta", InputDrive.ANGLE);
+        if (DCGm.relativeDrive) {
+            DCGm.driveToPositionAngle(DCGm.relativeValues(InputDrive, Angle), true, 1, 500);;
+        }
+        //DCGm.teleOpDrive(InputDrive, Angle, InputDrive.getMagnitude(), 5000);
     }
 
     public void swapDrive() {
@@ -143,9 +152,9 @@ public class Robot {
     public void turnLeft() {
         double speed;
         try {
-            speed = Driver1.retrieveAnalogFromAction(ANALOG_turnLeft)*90;
+            speed = Driver1.retrieveAnalogFromAction(ANALOG_turnLeft)*-90;
             Position2DAngle InputDrive = new Position2DAngle(0,0,speed);
-            DCGm.teleOpDrive(InputDrive, Angle, speed);
+            DCGm.teleOpDrive(InputDrive, Angle, speed, 500);
         } catch(IllegalArgumentException e1) {
             if (Driver1.retrieveBinaryFromAction(BINARY_turnLeft)) {
                 speed = 90;
@@ -153,16 +162,16 @@ public class Robot {
                 speed = 0;
             }
             Position2DAngle InputDrive = new Position2DAngle(0,0,speed);
-            DCGm.teleOpDrive(InputDrive, Angle, speed);
+            DCGm.teleOpDrive(InputDrive, Angle, speed, 500);
         }
     }
 
     public void turnRight() {
         double speed;
         try {
-            speed = Driver1.retrieveAnalogFromAction(ANALOG_turnRight)*-90;
+            speed = Driver1.retrieveAnalogFromAction(ANALOG_turnRight)*90;
             Position2DAngle InputDrive = new Position2DAngle(0,0,speed);
-            DCGm.teleOpDrive(InputDrive, Angle, speed);
+            DCGm.teleOpDrive(InputDrive, Angle, speed, 500);
         } catch(IllegalArgumentException e1) {
             if (Driver1.retrieveBinaryFromAction(BINARY_turnRight)) {
                 speed = -90;
@@ -170,23 +179,18 @@ public class Robot {
                 speed = 0;
             }
             Position2DAngle InputDrive = new Position2DAngle(0,0,speed);
-            DCGm.teleOpDrive(InputDrive, Angle, speed);
+            DCGm.teleOpDrive(InputDrive, Angle, speed, 500);
         }
     }
 
-    private int tCount = 0;
     public void resetGyro() {
         if (Driver1.retrieveBinaryFromAction(resetGyro)) {
             IMU.resetAngle();
             RHG.Hubs[0].setLedColor(255, 0, 0);
-            tCount += 1;
-            if (tCount > 10) {
-                tCount=0;
-                if (DCGm.relativeDrive) {
-                    RHG.Hubs[0].setLedColor(0,255,255);
-                } else {
-                    RHG.Hubs[0].setLedColor(100,0,255);
-                }
+            if (DCGm.relativeDrive) {
+                RHG.Hubs[0].setLedColor(0,255,255);
+            } else {
+                RHG.Hubs[0].setLedColor(100,0,255);
             }
         }
     }

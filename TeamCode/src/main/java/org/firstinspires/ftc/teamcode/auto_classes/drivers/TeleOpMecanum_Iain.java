@@ -33,15 +33,15 @@ public class TeleOpMecanum_Iain extends OpMode {
         Robot.Driver1.assignAnalog(left_stick_x, drivex);
         Robot.Driver1.assignAnalog(left_stick_y, drivey);
         Robot.Driver1.assignSign  (left_stick_y, ButtonAnalog.SIGN.NEGATIVE);
-        Robot.Driver1.assignAnalog(right_stick_y, turn);
-        Robot.Driver1.assignBinary(ButtonBinary.Binary.none, faceUp);
-        Robot.Driver1.assignBinary(ButtonBinary.Binary.none, faceRight);
-        Robot.Driver1.assignBinary(ButtonBinary.Binary.none, faceDown);
-        Robot.Driver1.assignBinary(ButtonBinary.Binary.none, faceLeft);
-        Robot.Driver1.assignBinary(ButtonBinary.Binary.none, BINARY_turnLeft);
-        Robot.Driver1.assignBinary(ButtonBinary.Binary.none, BINARY_turnRight);
-        Robot.Driver1.assignBinary(start, swapDriveMode); //not matched to preferences but oh well.
-        Robot.Driver1.assignBinary(back, resetGyro); //diito
+        Robot.Driver1.assignAnalog(right_stick_x, turn);
+        Robot.Driver1.assignBinary(dpad_up, faceUp);
+        Robot.Driver1.assignBinary(dpad_right, faceRight);
+        Robot.Driver1.assignBinary(dpad_down, faceDown);
+        Robot.Driver1.assignBinary(dpad_left, faceLeft);
+        Robot.Driver1.assignBinary(b, BINARY_turnLeft);
+        Robot.Driver1.assignBinary(x, BINARY_turnRight);
+        Robot.Driver1.assignBinary(right_bumper, swapDriveMode); //not matched to preferences but oh well.
+        Robot.Driver1.assignBinary(left_bumper, resetGyro); //diito
         Robot.Driver1.assignToggle(back, ButtonBinary.ACTUATE.TOGGLE);
         /*STARTDRIVER2*/
         Robot.Driver2 = new DriverConfiguration(Robot, gamepad2);
@@ -63,20 +63,21 @@ public class TeleOpMecanum_Iain extends OpMode {
     public void start() {
         runtime.reset();
         telemetry.setAutoClear(true);
+        telemetry.clearAll();
+        Robot.IMU.composeTelemetry(telemetry);
     }
 
     //Initialized by: After Start, Before Stop / loops
     @Override
     public void loop() {
         Robot.run();
-        Robot.IMU.composeTelemetry(telemetry);
-        Robot.DCGm.composeTelemetry(telemetry);
         telemetry.addData("Status", "Run Time: " + runtime.toString());
+        Robot.DCGm.composeTelemetry(telemetry);
     }
 
     //Initialized by: Stop / runs once
     @Override
     public void stop() {
-        Robot.DCGm.setPower(new double[]{0,0,0,0});
+        Robot.stop();
     }
 }

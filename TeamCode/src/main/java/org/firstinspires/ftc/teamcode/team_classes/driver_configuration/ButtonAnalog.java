@@ -12,7 +12,7 @@ public class ButtonAnalog extends ButtonSimple{
     public ButtonAnalog() {
         super(ANALOG);
         Button = Analog.none;
-        Sign = SIGN.NEGATIVE;
+        Sign = SIGN.POSITIVE;
     }
 
     public enum Analog {
