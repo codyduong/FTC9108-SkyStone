@@ -1,11 +1,13 @@
 package org.firstinspires.ftc.teamcode.auto_classes;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.team_classes.robot.Robot;
 
+@Disabled
 @Autonomous(name="Blue Building Zone", group="Blue")
 public class BlueBuildingZone extends OpMode {
 

@@ -2,29 +2,27 @@ package org.firstinspires.ftc.teamcode.auto_classes;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.team_classes.robot.Robot;
 
-@Disabled
 @Autonomous(name="supertest", group="Auto") //fix this
-public class Test extends OpMode {
+public class TestLinear extends LinearOpMode {
 
     private ElapsedTime runtime = new ElapsedTime();
     Robot Robot;
 
-    public void init() {
+    public void runOpMode() {
         Robot = new Robot(gamepad1, gamepad2, telemetry, hardwareMap);
         telemetry.setAutoClear(false);
         telemetry.addData("Status", "Initializing");
         Robot.initialize();
         telemetry.addData("Status","Complete");
-    }
 
-    //Initialized by: Start / runs once
-    @Override
-    public void start() {
+        waitForStart();
+
         Robot.DCGm.driveToPosition(0,0,180, runtime);
         telemetry.addData("Status","180Turn");
         telemetry.update();
@@ -49,17 +47,7 @@ public class Test extends OpMode {
         telemetry.addData("Status","180Turn");
         telemetry.update();
 
-        //Robot.DCGm.setPower(new double[]{-100,-100,-100,-100});
-    }
-
-    //Initialized by: After Start, Before Stop / loops
-    @Override
-    public void loop() { }
-
-    //Initialized by: Stop / runs once
-    @Override
-    public void stop() {
-        Robot.DCGm.setPower(new double[]{0,0,0,0});
+        Robot.stop();
     }
 }
 
