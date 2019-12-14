@@ -35,42 +35,42 @@ public class BlueBuildingZone extends OpMode {
 
 
         //starting facing wall, and 42.25'' away from the other wall
-        Robot.DCGm.driveToPosition(0,      65.75, 0, 5000);
-        Robot.DCGm.driveToPosition(20,     0,      0, 5000);
-        Robot.DCGm.driveToPosition(0,      -47.5,   0, 5000);
-        Robot.DCGm.driveToPosition(0,      47.5,  0, 5000);
-        Robot.DCGm.driveToPosition(-46.75, 0,      0, 5000);
-        Robot.DCGm.driveToPosition(0,      25,    0, 5000);
+        Robot.DCGm.driveToPosition(0,      65.75, 0, runtime);
+        Robot.DCGm.driveToPosition(20,     0,      0, runtime);
+        Robot.DCGm.driveToPosition(0,      -47.5,   0, runtime);
+        Robot.DCGm.driveToPosition(0,      47.5,  0, runtime);
+        Robot.DCGm.driveToPosition(-46.75, 0,      0, runtime);
+        Robot.DCGm.driveToPosition(0,      25,    0, runtime);
 
 
         while (getRuntime() < 20) {
 
             offset = 0;
             while (Robot.CSG.FrontColorSensor.argb() < averageColorFront) {
-            Robot.DCGm.driveToPosition(-1, 0, 0, 5000);
+            Robot.DCGm.driveToPosition(-1, 0, 0, runtime);
             offset++;
             }
 
             Robot.SGi.grab(); // at this point, the robot will intake the skystone
-            Robot.DCGm.driveToPosition(offset,   0,   0, 5000);
-            Robot.DCGm.driveToPosition(0,     43,  0, 5000);
-            Robot.DCGm.driveToPosition(26.75, 0,   0, 5000);
-            Robot.DCGm.driveToPosition(0,     -68, 0, 5000);
-            Robot.DCGm.driveToPosition(20,    0,   0, 5000);
-            Robot.DCGm.driveToPosition(0,     0,   180, 5000);
+            Robot.DCGm.driveToPosition(offset,   0,   0, runtime);
+            Robot.DCGm.driveToPosition(0,     43,  0, runtime);
+            Robot.DCGm.driveToPosition(26.75, 0,   0, runtime);
+            Robot.DCGm.driveToPosition(0,     -68, 0, runtime);
+            Robot.DCGm.driveToPosition(20,    0,   0, runtime);
+            Robot.DCGm.driveToPosition(0,     0,   180, runtime);
             Robot.DCGl.raiseToBlock(blockNumber + 2.25,50);
             Robot.SGi.drop(); // self-explanatory
             Robot.DCGl.raiseToBlock(-blockNumber - 2.25,50);
             blockNumber++;	            blockNumber++;
-            Robot.DCGm.driveToPosition(0,      0,  180, 5000);
-            Robot.DCGm.driveToPosition(-20,    0,  0, 5000);
-            Robot.DCGm.driveToPosition(0,      68, 0, 5000);
-            Robot.DCGm.driveToPosition(-26.75, 0,  0, 5000);
-            Robot.DCGm.driveToPosition(0,      43, 0, 5000);
+            Robot.DCGm.driveToPosition(0,      0,  180, runtime);
+            Robot.DCGm.driveToPosition(-20,    0,  0, runtime);
+            Robot.DCGm.driveToPosition(0,      68, 0, runtime);
+            Robot.DCGm.driveToPosition(-26.75, 0,  0, runtime);
+            Robot.DCGm.driveToPosition(0,      43, 0, runtime);
         }
 
         while(Robot.CSG.BottomColorSensor.argb() < avarageColorBottom) {
-            Robot.DCGm.driveToPosition(-1,0,0, 5000);
+            Robot.DCGm.driveToPosition(-1,0,0, runtime);
         }
     }
 

@@ -47,6 +47,7 @@ public class TeleOpMecanum_Shane extends OpMode {
         Robot.Driver2 = new DriverConfiguration(Robot, gamepad2);
         Robot.Driver2.assignDebounce(500);
         Robot.Driver2.assignAnalog(left_stick_y, elevatorDrive);
+        Robot.Driver2.assignSign  (left_stick_y, ButtonAnalog.SIGN.NEGATIVE);
         Robot.Driver2.assignAnalog(left_trigger, intakeGrab);
         Robot.Driver2.assignAnalog(right_trigger, intakeDrop);
         Robot.Driver2.assignBinary(a, elevatorLowerAbs);
@@ -68,7 +69,7 @@ public class TeleOpMecanum_Shane extends OpMode {
     //Initialized by: After Start, Before Stop / loops
     @Override
     public void loop() {
-        Robot.run();
+        Robot.run(runtime);
         Robot.IMU.composeTelemetry(telemetry);
         Robot.DCGm.composeTelemetry(telemetry);
         telemetry.addData("Status", "Run Time: " + runtime.toString());

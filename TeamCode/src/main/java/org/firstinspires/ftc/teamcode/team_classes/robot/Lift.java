@@ -14,11 +14,9 @@ public class Lift extends DcMotorGroup {
     private static final double WHEEL_DIAMETER_INCHES = WHEEL_DIAMETER_MM / 25.4;
     private static final double COUNTS_PER_INCH = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) / (WHEEL_DIAMETER_INCHES * 3.1415);
 
-    //Constructor
-    public Lift() {
+    Lift() {
         super(new DcMotor[1]);
     }
-
     //METHOD 1: self-explanatory
     public void initialize(HardwareMap Hmap, Telemetry Tm) {
         this.DcMotors[0] = Hmap.get(DcMotor.class, "Lift_motor");
@@ -29,9 +27,10 @@ public class Lift extends DcMotorGroup {
         double encoderInch = inchToEncoder(inch);
         double direction = inch / java.lang.Math.abs(inch);
         double encoderValue = 0; // Used temporarily.
-        while (encoderValue < encoderInch){
+        /*while (encoderValue < encoderInch){
             this.setPower(new double[] {direction * (speed/100)} );
-        }
+        }*/
+        this.DcMotors[0].setTargetPosition((int)encoderInch);
     }
 
     public void raiseToBlock(double blockNumber, double speed){

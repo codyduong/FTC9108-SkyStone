@@ -71,7 +71,7 @@ public class TeleOpMecanum extends OpMode {
     //Initialized by: After Start, Before Stop / loops
     @Override
     public void loop() {
-        Robot.run();
+        Robot.run(runtime);
         telemetry.addData("Status", "Run Time: " + runtime.toString());
         telemetry.addData("RobotAngle", Robot.Angle);
         Robot.DCGm.composeTelemetry(telemetry);

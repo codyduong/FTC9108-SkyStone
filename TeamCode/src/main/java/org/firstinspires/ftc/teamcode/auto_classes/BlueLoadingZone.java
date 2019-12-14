@@ -32,38 +32,38 @@ public class BlueLoadingZone extends OpMode {
     public void start() {
 
         //Starting at wall, facing away, and 50" away from other wall.
-        Robot.DCGm.driveToPosition(0, 40, 0, 5000);
+        Robot.DCGm.driveToPosition(0, 40, 0, runtime);
 
         while (getRuntime() < 20) {
 
             offset = 0;
             while (Robot.CSG.FrontColorSensor.argb() < averageColorFront) {
-                Robot.DCGm.driveToPosition(-1, 0, 0, 5000);
+                Robot.DCGm.driveToPosition(-1, 0, 0, runtime);
                 offset++;
             }
 
             //At this point, the robot will pick up the skystone.
             Robot.SGi.grab();
-            Robot.DCGm.driveToPosition(offset,   0,   0, 5000);
-            Robot.DCGm.driveToPosition(0,     43,  0, 5000);
-            Robot.DCGm.driveToPosition(26.75, 0,   0, 5000);
-            Robot.DCGm.driveToPosition(0,     -68, 0, 5000);
-            Robot.DCGm.driveToPosition(20,    0,   0, 5000);
-            Robot.DCGm.driveToPosition(0,     0,   180, 5000);
+            Robot.DCGm.driveToPosition(offset,   0,   0, runtime);
+            Robot.DCGm.driveToPosition(0,     43,  0, runtime);
+            Robot.DCGm.driveToPosition(26.75, 0,   0, runtime);
+            Robot.DCGm.driveToPosition(0,     -68, 0, runtime);
+            Robot.DCGm.driveToPosition(20,    0,   0, runtime);
+            Robot.DCGm.driveToPosition(0,     0,   180, runtime);
             Robot.DCGl.raiseToBlock(blockNumber + 2.25,50);
             Robot.SGi.drop(); //At this point, the robot will output the stone in the foundation.
             Robot.DCGl.raiseToBlock(-blockNumber - 2.25,50);
             blockNumber++;
-            Robot.DCGm.driveToPosition(0,      0,  180, 5000);
-            Robot.DCGm.driveToPosition(-20,    0,  0, 5000);
-            Robot.DCGm.driveToPosition(0,      68, 0, 5000);
-            Robot.DCGm.driveToPosition(-26.75, 0,  0, 5000);
-            Robot.DCGm.driveToPosition(0,      43, 0, 5000);
+            Robot.DCGm.driveToPosition(0,      0,  180, runtime);
+            Robot.DCGm.driveToPosition(-20,    0,  0, runtime);
+            Robot.DCGm.driveToPosition(0,      68, 0, runtime);
+            Robot.DCGm.driveToPosition(-26.75, 0,  0, runtime);
+            Robot.DCGm.driveToPosition(0,      43, 0, runtime);
         }
 
 
         while (Robot.CSG.BottomColorSensor.argb() < avarageColorBottom) {
-            Robot.DCGm.driveToPosition(-1, 0, 0, 5000);
+            Robot.DCGm.driveToPosition(-1, 0, 0, runtime);
         }
     }
 

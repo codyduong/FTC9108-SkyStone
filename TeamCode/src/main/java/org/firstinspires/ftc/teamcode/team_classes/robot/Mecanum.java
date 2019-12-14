@@ -15,7 +15,9 @@ import org.firstinspires.ftc.teamcode.team_classes.robot.DcMotorGroup;
  * For all stuff Mecanum Drivetrain related
  */
 public class Mecanum extends DcMotorGroup {
+
     public boolean relativeDrive = false;
+    public double timeOutMS;
 
     //Constant Properties
     private static final double     COUNTS_PER_MOTOR_REV    = 753.2 ;   // SKU: 5202-0002-0027
@@ -37,6 +39,7 @@ public class Mecanum extends DcMotorGroup {
      * @param Tm - Telemetry to add data.
      */
     public void initialize(HardwareMap Hmap, Telemetry Tm) {
+        timeOutMS = 500;
         this.DcMotors[0] = Hmap.get(DcMotor.class, "front_right_motor");
         this.DcMotors[1] = Hmap.get(DcMotor.class, "front_left_motor");
         this.DcMotors[2] = Hmap.get(DcMotor.class, "back_left_motor");
@@ -73,10 +76,10 @@ public class Mecanum extends DcMotorGroup {
      * @param PositionAngle A position and value parameter
      * @param teleOp A boolean for whether this is for teleOp.
      * @param multiplier A number from -1 to 1.
-     * @param timeOutMS Time in milliseconds before the robot times out and moves on to next action
      */
-    public void driveToPositionAngle(Position2DAngle PositionAngle, boolean teleOp, double multiplier, double timeOutMS) {
-        ElapsedTime runtime = new ElapsedTime();
+    public void driveToPositionAngle(Position2DAngle PositionAngle, boolean teleOp, double multiplier,
+                                     ElapsedTime eTime) {
+        ElapsedTime runtime = eTime;
         double relativeY = PositionAngle.Y;
         double relativeX = PositionAngle.X;
         double degreesAngle = PositionAngle.ANGLE;
@@ -147,8 +150,8 @@ public class Mecanum extends DcMotorGroup {
      * Without a teleOp parameter assumes it is autonomous.
      * @param PositionAngle
      */
-    public void driveToPositionAngle(Position2DAngle PositionAngle, double timeOutMS) {
-        driveToPositionAngle(PositionAngle,false, 1, timeOutMS);
+    public void driveToPositionAngle(Position2DAngle PositionAngle, ElapsedTime eTime) {
+        driveToPositionAngle(PositionAngle,false, 1, eTime);
     }
 
     /**
@@ -156,10 +159,10 @@ public class Mecanum extends DcMotorGroup {
      * @param Position
      * @param teleOp
      */
-    public void strafeToAngle(Position2D Position, boolean teleOp, double timeOutMS) {
+    public void strafeToAngle(Position2D Position, boolean teleOp, ElapsedTime eTime) {
         double xlength = Position.X_POS;
         double ylength = Position.Y_POS;
-        driveToPositionAngle(new Position2DAngle(xlength,ylength,0), teleOp, 1, timeOutMS);
+        driveToPositionAngle(new Position2DAngle(xlength,ylength,0), teleOp, 1, eTime);
     }
 
     /**
@@ -167,8 +170,8 @@ public class Mecanum extends DcMotorGroup {
      * @param angle
      * @param teleOp
      */
-    public void turnToAngle(double angle, boolean teleOp, double timeOutMS) {
-        driveToPositionAngle(new Position2DAngle(0,0,angle), teleOp, 1, timeOutMS);
+    public void turnToAngle(double angle, boolean teleOp, ElapsedTime eTime) {
+        driveToPositionAngle(new Position2DAngle(0,0,angle), teleOp, 1, eTime);
     }
 
 
@@ -181,8 +184,8 @@ public class Mecanum extends DcMotorGroup {
      * @param Y
      * @param Angle
      */
-    public void driveToPosition(double X, double Y, double Angle, double timeOutMS) {
-        driveToPositionAngle(new Position2DAngle(X,Y,Angle),false, 1, timeOutMS);
+    public void driveToPosition(double X, double Y, double Angle, ElapsedTime eTime) {
+        driveToPositionAngle(new Position2DAngle(X,Y,Angle),false, 1, eTime);
     }
 
 
@@ -320,12 +323,12 @@ public class Mecanum extends DcMotorGroup {
         relativeDrive = !relativeDrive;
     }
 
-    public void teleOpDrive(Position2DAngle input, double Heading, double magnitude, double timeOutMS) {
+    public void teleOpDrive(Position2DAngle input, double Heading, double magnitude, ElapsedTime eTime) {
         if (relativeDrive) {
             Position2DAngle newRelative = relativeValues(input, Heading);
-            driveToPositionAngle(newRelative, true, 1, timeOutMS);
+            driveToPositionAngle(newRelative, true, 1, eTime);
         } else {
-            driveToPositionAngle(input, true, 1, timeOutMS);
+            driveToPositionAngle(input, true, 1, eTime);
         }
     }
 

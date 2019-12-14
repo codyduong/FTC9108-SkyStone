@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.general_classes.Position2D;
@@ -19,6 +20,7 @@ import static org.firstinspires.ftc.teamcode.team_classes.driver_configuration.A
 import static org.firstinspires.ftc.teamcode.team_classes.driver_configuration.Action.Binary_Action.*;
 
 public class Robot {
+
     public Position2D Position;
     public Position2D EstimatedPosition;
     public double Angle;
@@ -67,10 +69,10 @@ public class Robot {
     /**
      * A method that runs all the essential processes of the robot. Including drivetrain, servos, etc...
      */
-    public void run() {
+    public void run(ElapsedTime runtime) {
         updateRobot();
-        robotMecanumDrive();
-        swapDrive();
+        robotMecanumDrive(runtime);
+        swapDrive(tmtr);
         /*
         faceUp();
         faceRight();
@@ -80,10 +82,10 @@ public class Robot {
         //elevatorDrive();
         elevatorRaiseAbs();
         elevatorLowerAbs();
-        //intakeGrab();
-        //intakeDrop();
-        turnLeft();
-        turnRight();
+        intakeGrab();
+        intakeDrop();
+        turnLeft(runtime);
+        turnRight(runtime);
         //resetGyro();
     }
 
@@ -99,7 +101,7 @@ public class Robot {
     private double drivex;
     private double drivey;
     private double turn;
-    public void robotMecanumDrive() {
+    public void robotMecanumDrive(ElapsedTime runtime) {
         drivex = (double)Driver1.retrieveAnalogFromAction(Action.Analog_Action.drivex);
         tmtr.addData("drivex", drivex);
         drivey = (double)Driver1.retrieveAnalogFromAction(Action.Analog_Action.drivey);
@@ -120,12 +122,12 @@ public class Robot {
         tmtr.addData("InputY", InputDrive.Y);
         tmtr.addData("InputTheta", InputDrive.ANGLE);
         if (DCGm.relativeDrive) {
-            DCGm.driveToPositionAngle(DCGm.relativeValues(InputDrive, Angle), true, 1, 500);;
+            DCGm.driveToPositionAngle(DCGm.relativeValues(InputDrive, Angle), true, 1, runtime);;
         }
         //DCGm.teleOpDrive(InputDrive, Angle, InputDrive.getMagnitude(), 5000);
     }
 
-    public void swapDrive() {
+    public void swapDrive(Telemetry tmtr) {
         if (Driver1.retrieveBinaryFromAction(swapDriveMode)) {
             DCGm.setRelativeDriveToggle();
             if (DCGm.relativeDrive) {
@@ -133,6 +135,7 @@ public class Robot {
             } else {
                 RHG.Hubs[0].setLedColor(100,0,255);
             }
+            tmtr.addLine().addData("SWAP DRIVE", "SWAPPING");
         }
     }
 
@@ -149,12 +152,12 @@ public class Robot {
     public void faceLeft() {
     }
 
-    public void turnLeft() {
+    public void turnLeft(ElapsedTime runtime) {
         double speed;
         try {
             speed = Driver1.retrieveAnalogFromAction(ANALOG_turnLeft)*-90;
             Position2DAngle InputDrive = new Position2DAngle(0,0,speed);
-            DCGm.teleOpDrive(InputDrive, Angle, speed, 500);
+            DCGm.teleOpDrive(InputDrive, Angle, speed, runtime);
         } catch(IllegalArgumentException e1) {
             if (Driver1.retrieveBinaryFromAction(BINARY_turnLeft)) {
                 speed = 90;
@@ -162,16 +165,16 @@ public class Robot {
                 speed = 0;
             }
             Position2DAngle InputDrive = new Position2DAngle(0,0,speed);
-            DCGm.teleOpDrive(InputDrive, Angle, speed, 500);
+            DCGm.teleOpDrive(InputDrive, Angle, speed, runtime);
         }
     }
 
-    public void turnRight() {
+    public void turnRight(ElapsedTime runtime) {
         double speed;
         try {
             speed = Driver1.retrieveAnalogFromAction(ANALOG_turnRight)*90;
             Position2DAngle InputDrive = new Position2DAngle(0,0,speed);
-            DCGm.teleOpDrive(InputDrive, Angle, speed, 500);
+            DCGm.teleOpDrive(InputDrive, Angle, speed, runtime);
         } catch(IllegalArgumentException e1) {
             if (Driver1.retrieveBinaryFromAction(BINARY_turnRight)) {
                 speed = -90;
@@ -179,7 +182,7 @@ public class Robot {
                 speed = 0;
             }
             Position2DAngle InputDrive = new Position2DAngle(0,0,speed);
-            DCGm.teleOpDrive(InputDrive, Angle, speed, 500);
+            DCGm.teleOpDrive(InputDrive, Angle, speed, runtime);
         }
     }
 
@@ -192,6 +195,7 @@ public class Robot {
             } else {
                 RHG.Hubs[0].setLedColor(100,0,255);
             }
+            tmtr.addLine().addData("GYRO","RESET");
         }
     }
 
