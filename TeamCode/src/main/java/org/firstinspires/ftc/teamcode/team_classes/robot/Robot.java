@@ -95,7 +95,7 @@ public class Robot {
             DCGm.setPower(new double[]{0,0,0,0});
         }
         if (DCGl.isBusy()) {
-            DCGl.setPower(new double[]{0});
+            DCGl.setPower(new double[]{0,0,0,0});
         }
     }
 
